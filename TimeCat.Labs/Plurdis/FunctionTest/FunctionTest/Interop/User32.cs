@@ -35,6 +35,34 @@ namespace FunctionTest.Interop
 
         #endregion
 
+        #region [  API Declaration  ]
+
+        public static IDictionary<IntPtr, string> GetOpenWindows()
+        {
+            IntPtr shellWindow = User32.GetShellWindow();
+            Dictionary<IntPtr, string> windows = new Dictionary<IntPtr, string>();
+
+            User32.EnumWindows(delegate (IntPtr hWnd, int lParam)
+            {
+                if (hWnd == shellWindow) return true;
+                if (!User32.IsWindowVisible(hWnd)) return true;
+
+                int length = User32.GetWindowTextLength(hWnd);
+                if (length == 0) return true;
+
+                StringBuilder builder = new StringBuilder(length);
+                User32.GetWindowText(hWnd, builder, length + 1);
+
+                windows[hWnd] = builder.ToString();
+                return true;
+
+            }, 0);
+
+            return windows;
+        }
+
+        #endregion
+
         #region [  Struct Declaration  ]
 
         internal struct LASTINPUTINFO
