@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace FunctionTest.Interop
 {
@@ -14,6 +17,18 @@ namespace FunctionTest.Interop
 
         [DllImport(ExternDll.User32)]
         public static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+
+        [DllImport(ExternDll.User32)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport(ExternDll.User32)]
+        public static extern int GetWindowTextLength(IntPtr hWnd);
+
+        [DllImport(ExternDll.User32)]
+        public static extern IntPtr GetShellWindow();
+
+        [DllImport(ExternDll.User32)]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
         [DllImport(ExternDll.User32)]
         static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
