@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
+using FunctionTest.Interop;
 
 namespace FunctionTest
 {
@@ -6,7 +9,11 @@ namespace FunctionTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            User32.GetOpenWindows()
+                .ToList()
+                .ForEach(i => Console.WriteLine(i.Value));
+
+            Console.ReadLine();
         }
     }
 }
