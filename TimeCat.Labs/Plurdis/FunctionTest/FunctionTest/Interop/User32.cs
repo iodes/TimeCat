@@ -35,7 +35,7 @@ namespace FunctionTest.Interop
 
         #endregion
 
-        #region [  API Declaration  ]
+        #region [  Function Declaration  ]
 
         public static IDictionary<IntPtr, string> GetOpenWindows()
         {
