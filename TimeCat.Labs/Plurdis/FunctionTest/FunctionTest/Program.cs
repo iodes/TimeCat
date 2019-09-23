@@ -9,6 +9,11 @@ namespace FunctionTest
     {
         static void Main(string[] args)
         {
+            User32.GetOpenWindows()
+                .ToList()
+                .ForEach(i => Console.WriteLine(i.Value));
+
+            Console.ReadLine();
         }
     }
 }
