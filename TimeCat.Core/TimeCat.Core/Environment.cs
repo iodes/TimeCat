@@ -16,7 +16,7 @@ namespace TimeCat.Core
             }
         }
 
-        static readonly string _storage = Path.Combine(SystemEnvironment.GetFolderPath(SystemEnvironment.SpecialFolder.Personal), ".timecat");
+        static readonly string _storage = Path.Combine(SystemEnvironment.GetFolderPath(SystemEnvironment.SpecialFolder.ApplicationData), ".timecat");
 
         public static string Database => Path.Combine(Storage, "TimeCat.db");
     }
