@@ -17,6 +17,8 @@ namespace TimeCat.Core.Database
 
         public IAsyncEnumerable<Application> GetApplications() => TableAsync<Application>();
 
+        public IAsyncEnumerable<Activity> GetActivities() => TableAsync<Activity>();
+
         #region Singleton
         static TimeCatDB _instance;
 
