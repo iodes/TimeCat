@@ -11,4 +11,8 @@
     <PackageReference Include="SQLite.NET.SQLCipher" Version="2.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TimeCat.Proto\TimeCat.Proto.csproj" />
+  </ItemGroup>
+
 </Project>
