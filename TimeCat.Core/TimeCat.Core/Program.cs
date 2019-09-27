@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TimeCat.Core.Commons;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
 
@@ -38,9 +39,25 @@ namespace TimeCat.Core
 
             await TimeCatDB.Instance.InsertRangeAsync(applications);
 
+            var activities = new List<Activity>();
+
             await foreach (Application app in TimeCatDB.Instance.GetApplications())
             {
                 Console.WriteLine($"App: {app.Id}, {app.Name}({app.Version})");
+
+                activities.Add(new Activity()
+                {
+                    ApplicationId = app.Id,
+                    Action = ActionType.Active,
+                    Time = DateTimeOffset.Now
+                });
+            }
+
+            await TimeCatDB.Instance.InsertRangeAsync(activities);
+
+            await foreach (Activity activity in TimeCatDB.Instance.GetActivities())
+            {
+                Console.WriteLine($"Activity: {activity.Id}, {activity.Action}, {activity.Time}");
             }
         }
     }
