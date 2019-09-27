@@ -7,5 +7,7 @@ namespace TimeCat.Core.Database.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+
+        // TODO
     }
 }
