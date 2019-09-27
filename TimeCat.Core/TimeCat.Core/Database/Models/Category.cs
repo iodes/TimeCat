@@ -15,8 +15,16 @@ namespace TimeCat.Core.Database.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the color of category
+        /// Gets the color of category label
         /// </summary>
-        public Color Color { get; set; }
+        [Ignore]
+        public Color Color 
+        {
+            get => Color.FromArgb(ColorRgb);
+            set => ColorRgb = value.ToArgb();
+        }
+
+        [Column("Color")]
+        public int ColorRgb { get; set; }
     }
 }
