@@ -8,7 +8,7 @@ namespace FunctionTest.Interop
 {
     class User32
     {
-        #region [  API Declaration  ]
+        #region API Declaration
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
@@ -35,7 +35,7 @@ namespace FunctionTest.Interop
 
         #endregion
 
-        #region [  Function Declaration  ]
+        #region Function Declaration
 
         public static IDictionary<IntPtr, string> GetOpenWindows()
         {
@@ -63,7 +63,7 @@ namespace FunctionTest.Interop
 
         #endregion
 
-        #region [  Struct Declaration  ]
+        #region Struct Declaration
 
         internal struct LASTINPUTINFO
         {
