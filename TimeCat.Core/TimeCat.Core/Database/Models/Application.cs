@@ -1,5 +1,4 @@
 ﻿using SQLite;
-using SQLiteNetExtensions.Attributes;
 
 namespace TimeCat.Core.Database.Models
 {
@@ -29,10 +28,6 @@ namespace TimeCat.Core.Database.Models
         /// </summary>
         public string Version { get; set; }
         
-        [ForeignKey(typeof(Category))]
         public int CategoryId { get; set; }
-
-        [OneToOne]
-        public Category Category { get; set; }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SQLite;
+using System;
+using TimeCat.Core.Commons;
 
 namespace TimeCat.Core.Database.Models
 {
@@ -8,6 +10,16 @@ namespace TimeCat.Core.Database.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        // TODO
+        public int ApplicationId { get; set; }
+
+        /// <summary>
+        /// Gets the action type of the activity
+        /// </summary>
+        public ActionType Action { get; set; }
+
+        /// <summary>
+        /// Gets the action time of the activity
+        /// </summary>
+        public DateTimeOffset Time { get; set; }
     }
 }
