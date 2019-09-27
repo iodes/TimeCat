@@ -15,7 +15,7 @@ namespace TimeCat.Core
 
             await TimeCatDB.Instance.DeleteAllAsync<Category>();
             await TimeCatDB.Instance.DeleteAllAsync<Application>();
-            //await TimeCatDB.Instance.DeleteAllAsync<Activity>();
+            await TimeCatDB.Instance.DeleteAllAsync<Activity>();
 
             var categories = Enumerable.Range(0, 100)
                 .Select(i => new Category() { Name = $"Category {i}" });
