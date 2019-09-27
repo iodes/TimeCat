@@ -1,18 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface Props {}
-export interface State {}
-
-export class Timeline extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export class Timeline extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <h2>Hello, Timeline Component</h2>
-        );
+        )
     }
 }
 
-export default Timeline;
+export default Timeline

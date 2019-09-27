@@ -4,7 +4,8 @@
   "description": "TimeCat Web Frontend",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack"
+    "build": "webpack",
+    "lint": "tslint --project tsconfig.json"
   },
   "dependencies": {
     "react": "^16.9.0",

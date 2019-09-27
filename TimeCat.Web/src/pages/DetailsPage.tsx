@@ -1,18 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface Props {}
-export interface State {}
-
-export class DetailsPage extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export class DetailsPage extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <h1>Hello, Details Page</h1>
-        );
+        )
     }
 }
 
-export default DetailsPage;
+export default DetailsPage
