@@ -1,18 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface Props {}
-export interface State {}
-
-export class ListView extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export class ListView extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <h2>Hello, ListView Component</h2>
-        );
+        )
     }
 }
 
-export default ListView;
+export default ListView
