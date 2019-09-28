@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 
 import TotalTime from "./components/Activity/TotalTime";
 import ActiveWeekdays from "./components/Activity/Weekdays";
+import ActiveHours from "./components/Activity/Hours";
 
 const Overview: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ const Overview: React.FC = () => {
                 <ActiveWeekdays />
               </Col>
               <Col xs={8} style={styles.colStyle}>
-                Most active hours
+                <ActiveHours />
               </Col>
             </Col>
           </Row>
