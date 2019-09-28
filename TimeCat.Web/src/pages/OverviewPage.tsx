@@ -1,18 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface Props {}
-export interface State {}
-
-export class OverviewPage extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export class OverviewPage extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <h1>Hello, Overview Page</h1>
-        );
+        )
     }
 }
 
-export default OverviewPage;
+export default OverviewPage
