@@ -12,6 +12,7 @@ import ProductiveHours from "./components/Productivity/Hours";
 
 import StackedBar from "./components/Charts/StackedBar";
 import Applications from "./components/Charts/Applications";
+import Projects from "./components/Charts/Projects";
 
 const Overview: React.FC = () => {
   return (
@@ -54,7 +55,7 @@ const Overview: React.FC = () => {
           <Applications />
         </Col>
         <Col lg={12} style={styles.colStyle}>
-          Projects & Tasks
+          <Projects />
         </Col>
       </Row>
     </div>
