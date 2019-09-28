@@ -9,19 +9,19 @@ namespace FunctionTest.Interop
     class User32
     {
         #region API Declaration
-        private const uint WINEVENT_OUTOFCONTEXT = 0;
-        private const uint EVENT_SYSTEM_FOREGROUND = 3;
+        public const uint winEventOutOfContext = 0;
+        public const uint eventSystemForeground = 3;
 
         public delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
 
         [DllImport(ExternDll.User32)]
-        static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+        public static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
         [DllImport(ExternDll.User32)]
-        static extern IntPtr GetForegroundWindow();
+        public static extern IntPtr GetForegroundWindow();
 
         [DllImport(ExternDll.User32)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
@@ -41,7 +41,7 @@ namespace FunctionTest.Interop
         public static extern IntPtr GetShellWindow();
 
         [DllImport(ExternDll.User32)]
-        static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+        public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
         #endregion
 
