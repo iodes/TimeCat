@@ -6,9 +6,9 @@ namespace TimeCat.Core.Services
 {
     class CommonRpc : CommonService.CommonServiceBase
     {
-        public override Task<Empty> initialize(Empty request, ServerCallContext context)
+        public override Task<Void> initialize(Void request, ServerCallContext context)
         {
-            return Task.FromResult(new Empty());
+            return Task.FromResult(new Void());
         }
     }
 }
