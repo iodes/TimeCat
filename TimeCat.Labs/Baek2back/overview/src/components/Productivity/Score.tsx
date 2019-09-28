@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Typography } from "antd";
 const { Text } = Typography;
 
-const TotalTime: React.FC = () => {
+const Score: React.FC = () => {
   return (
     <Card
       hoverable
@@ -10,11 +10,9 @@ const TotalTime: React.FC = () => {
       style={styles.cardStyle}
       bodyStyle={styles.bodyStyle}
     >
-      <Text strong>Total Time</Text>
-      <p style={styles.pStyle}>3h 42m</p>
-      <p style={styles.summaryStyle}>
-        <b style={styles.bStyle}>28m</b> hour
-      </p>
+      <Text strong>Productivity Score</Text>
+      <p style={styles.percentStyle}>58%</p>
+      <p style={styles.commentStyle}>Keep it up 😊</p>
     </Card>
   );
 };
@@ -27,22 +25,19 @@ const styles = {
   bodyStyle: {
     padding: 12
   },
-  pStyle: {
+  percentStyle: {
     marginTop: 30,
     marginBottom: 5,
     fontWeight: "bold" as "bold",
     fontSize: 36,
     textAlign: "center" as "center",
-    color: "#006fff"
+    color: "#4bcd50"
   },
-  summaryStyle: {
+  commentStyle: {
     fontSize: 14,
-    lineHeight: "10%",
-    textAlign: "center" as "center"
-  },
-  bStyle: {
-    color: "#006fff"
+    textAlign: "center" as "center",
+    lineHeight: "10%"
   }
 };
 
-export default TotalTime;
+export default Score;
