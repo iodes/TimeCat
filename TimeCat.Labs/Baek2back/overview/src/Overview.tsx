@@ -10,6 +10,8 @@ import Score from "./components/Productivity/Score";
 import ProductiveWeekdays from "./components/Productivity/Weekdays";
 import ProductiveHours from "./components/Productivity/Hours";
 
+import StackedBar from "./components/Charts/StackedBar";
+
 const Overview: React.FC = () => {
   return (
     <div style={styles.container}>
@@ -43,7 +45,7 @@ const Overview: React.FC = () => {
           </Row>
         </Col>
         <Col lg={12} style={styles.colStyle}>
-          Time per Project per Hour
+          <StackedBar />
         </Col>
       </Row>
       <Row>
