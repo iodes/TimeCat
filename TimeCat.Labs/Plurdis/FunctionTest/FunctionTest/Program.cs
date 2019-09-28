@@ -23,6 +23,7 @@ namespace FunctionTest
 
                 manualResetEvent.WaitOne();
             });
+            thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
 
             Console.ReadLine();
