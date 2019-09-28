@@ -1,7 +1,8 @@
 import React from "react";
+import Overview from "./Overview";
 
 const App: React.FC = () => {
-  return <div></div>;
+  return <Overview />;
 };
 
 export default App;
