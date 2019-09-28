@@ -1,7 +1,22 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="SQLite.NET.SQLCipher" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TimeCat.Proto\TimeCat.Proto.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
+    <EmbeddedResource Include="..\..\Certificate\timecat.pem" Link="Resources\Certificates\%(FileName)%(Extension)" />
+  </ItemGroup>
 </Project>
