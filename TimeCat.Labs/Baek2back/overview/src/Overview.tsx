@@ -2,6 +2,8 @@ import React from "react";
 import { Row, Col } from "antd";
 import "antd/dist/antd.css";
 
+import TotalTime from "./components/Activity/TotalTime";
+
 const Overview: React.FC = () => {
   return (
     <div style={styles.container}>
@@ -10,7 +12,7 @@ const Overview: React.FC = () => {
           <Row>
             <Col xs={24}>
               <Col xs={8} style={styles.colStyle}>
-                Total time
+                <TotalTime />
               </Col>
               <Col xs={8} style={styles.colStyle}>
                 Most active weekdays
