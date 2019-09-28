@@ -8,6 +8,7 @@ import ActiveHours from "./components/Activity/Hours";
 
 import Score from "./components/Productivity/Score";
 import ProductiveWeekdays from "./components/Productivity/Weekdays";
+import ProductiveHours from "./components/Productivity/Hours";
 
 const Overview: React.FC = () => {
   return (
@@ -36,7 +37,7 @@ const Overview: React.FC = () => {
                 <ProductiveWeekdays />
               </Col>
               <Col xs={8} style={styles.colStyle}>
-                Most productive hours
+                <ProductiveHours />
               </Col>
             </Col>
           </Row>
