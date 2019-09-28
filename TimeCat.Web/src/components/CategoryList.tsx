@@ -1,18 +1,15 @@
-import * as React from 'react';
+import * as React from 'react'
 
-export interface Props {}
-export interface State {}
-
-export class CategoryList extends React.Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
+export class CategoryList extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <h2>Hello, CategoryList Component</h2>
-        );
+        )
     }
 }
 
-export default CategoryList;
+export default CategoryList

@@ -1,20 +1,17 @@
-import * as React from 'react';
-import { HashRouter, Link, Route } from "react-router-dom";
+import * as React from 'react'
+import { HashRouter, Link, Route } from 'react-router-dom'
 
-import OverviewPage from './pages/OverviewPage'
 import DetailsPage from './pages/DetailsPage'
+import OverviewPage from './pages/OverviewPage'
 import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
 
-interface AppProps {}
-interface AppState {}
-
-class App extends React.Component<AppProps, AppState> {
-    constructor(props: AppProps) {
-        super(props);
+class App extends React.Component {
+    constructor(props: {}) {
+        super(props)
     }
 
-    render() {
+    public render() {
         return (
             <HashRouter>
                 <div>
@@ -46,8 +43,8 @@ class App extends React.Component<AppProps, AppState> {
                     </main>
                 </div>
             </HashRouter>
-        );
+        )
     }
 }
 
-export default App;
+export default App
