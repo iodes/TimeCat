@@ -8,7 +8,20 @@ namespace FunctionTest.Interop
 {
     class User32
     {
-        #region [  API Declaration  ]
+        #region API Declaration
+        public const uint winEventOutOfContext = 0;
+        public const uint eventSystemForeground = 3;
+
+        public delegate void WinEventDelegate(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime);
+
+        [DllImport(ExternDll.User32)]
+        public static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
+
+        [DllImport(ExternDll.User32)]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport(ExternDll.User32)]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int count);
 
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
@@ -28,14 +41,25 @@ namespace FunctionTest.Interop
         public static extern IntPtr GetShellWindow();
 
         [DllImport(ExternDll.User32)]
-        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
-        [DllImport(ExternDll.User32)]
-        static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+        public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
         #endregion
 
-        #region [  Function Declaration  ]
+        #region Function Declaration
+
+        public static string GetActiveWindowTitle()
+        {
+            const int nChars = 256;
+            IntPtr handle = IntPtr.Zero;
+            StringBuilder Buff = new StringBuilder(nChars);
+            handle = GetForegroundWindow();
+
+            if (GetWindowText(handle, Buff, nChars) > 0)
+            {
+                return Buff.ToString();
+            }
+            return null;
+        }
 
         public static IDictionary<IntPtr, string> GetOpenWindows()
         {
@@ -63,7 +87,7 @@ namespace FunctionTest.Interop
 
         #endregion
 
-        #region [  Struct Declaration  ]
+        #region Struct Declaration
 
         internal struct LASTINPUTINFO
         {
