@@ -10,6 +10,7 @@ namespace FunctionTest
 
         static void Main(string[] args)
         {
+            var manualResetEvent = new ManualResetEvent(false);
             var thread = new Thread(() =>
             {
                 IntPtr m_hhook = User32.SetWinEventHook(User32.eventSystemForeground,
@@ -19,13 +20,13 @@ namespace FunctionTest
                     0,
                     0,
                     User32.winEventOutOfContext);
+
+                manualResetEvent.WaitOne();
             });
             thread.Start();
 
-            while (true)
-            {
-                Thread.Sleep(10);
-            }
+            Console.ReadLine();
+            manualResetEvent.Set();
         }
 
         private static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
