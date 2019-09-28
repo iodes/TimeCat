@@ -15,4 +15,8 @@
     <ProjectReference Include="..\TimeCat.Proto\TimeCat.Proto.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
+    <EmbeddedResource Include="..\..\Certificate\timecat.pem" Link="Resources\Certificates\%(FileName)%(Extension)" />
+  </ItemGroup>
 </Project>
