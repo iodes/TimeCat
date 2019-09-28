@@ -1,4 +1,4 @@
-<h3 align="center">OSS Contributon 2019</h3>
+<h3 align="center">OSS Contributhon 2019</h3>
 <h1 align="center">TimeCat ⏰🐱</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
