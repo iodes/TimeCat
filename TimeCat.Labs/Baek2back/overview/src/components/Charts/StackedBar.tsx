@@ -87,7 +87,7 @@ const StackedBar: React.FC = () => {
     <Card
       hoverable
       bordered={true}
-      style={styles.chartStyle}
+      style={styles.cardStyle}
       bodyStyle={styles.bodyStyle}
     >
       <div>
@@ -137,7 +137,7 @@ const StackedBar: React.FC = () => {
 };
 
 const styles = {
-  chartStyle: {
+  cardStyle: {
     width: 820,
     height: 380
   },

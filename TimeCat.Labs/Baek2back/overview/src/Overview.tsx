@@ -11,6 +11,7 @@ import ProductiveWeekdays from "./components/Productivity/Weekdays";
 import ProductiveHours from "./components/Productivity/Hours";
 
 import StackedBar from "./components/Charts/StackedBar";
+import Applications from "./components/Charts/Applications";
 
 const Overview: React.FC = () => {
   return (
@@ -50,7 +51,7 @@ const Overview: React.FC = () => {
       </Row>
       <Row>
         <Col lg={12} style={styles.colStyle}>
-          Applications
+          <Applications />
         </Col>
         <Col lg={12} style={styles.colStyle}>
           Projects & Tasks
