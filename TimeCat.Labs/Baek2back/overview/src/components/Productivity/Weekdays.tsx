@@ -5,41 +5,32 @@ const { Text } = Typography;
 
 const data = [
   {
-    idx: 1,
     day: "월",
-    data: -17,
-    color: "#46e24e"
+    value: -17
   },
   {
-    idx: 2,
     day: "화",
-    data: 8,
-    color: "#ea4942"
+    value: 8
   },
   {
-    idx: 3,
     day: "수",
-    data: 22
+    value: 22
   },
   {
-    idx: 4,
     day: "목",
-    data: 30
+    value: 30
   },
   {
-    idx: 6,
     day: "금",
-    data: -47
+    value: -47
   },
   {
-    idx: 7,
     day: "토",
-    data: 44
+    value: 44
   },
   {
-    idx: 8,
     day: "일",
-    data: 30
+    value: 30
   }
 ];
 
@@ -56,8 +47,11 @@ const ProductiveWeekdays: React.FC = () => {
         <ResponsiveBar
           data={data}
           groupMode={"grouped"}
-          keys={["data"]}
+          keys={["value"]}
           indexBy={"day"}
+          colors={d => {
+            return d.data.value >= 0 ? "#8fe563" : "#d05b55";
+          }}
           margin={{ top: 10, right: 0, bottom: 50, left: 0 }}
           padding={0.1}
           enableLabel={false}

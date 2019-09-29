@@ -59,7 +59,9 @@ const ProductiveHours: React.FC = () => {
           padding={0.1}
           groupMode="grouped"
           axisTop={null}
-          colors={"#4bcd50"}
+          colors={d => {
+            return d.value >= 0 ? "#8fe563" : "#d05b55";
+          }}
           innerPadding={2}
           axisRight={null}
           axisBottom={{ tickSize: 0 }}
