@@ -2,6 +2,7 @@
     "extends": "tslint:recommended",
     "rules": {
         "quotemark": [true, "single", "jsx-double"],
-        "semicolon": [true, "never"]
+        "semicolon": [true, "never"],
+        "object-literal-sort-keys": false
     }
 }
