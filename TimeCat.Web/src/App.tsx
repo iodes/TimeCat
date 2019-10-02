@@ -3,13 +3,24 @@ import { HashRouter, Link, Route } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
+
+import { setKeywordFilter } from './stores/filters/actions'
+import { IFiltersState } from './stores/filters/types'
+import { IRootState } from './stores/index'
+
 import DetailsPage from './pages/DetailsPage'
 import OverviewPage from './pages/OverviewPage'
 import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
-import { setKeywordFilter } from './stores/filters/actions'
-import { IFiltersState } from './stores/filters/types'
-import { IRootState } from './stores/index'
+
+import styled, { createGlobalStyle } from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+    body {
+        padding: 0;
+        margin: 0;
+    }
+`
 
 interface IProps {
     filters: IFiltersState
@@ -31,40 +42,43 @@ class App extends React.Component<IProps> {
         const { filters } = this.props
 
         return (
-            <HashRouter>
-                <div>
-                    <header>
-                        <input type="text" value={filters.keyword} onChange={this.onKeywordChange} />
-                    </header>
+            <React.Fragment>
+                <GlobalStyle />
+                <HashRouter>
+                    <div>
+                        <header>
+                            <input type="text" value={filters.keyword} onChange={this.onKeywordChange} />
+                        </header>
 
-                    <aside>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <Link to="/overview">Overview</Link>
-                                </li>
-                                <li>
-                                    <Link to="/review">Review</Link>
-                                </li>
-                                <li>
-                                    <Link to="/details">Details</Link>
-                                </li>
-                                <li>
-                                    <Link to="/reports">Reports</Link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </aside>
+                        <aside>
+                            <nav>
+                                <ul>
+                                    <li>
+                                        <Link to="/overview">Overview</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/review">Review</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/details">Details</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/reports">Reports</Link>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </aside>
 
-                    <main>
-                        <Route exact path="/" component={OverviewPage} />
-                        <Route path="/overview" component={OverviewPage} />
-                        <Route path="/review" component={ReviewPage} />
-                        <Route path="/details" component={DetailsPage} />
-                        <Route path="/reports" component={ReportsPage} />
-                    </main>
-                </div>
-            </HashRouter>
+                        <main>
+                            <Route exact path="/" component={OverviewPage} />
+                            <Route path="/overview" component={OverviewPage} />
+                            <Route path="/review" component={ReviewPage} />
+                            <Route path="/details" component={DetailsPage} />
+                            <Route path="/reports" component={ReportsPage} />
+                        </main>
+                    </div>
+                </HashRouter>
+            </React.Fragment>
         )
     }
 }
