@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { HashRouter, Link, Route } from 'react-router-dom'
 
-import {connect} from 'react-redux'
-import {bindActionCreators, Dispatch} from 'redux'
+import { connect } from 'react-redux'
+import { bindActionCreators, Dispatch } from 'redux'
 import DetailsPage from './pages/DetailsPage'
 import OverviewPage from './pages/OverviewPage'
 import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
-import {setKeywordFilter} from './stores/filters/actions'
-import {IFiltersState} from './stores/filters/types'
-import {IRootState} from './stores/index'
+import { setKeywordFilter } from './stores/filters/actions'
+import { IFiltersState } from './stores/filters/types'
+import { IRootState } from './stores/index'
 
 interface IProps {
     filters: IFiltersState
