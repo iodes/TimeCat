@@ -48,14 +48,14 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
       <a href="#maintenance-iodes" title="Maintenance">🚧</a>
     </td>
     <td align="center">
-      <a href="https://github.com/Steal"
+      <a href="https://github.com/SteaI"
         ><img
           src="https://avatars1.githubusercontent.com/u/9690415?s=400&?v=4"
           width="75px;"
           alt="5ちゃ"
         /><br /><sub><b>5ちゃ</b></sub></a
       ><br /><a
-        href="https://github.com/iodes/TimeCat/commits?author=Steal"
+        href="https://github.com/iodes/TimeCat/commits?author=SteaI"
         title="Code"
         >💻</a
       >
