@@ -130,6 +130,19 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
         >💻</a
       >
     </td>
+    <td align="center">
+      <a href="https://github.com/Baek2back"
+        ><img
+          src="https://avatars1.githubusercontent.com/u/37530109?s=460&v=4"
+          width="75px;"
+          alt="Baek2back"
+        /><br /><sub><b>김성백</b></sub></a
+      ><br /><a
+        href="https://github.com/iodes/TimeCat/commits?author=Baek2back"
+        title="Code"
+        >💻</a
+      >
+    </td>
   </tr>
 </table>
 <!-- ALL-CONTRIBUTORS-LIST:END -->
