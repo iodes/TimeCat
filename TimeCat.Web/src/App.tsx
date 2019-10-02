@@ -1,20 +1,42 @@
 import * as React from 'react'
 import { HashRouter, Link, Route } from 'react-router-dom'
 
+import {connect} from 'react-redux'
+import {bindActionCreators, Dispatch} from 'redux'
 import DetailsPage from './pages/DetailsPage'
 import OverviewPage from './pages/OverviewPage'
 import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
+import {setKeywordFilter} from './stores/filters/actions'
+import {IFiltersState} from './stores/filters/types'
+import {IRootState} from './stores/index'
 
-class App extends React.Component {
-    constructor(props: {}) {
+interface IProps {
+    filters: IFiltersState
+    setKeywordFilter: typeof setKeywordFilter
+}
+
+class App extends React.Component<IProps> {
+    constructor(props: IProps) {
         super(props)
+
+        this.onKeywordChange = this.onKeywordChange.bind(this)
+    }
+
+    public onKeywordChange(e: React.ChangeEvent<HTMLInputElement>) {
+        this.props.setKeywordFilter(e.target.value)
     }
 
     public render() {
+        const { filters } = this.props
+
         return (
             <HashRouter>
                 <div>
+                    <header>
+                        <input type="text" value={filters.keyword} onChange={this.onKeywordChange} />
+                    </header>
+
                     <aside>
                         <nav>
                             <ul>
@@ -47,4 +69,15 @@ class App extends React.Component {
     }
 }
 
-export default App
+const mapStateToProps  = ({ filters }: IRootState) => ({
+    filters,
+})
+
+const dispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+    setKeywordFilter,
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    dispatchToProps,
+)(App)
