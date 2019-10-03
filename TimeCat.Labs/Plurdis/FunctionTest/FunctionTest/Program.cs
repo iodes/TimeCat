@@ -57,13 +57,13 @@ namespace FunctionTest
                 }
             });
 
-            //thread.SetApartmentState(ApartmentState.STA);
-            //thread.Start();
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
 
             Console.ReadLine();
             manualResetEvent.Set();
         }
-
+        
         private static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
             Console.WriteLine(User32.GetActiveWindowTitle());
