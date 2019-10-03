@@ -9,8 +9,10 @@ namespace FunctionTest
     {
         static User32.WinEventDelegate dele = new User32.WinEventDelegate(WinEventProc);
         static uint lastInputTick;
-        static int TargetMillseconds = 50;
-
+        static int targetMillseconds = 50;
+        static int idleCtr = 0;
+        static int fullCtr = 0;
+        static string lastTitle;
         static void Main(string[] args)
         {
             var manualResetEvent = new ManualResetEvent(false);
@@ -30,7 +32,7 @@ namespace FunctionTest
 
             Task.Run(() =>
             {
-                int i = 0;
+                lastTitle = User32.GetActiveWindowTitle();
                 while (true)
                 {
                     uint tick = User32.GetLastInputTick();
@@ -38,20 +40,22 @@ namespace FunctionTest
                     bool isMoved = lastInputTick != tick;
                     lastInputTick = tick;
 
-                    if (i == TargetMillseconds)
+                    if (idleCtr == targetMillseconds)
                         Console.WriteLine("IDLE Detected (Over 5s)");
 
                     if (isMoved)
                     {
-                        if (i >= TargetMillseconds)
-                            Console.WriteLine($"IDLE Time : {i * 100}ms");
+                        if (idleCtr >= targetMillseconds)
+                            Console.WriteLine($"IDLE Time : {idleCtr * 100}ms");
 
-                        i = 0;
+                        idleCtr = 0;
                     }
                     else
                     {
-                        i++;
+                        idleCtr++;
                     }
+
+                    fullCtr++;
 
                     Thread.Sleep(100);
                 }
@@ -66,7 +70,13 @@ namespace FunctionTest
         
         private static void WinEventProc(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            Console.WriteLine(User32.GetActiveWindowTitle());
+            Console.WriteLine($"'{lastTitle}' Window was selected while {fullCtr * 100}ms.");
+            idleCtr = 0;
+            fullCtr = 0;
+            string title = User32.GetActiveWindowTitle();
+            Console.WriteLine($"Selected Window Changes to {title}");
+
+            lastTitle = title;
         }
     }
 }
