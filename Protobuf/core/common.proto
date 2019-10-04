@@ -12,6 +12,10 @@ message TimestampRange {
 	google.protobuf.Timestamp end = 2;
 }
 
+message NullableInt32 {
+  int32 value = 1;
+}
+
 message RpcApplication {
 	int32 id = 1;
 	string name = 2;
@@ -19,6 +23,7 @@ message RpcApplication {
 	string icon = 4;
 	string version = 5;
 	bool isProductivity = 6;
+	NullableInt32 categoryId = 7;
 }
 
 message RpcCategory {
@@ -26,7 +31,6 @@ message RpcCategory {
 	string name = 2;
 	string color = 3;
 	repeated RpcCategory categories = 4;
-	repeated RpcApplication applications = 5;
 }
 
 message RpcActivity {
