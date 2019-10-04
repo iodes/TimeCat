@@ -4,7 +4,7 @@ option csharp_namespace = "TimeCat.Proto.Services";
 
 import "google/protobuf/timestamp.proto";
 
-service CommonService {
+service RpcCommonService {
     rpc Initialize (InitializeRequest) returns (InitializeResponse);
 	rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
 }

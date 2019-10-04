@@ -8,7 +8,7 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    class CommonServiceRpc : CommonService.CommonServiceBase
+    class CommonService : RpcCommonService.RpcCommonServiceBase
     {
         public bool IsInitialized { get; private set; }
 
