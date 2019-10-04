@@ -4,9 +4,19 @@ option csharp_namespace = "TimeCat.Proto.Commons";
 
 import "google/protobuf/timestamp.proto";
 
-package commons;
+message Empty {
+}
 
 message TimestampRange {
 	google.protobuf.Timestamp start = 1;
 	google.protobuf.Timestamp end = 2;
+}
+
+enum GroupType {
+	None = 0;
+	Hour = 1;
+	Day = 2;
+	Week = 3;
+	Month = 4;
+	Year = 5;
 }
