@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
-using TimeCat.Proto;
+using TimeCat.Proto.Services;
 
 namespace TimeCat.Core
 {
@@ -18,8 +18,18 @@ namespace TimeCat.Core
 
         static void Main(string[] args)
         {
-            _autoResetEvent = new AutoResetEvent(false);
+            ShowInitialize();
+            StartServer(host, port);
+            Wait();
+        }
 
+        static void ShowInitialize()
+        {
+            Console.WriteLine(ResourceManager.GetText("Initialize"));
+        }
+
+        static void StartServer(string host, int port)
+        {
             var credentials = new SslServerCredentials(new List<KeyCertificatePair>
             {
                 new KeyCertificatePair(
@@ -32,7 +42,12 @@ namespace TimeCat.Core
             {
                 Services =
                 {
-                    CommonService.BindService(new CommonRpc())
+                    RpcCategoryService.BindService(new CategoryService()),
+                    RpcCommonService.BindService(new CommonService()),
+                    RpcDashboardService.BindService(new DashboardService()),
+                    RpcDetailService.BindService(new DetailService()),
+                    RpcMainService.BindService(new MainService()),
+                    RpcReviewService.BindService(new ReviewService())
                 },
                 Ports =
                 {
@@ -41,9 +56,13 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+            Console.WriteLine($"Listening on {host}:{port}");
+        }
 
+        static void Wait()
+        {
+            _autoResetEvent = new AutoResetEvent(false);
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-
             _autoResetEvent.WaitOne();
         }
 

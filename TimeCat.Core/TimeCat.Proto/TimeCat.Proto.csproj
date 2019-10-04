@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\Protobuf\*.proto" ProtoRoot="..\..\Protobuf">
-      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    <Protobuf Include="..\..\Protobuf\core\**\*.proto" ProtoRoot="..\..\Protobuf">
+      <Link>Protobuf\%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Protobuf>
   </ItemGroup>
 
