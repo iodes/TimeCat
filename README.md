@@ -45,11 +45,21 @@ git pull
 
 ### Building
 
+Build the core:
+
 ```shell
-dotnet build TimeCat.Core
+cd TimeCat.Core
+dotnet restore
+dotnet build
 ```
 
-If the build fails, try to restore nuget packages with `dotnet restore`.
+Build the client:
+
+```shell
+cd TimeCat.Client
+npm install
+npm start
+```
 
 ## ✨ Demo
 
