@@ -26,5 +26,7 @@ namespace TimeCat.Core.Database.Models
 
         [Column("Color")]
         public int ColorRgb { get; set; }
+
+        public int CategoryId { get; set; }
     }
 }
