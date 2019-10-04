@@ -37,6 +37,14 @@ namespace TimeCat.Core.Database
             }
         }
 
+        public async IAsyncEnumerable<T> TableAsync<T>(Expression<Func<T, bool>> expression) where T : new()
+        {
+            foreach (T item in await Connection.Table<T>().Where(expression).ToArrayAsync())
+            {
+                yield return item;
+            }
+        }
+
         public Task<T> GetAsync<T>(object pk) where T : new()
         {
             return Connection.GetAsync<T>(pk);
