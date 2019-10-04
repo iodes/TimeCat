@@ -25,7 +25,7 @@ namespace TimeCat.Core
 
         static void ShowInitialize()
         {
-            Console.WriteLine(ResourceManager.GetText("Initialize.txt"));
+            Console.WriteLine(ResourceManager.GetText("Initialize"));
         }
 
         static void StartServer(string host, int port)
