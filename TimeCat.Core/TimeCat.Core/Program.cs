@@ -18,10 +18,18 @@ namespace TimeCat.Core
 
         static void Main(string[] args)
         {
+            ShowInitialize();
+            StartServer(host, port);
+            Wait();
+        }
+
+        static void ShowInitialize()
+        {
             Console.WriteLine(ResourceManager.GetText("Initialize.txt"));
+        }
 
-            _autoResetEvent = new AutoResetEvent(false);
-
+        static void StartServer(string host, int port)
+        {
             var credentials = new SslServerCredentials(new List<KeyCertificatePair>
             {
                 new KeyCertificatePair(
@@ -43,9 +51,13 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+            Console.WriteLine($"Listening on {host}:{port}");
+        }
 
+        static void Wait()
+        {
+            _autoResetEvent = new AutoResetEvent(false);
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-
             _autoResetEvent.WaitOne();
         }
 
