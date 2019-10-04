@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Initialize.txt" />
+    <None Remove="Resources\Initialize" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +22,6 @@
   <ItemGroup>
     <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="..\..\Certificate\timecat.key" Link="Resources\Certificates\%(FileName)%(Extension)" />
-    <EmbeddedResource Include="Resources\Initialize.txt" />
+    <EmbeddedResource Include="Resources\Initialize" />
   </ItemGroup>
 </Project>
