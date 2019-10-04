@@ -18,6 +18,8 @@ namespace TimeCat.Core
 
         static void Main(string[] args)
         {
+            Console.WriteLine(ResourceManager.GetText("Initialize.txt"));
+
             _autoResetEvent = new AutoResetEvent(false);
 
             var credentials = new SslServerCredentials(new List<KeyCertificatePair>
