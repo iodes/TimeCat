@@ -3,7 +3,18 @@ syntax = "proto3";
 option csharp_namespace = "TimeCat.Proto.Services";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "core/common.proto";
 
 service RpcReviewService {
-	// TODO: define review rpc
+	rpc GetTimeline (TimelineRequest) returns (stream TimelineResponse);
+}
+
+message TimelineRequest {
+	TimestampRange range = 1;
+}
+
+message TimelineResponse {
+	RpcApplication application = 1;
+	TimestampRange range = 2;
 }
