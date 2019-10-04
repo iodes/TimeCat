@@ -2,9 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using TimeCat.Core.Database;
-using TimeCat.Core.Database.Models;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
 using TimeCat.Proto.Services;
@@ -19,7 +16,7 @@ namespace TimeCat.Core
         static Server _server;
         static AutoResetEvent _autoResetEvent;
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             ShowInitialize();
             StartServer(host, port);
