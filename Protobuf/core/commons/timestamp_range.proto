@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Commons";
+
+import "google/protobuf/timestamp.proto";
+
+package commons;
+
+message TimestampRange {
+	google.protobuf.Timestamp start = 1;
+	google.protobuf.Timestamp end = 2;
+}
