@@ -1,17 +1,12 @@
 syntax = "proto3";
 
-option csharp_namespace = "TimeCat.Proto";
+option csharp_namespace = "TimeCat.Proto.Services";
 
 import "google/protobuf/timestamp.proto";
-
-package common;
 
 service CommonService {
     rpc Initialize (InitializeRequest) returns (InitializeResponse);
 	rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
-}
-
-message Void {
 }
 
 message InitializeRequest {
