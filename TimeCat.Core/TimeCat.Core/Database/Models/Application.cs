@@ -27,7 +27,12 @@ namespace TimeCat.Core.Database.Models
         /// Gets the display version of the application
         /// </summary>
         public string Version { get; set; }
-        
+
+        /// <summary>
+        /// Indicates whether this is a productive application
+        /// </summary>
+        public bool IsProductivity { get; set; }
+
         public int CategoryId { get; set; }
     }
 }
