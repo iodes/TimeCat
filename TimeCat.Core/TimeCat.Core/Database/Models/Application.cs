@@ -33,6 +33,6 @@ namespace TimeCat.Core.Database.Models
         /// </summary>
         public bool IsProductivity { get; set; }
 
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
     }
 }
