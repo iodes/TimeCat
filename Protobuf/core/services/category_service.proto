@@ -17,7 +17,7 @@ message CategoryListResponse {
 }
 
 message CategoryCreateRequest {
-	int32 parentId = 1;
+	NullableInt32 parentId = 1;
 	string name = 2;
 	string color = 3;
 }
@@ -30,6 +30,7 @@ message CategoryUpdateRequest {
 	int32 id = 1;
 	string name = 2;
 	string color = 3;
+	NullableInt32 parentId = 4;
 }
 
 message CategoryDeleteRequest {

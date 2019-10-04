@@ -29,6 +29,11 @@ namespace TimeCat.Core.Database
 
         protected abstract void OnInitialize(SQLiteConnection connection);
 
+        public int LastInsertRowId()
+        {
+            return (int)SQLite3.LastInsertRowid(Connection.GetConnection().Handle);
+        }
+
         public async IAsyncEnumerable<T> TableAsync<T>() where T : new()
         {
             foreach (T item in await Connection.Table<T>().ToArrayAsync())
@@ -88,6 +93,11 @@ namespace TimeCat.Core.Database
         public async Task<bool> DeleteAsync(object item)
         {
             return await Connection.DeleteAsync(item) > 0;
+        }
+
+        public async Task<bool> DeleteAsync<T>(object pk)
+        {
+            return await Connection.DeleteAsync<T>(pk) > 0;
         }
 
         public async Task<bool> DeleteRangeAsync(IEnumerable<object> items)

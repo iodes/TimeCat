@@ -32,5 +32,10 @@ namespace TimeCat.Core.Database.Models
         public IReadOnlyList<Category> Categories { get; set; }
 
         public int? CategoryId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{{ Id: {Id}, Name: {Name}, Color: {ColorTranslator.ToHtml(Color)} }}";
+        }
     }
 }
