@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using TimeCat.Core.Database;
 using TimeCat.Core.Utility;
-using TimeCat.Proto;
+using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
