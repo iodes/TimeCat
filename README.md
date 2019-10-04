@@ -26,6 +26,31 @@ We are accepting bug reports (please report with as much detail as possible). Fe
 - When running on Windows 7 or 8.1, **[additional prerequisites](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore30)** may be required to correctly run .NET Core applications if your operating system is not up-to-date with the latest service packs.
 - When working with the codebase, we recommend using an IDE with intellisense and syntax highlighting, such as [Visual Studio 2017+](https://visualstudio.microsoft.com/vs/), [Jetbrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio Code](https://code.visualstudio.com/).
 
+## Running TimeCat
+
+### Downloading the source code
+
+Clone the repository:
+
+```shell
+git clone https://github.com/iodes/timecat
+cd TimeCat
+```
+
+To update the source code to the latest commit, run the following command inside the `TimeCat` directory:
+
+```shell
+git pull
+```
+
+### Building
+
+```shell
+dotnet build TimeCat.Core
+```
+
+If the build fails, try to restore nuget packages with `dotnet restore`.
+
 ## ✨ Demo
 
 ## 🚀 Usage
