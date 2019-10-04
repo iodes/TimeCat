@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Commons";
+
+import "google/protobuf/timestamp.proto";
+
+message Empty {
+}
+
+message TimestampRange {
+	google.protobuf.Timestamp start = 1;
+	google.protobuf.Timestamp end = 2;
+}
+
+message NullableInt32 {
+  int32 value = 1;
+}
+
+message RpcApplication {
+	int32 id = 1;
+	string name = 2;
+	string fullName = 3;
+	string icon = 4;
+	string version = 5;
+	bool isProductivity = 6;
+	NullableInt32 categoryId = 7;
+}
+
+message RpcCategory {
+	int32 id = 1;
+	string name = 2;
+	string color = 3;
+	repeated RpcCategory categories = 4;
+}
+
+message RpcActivity {
+	int32 id = 1;
+	RpcApplication application = 2;
+	RpcActionType action = 3;
+	google.protobuf.Timestamp time = 4;
+}
+
+enum RpcActionType {
+	Focus = 0;
+	Blur = 1;
+	Open = 2;
+	Close = 3;
+	Active = 4;
+}
+
+enum RpcTimeUnit {
+	None = 0;
+	Millisecond = 1;
+	Second = 2;
+	Minute = 3;
+	Hour = 4;
+	Day = 5;
+	Week = 6;
+	Month = 7;
+	Year = 8;
+}
