@@ -7,9 +7,27 @@ import "google/protobuf/timestamp.proto";
 package common;
 
 service CommonService {
-    rpc initialize (Void) returns (Void);
- // void initialize (Request) returns (Response);
+    rpc Initialize (InitializeRequest) returns (InitializeResponse);
+	rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
 }
 
 message Void {
+}
+
+message InitializeRequest {
+	string appVersion = 1;
+}
+
+message InitializeResponse {
+	bool isSuccess = 1;
+}
+
+message HealthCheckRequest {
+	google.protobuf.Timestamp currentTime = 1;
+	google.protobuf.Timestamp responseTime = 2;
+}
+
+message HealthCheckResponse {
+	google.protobuf.Timestamp currentTime = 1;
+	google.protobuf.Timestamp requestTime = 2;
 }
