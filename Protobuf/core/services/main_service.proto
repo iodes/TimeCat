@@ -15,9 +15,9 @@ message DateRangeRequest {
 }
 
 message SearchRequest {
-	
+	string keyword = 1;
 }
 
 message SearchResponse {
-	
+	// TODO: define search response
 }

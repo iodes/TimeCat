@@ -12,5 +12,10 @@ namespace TimeCat.Core.Services
         {
             throw new NotImplementedException();
         }
+
+        public override Task<SearchResponse> Search(SearchRequest request, ServerCallContext context)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
