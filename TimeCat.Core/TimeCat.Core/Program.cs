@@ -42,7 +42,7 @@ namespace TimeCat.Core
             {
                 Services =
                 {
-                    CommonService.BindService(new CommonRpc())
+                    CommonService.BindService(new CommonServiceRpc())
                 },
                 Ports =
                 {
