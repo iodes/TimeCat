@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Services";
+
+import "core/common.proto";
+import "google/protobuf/timestamp.proto";
+
+service RpcMainService {
+	rpc SetDateRange (DateRangeRequest) returns (Empty);
+	rpc Search (SearchRequest) returns (SearchResponse);
+}
+
+message DateRangeRequest {
+	TimestampRange range = 1;
+}
+
+message SearchRequest {
+	string keyword = 1;
+}
+
+message SearchResponse {
+	// TODO: define search response
+}
