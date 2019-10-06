@@ -1,0 +1,10 @@
+{
+    "extends": "tslint:recommended",
+    "rules": {
+        "quotemark": [true, "single", "jsx-double"],
+        "semicolon": [true, "never"],
+        "object-literal-sort-keys": false,
+        "whitespace": [true, "check-module"],
+        "indent": [true, "tabs", 2]
+    }
+}
