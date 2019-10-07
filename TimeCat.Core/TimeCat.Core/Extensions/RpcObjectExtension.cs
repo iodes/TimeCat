@@ -23,6 +23,22 @@ namespace TimeCat.Core.Extensions
 
             return rpcCategory;
         }
+        
+        public static RpcApplication ToRpc(this Application application)
+        {
+            var rpcApplication = new RpcApplication()
+            {
+                CategoryId = application.CategoryId,
+                FullName = application.FullName,
+                Icon = application.Icon,
+                Id = application.Id,
+                IsProductivity = application.IsProductivity,
+                Name = application.Name,
+                Version = application.Version
+            };
+
+            return rpcApplication;
+        }
 
         public static Category FromRpc(this RpcCategory rpcCategory)
         {
