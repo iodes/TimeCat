@@ -7,8 +7,9 @@ import "google/protobuf/timestamp.proto";
 package common;
 
 service CommonService {
-    rpc initialize (Empty) returns (Empty);
+    rpc initialize (Void) returns (Void);
+ // void initialize (Request) returns (Response);
 }
 
-message Empty {
+message Void {
 }
