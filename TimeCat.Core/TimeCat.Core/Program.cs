@@ -1,6 +1,8 @@
 ﻿using Grpc.Core;
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
 using TimeCat.Proto;
 
@@ -18,6 +20,14 @@ namespace TimeCat.Core
         {
             _autoResetEvent = new AutoResetEvent(false);
 
+            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
+            {
+                new KeyCertificatePair(
+                    ResourceManager.GetText("Certificates.timecat.crt"),
+                    ResourceManager.GetText("Certificates.timecat.key")
+                )
+            });
+
             _server = new Server
             {
                 Services =
@@ -26,7 +36,7 @@ namespace TimeCat.Core
                 },
                 Ports =
                 {
-                    new ServerPort(host, port, null)
+                    new ServerPort(host, port, credentials)
                 }
             };
 
@@ -37,7 +47,7 @@ namespace TimeCat.Core
             _autoResetEvent.WaitOne();
         }
 
-        private static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
             _server.ShutdownAsync().Wait();
             _autoResetEvent.Set();
