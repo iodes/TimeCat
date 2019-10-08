@@ -10,5 +10,8 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^6.0.10"
+  },
+  "dependencies": {
+    "grpc": "^1.23.3"
   }
 }
