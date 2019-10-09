@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace FunctionTest
 {
-    public static class IdleManager
+    public class IdleManager
     {
-        private static uint _lastTick;
+        uint _lastTick;
+        Stopwatch _sw = new Stopwatch();
 
-        public static event EventHandler<IdleDetectEventArgs> IdleDetected;
-        public static event EventHandler<IdleDetectEventArgs> IdleReleased;
+        public int IdleMilliseconds { get; set; }
 
-        static Stopwatch _sw = new Stopwatch();
+        public event EventHandler<IdleDetectEventArgs> IdleDetected;
+        public event EventHandler<IdleDetectEventArgs> IdleReleased;
 
-        static int IdleMilliseconds { get; set; } = 5000;
+        public IdleManager(int idleMilliseconds = 5000)
+        {
+            IdleMilliseconds = idleMilliseconds;
+        }
 
-        public static void Init()
+        public void Start()
         {
             Task.Run(() =>
             {
