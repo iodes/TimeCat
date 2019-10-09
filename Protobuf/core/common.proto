@@ -46,6 +46,7 @@ enum RpcActionType {
 	Open = 2;
 	Close = 3;
 	Active = 4;
+	Idle = 5;
 }
 
 enum RpcTimeUnit {
