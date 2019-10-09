@@ -67,7 +67,11 @@ namespace TimeCat.Core.Services
                         break;
                     case ActionType.Active:
                         long activityTicks = activity.Time.Ticks;
-                        totalTime += (activityTicks - activeSince);
+                        long passedTime = activityTicks - activeSince;
+                        if (activeMillis * 10000 > passedTime)
+                        {
+                            totalTime += (activityTicks - activeSince);
+                        }
                         activeSince = activityTicks;
                         break;
                     case ActionType.Blur:
