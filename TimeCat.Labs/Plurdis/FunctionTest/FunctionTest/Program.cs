@@ -14,18 +14,18 @@ namespace FunctionTest
         static int fullCtr = 0;
         static string lastTitle;
 
-        static IdleManager idleManager = new IdleManager();
+        static IdleDetector idleDetector = new IdleDetector();
 
         static void Main(string[] args)
         {
-            idleManager.Start();
-            idleManager.IdleDetected += (s, e) => 
+            idleDetector.Start();
+            idleDetector.IdleDetected += (s, e) => 
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine("IDLE Detected: " + e.IdleMillseconds + "ms");
             };
 
-            idleManager.IdleReleased += (s, e) =>
+            idleDetector.IdleReleased += (s, e) =>
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("IDLE Released: " + e.IdleMillseconds + "ms");

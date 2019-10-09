@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FunctionTest
 {
-    public class IdleManager
+    public class IdleDetector
     {
         uint _lastTick;
         Stopwatch _sw = new Stopwatch();
@@ -17,7 +17,7 @@ namespace FunctionTest
         public event EventHandler<IdleDetectEventArgs> IdleDetected;
         public event EventHandler<IdleDetectEventArgs> IdleReleased;
 
-        public IdleManager(int idleMilliseconds = 5000)
+        public IdleDetector(int idleMilliseconds = 5000)
         {
             IdleMilliseconds = idleMilliseconds;
         }
