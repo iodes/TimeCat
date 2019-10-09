@@ -8,6 +8,7 @@ using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
 using TimeCat.Proto.Commons;
 using TimeCat.Proto.Services;
+using Google.Protobuf.WellKnownTypes;
 
 namespace TimeCat.Core.Services
 {
@@ -47,7 +48,7 @@ namespace TimeCat.Core.Services
 
             return new TotalTimeResponse()
             {
-                TotalTime = Google.Protobuf.WellKnownTypes.Duration.FromTimeSpan(new TimeSpan(totalTime))
+                TotalTime = Duration.FromTimeSpan(new TimeSpan(totalTime))
             };
         }
 
