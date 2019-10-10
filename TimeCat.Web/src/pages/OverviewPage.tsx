@@ -2,6 +2,7 @@ import { Col, Row } from 'antd'
 import 'antd/dist/antd.css'
 import * as React from 'react'
 import styled from 'styled-components'
+import TotalTime from '../components/Contents/Activity/TotalTime'
 
 const Container = styled('div')`
   background-color: #eeeeee;
@@ -21,7 +22,7 @@ const OverviewPage: React.FC = () => {
           <Row>
             <Col xs={24}>
               <Content xs={8}>
-                TotalTime
+                <TotalTime/>
               </Content>
               <Content xs={8}>
                 ActiveWeekdays
