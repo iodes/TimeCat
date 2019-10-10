@@ -72,6 +72,7 @@ namespace TimeCat.Core.Services
                                 Application = application.ToRpc(),
                                 TotalTime = Duration.FromTimeSpan(activity.Time - startTimes[activity.ApplicationId])
                             };
+                            await responseStream.WriteAsync(response);
                             startTimes.Remove(activity.ApplicationId);
                         }
                         break;
