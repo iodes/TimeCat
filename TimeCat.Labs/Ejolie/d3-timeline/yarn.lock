@@ -3555,6 +3555,13 @@ d3@^5.12.0:
     d3-voronoi "1"
     d3-zoom "1"
 
+d3blackbox@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/d3blackbox/-/d3blackbox-1.2.0.tgz#bd6251feb5714cb201b88a2971ba91e633961b87"
+  integrity sha512-N7DECkAVSv51HXDz7hIWj0x9uJYMkVeGm0ItxE+633WQ0xh4bzrTv36q5/EC0bdJ+M3jPLkShfDMJWhORzPoFg==
+  dependencies:
+    prop-types "^15.7.2"
+
 d@1, d@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/d/-/d-1.0.1.tgz#8698095372d58dbee346ffd0c7093f99f8f9eb5a"
