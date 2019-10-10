@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Extensions;
 using TimeCat.Core.Database;
@@ -49,37 +50,30 @@ namespace TimeCat.Core.Services
 
         public override async Task GetApplications(ApplicationRequest request, IServerStreamWriter<ApplicationResponse> responseStream, ServerCallContext context)
         {
-            long totalTime = 0, activeSince = -1;
-            Application application = null;
+            Dictionary<int, DateTimeOffset> startTimes = new Dictionary<int, DateTimeOffset>();
             await foreach (Activity activity in _db.GetActivities())
             {
                 if (activity.Time < request.Range.Start.ToDateTime() || activity.Time > request.Range.End.ToDateTime())
                     continue;
                 switch (activity.Action)
                 {
-                    case ActionType.Focus:
-                        application = await _db.GetAsync<Application>(activity.ApplicationId);
-                        activeSince = activity.Time.Ticks;
-                        break;
                     case ActionType.Active:
-                        long activityTicks = activity.Time.Ticks;
-                        long passedTime = activityTicks - activeSince;
-                        if (activeMillis * 10000 > passedTime)
+                        if (!startTimes.ContainsKey(activity.ApplicationId))
                         {
-                            totalTime += (activityTicks - activeSince);
+                            startTimes.Add(activity.ApplicationId, activity.Time);
                         }
-                        activeSince = activityTicks;
                         break;
-                    case ActionType.Blur:
-                        ApplicationResponse response = new ApplicationResponse()
+                    case ActionType.Idle:
+                        if (startTimes.ContainsKey(activity.ApplicationId))
                         {
-                            Application = application.ToRpc(),
-                            TotalTime = Google.Protobuf.WellKnownTypes.Duration.FromTimeSpan(new TimeSpan(totalTime))
-                        };
-                        await responseStream.WriteAsync(response);
-                        activeSince = -1;
-                        totalTime = 0;
-                        application = null;
+                            Application application = await _db.GetAsync<Application>(activity.ApplicationId);
+                            ApplicationResponse response = new ApplicationResponse()
+                            {
+                                Application = application.ToRpc(),
+                                TotalTime = Duration.FromTimeSpan(activity.Time - startTimes[activity.ApplicationId])
+                            };
+                            startTimes.Remove(activity.ApplicationId);
+                        }
                         break;
                     default:
                         continue;
