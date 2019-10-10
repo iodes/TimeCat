@@ -15,7 +15,6 @@ namespace TimeCat.Core.Services
     class DashboardService : RpcDashboardService.RpcDashboardServiceBase
     {
         private readonly TimeCatDB _db = TimeCatDB.Instance;
-        const int activeMillis = 5000;
         public override async Task<TotalTimeResponse> GetTotalTime(TotalTimeRequest request, ServerCallContext context)
         {
             long totalTime = 0, activeSince = -1;
@@ -23,26 +22,22 @@ namespace TimeCat.Core.Services
             {
                 if (activity.Time < request.Range.Start.ToDateTime() || activity.Time > request.Range.End.ToDateTime())
                     continue;
-                if (activity.Action == ActionType.Active)
+                long activityTicks = activity.Time.Ticks;
+                switch(activity.Action)
                 {
-                    long activityTicks = activity.Time.Ticks;
-                    if (activeSince == -1)
-                    {
-                        activeSince = activityTicks;
-                    }
-                    else
-                    {
-                        long passedTime = (activityTicks - activeSince);
-                        if (passedTime > activeMillis * 10000)
+                    case ActionType.Active:
+                        if (activeSince == -1)
+                            activeSince = activityTicks;
+                        break;
+                    case ActionType.Idle:
+                        if (activeSince != -1)
                         {
+                            totalTime += activityTicks - activeSince;
                             activeSince = -1;
                         }
-                        else
-                        {
-                            totalTime += passedTime;
-                            activeSince = activityTicks;
-                        }
-                    }
+                        break;
+                    default:
+                        continue;
                 }
             }
 
