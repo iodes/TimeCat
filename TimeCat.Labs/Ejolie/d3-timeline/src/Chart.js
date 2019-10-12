@@ -1,28 +1,21 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import * as d3 from 'd3';
-import { useD3 } from 'd3blackbox';
+import styled from 'styled-components';
+import moment from 'moment';
 
-import IntervalBar from './IntervalBar';
+import IntervalBar from './components/IntervalBar';
+import Axis from './components/Axis';
 
-const Axis = ({ type, scale, tickSize, height }) => {
-  let axis = d3.axisBottom(scale).tickSize(-tickSize);
-
-  const anchorRef = useD3((anchor) => {
-    d3.select(anchor).call(axis);
-  });
-
-  return (
-    <g
-      className={`axis axis-${type}`}
-      ref={anchorRef}
-      transform={`translate(0, ${height})`}
-    />
-  );
-};
+const GroupLabel = styled.text`
+  fill: #818181;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+`;
 
 const Chart = ({ chartData, svgDimensions }) => {
-  const margins = { top: 0, right: 0, bottom: 20, left: 0 };
-  // const svgDimensions = { width: 900, height: 500 };
+  const margins = { top: 20, right: 15, bottom: 20, left: 5 };
+
   const [width, setWidth] = useState(
     svgDimensions.width - margins.right - margins.left
   );
@@ -44,15 +37,10 @@ const Chart = ({ chartData, svgDimensions }) => {
   let groupWidth = 200;
   let groupHeight = height / chartData.length;
 
-  let allElements = chartData.reduce((agg, e) => agg.concat(e.data), []);
-  console.log(`allElements: ${allElements}`);
-
-  let minDt = d3.min(allElements, (p) => p.from);
-  let maxDt = d3.max(allElements, (p) => p.to);
-
   let xScale = d3
     .scaleTime()
-    .domain([minDt, maxDt])
+    .domain([new Date(), new Date()])
+    .nice(d3.timeDay)
     .range([groupWidth, width]);
 
   // zoom
@@ -64,7 +52,7 @@ const Chart = ({ chartData, svgDimensions }) => {
   //   .on('zoom', zoomed);
 
   let intervalBarHeight = 0.8 * groupHeight;
-  let intervalBarMargin = (groupHeight - intervalBarHeight) / 2;
+  let intervalBarMargin = (groupHeight - intervalBarHeight) / 2 + margins.top;
 
   return (
     <svg
@@ -72,6 +60,8 @@ const Chart = ({ chartData, svgDimensions }) => {
       height={svgDimensions.height + margins.top + margins.bottom}
     >
       {chartData.map((obj, idx) => {
+        const myColor = d3.scaleOrdinal().domain(obj.data).range(d3.schemeSet3);
+      
         const intervalBarGroup = obj.data.map((d, i) => {
           return (
             <IntervalBar
@@ -80,6 +70,7 @@ const Chart = ({ chartData, svgDimensions }) => {
               y={intervalBarMargin}
               width={xScale(d.to) - xScale(d.from)}
               height={intervalBarHeight}
+              color={myColor(d)}
             />
           );
         });
@@ -91,18 +82,18 @@ const Chart = ({ chartData, svgDimensions }) => {
               className="group-section"
               x1="0"
               x2={width}
-              y1={groupHeight * (idx + 1)}
-              y2={groupHeight * (idx + 1)}
+              y1={groupHeight * (idx + 1) + margins.top}
+              y2={groupHeight * (idx + 1) + margins.top}
             ></line>
-            <text
+            <GroupLabel
               key={`group-label-${idx}`}
               className="group-label"
               x="0"
-              y={groupHeight * idx + groupHeight / 2 + 5.5}
+              y={groupHeight * idx + groupHeight / 2 + 5.5 + margins.top}
               dx="0.5em"
             >
               {obj.label}
-            </text>
+            </GroupLabel>
             {intervalBarGroup}
           </>
         );
@@ -111,10 +102,10 @@ const Chart = ({ chartData, svgDimensions }) => {
         x1={groupWidth}
         x2={groupWidth}
         y1="0"
-        y2={height}
-        stroke="black"
+        y2={height + margins.top}
+        style={{ stroke: '#e6e6e6' }}
       ></line>
-      <Axis type="bottom" tickSize={height} scale={xScale} height={height} />
+      <Axis type="top" tickSize={height} scale={xScale} margins={margins} />
     </svg>
   );
 };
