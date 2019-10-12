@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-import './ChartApp.css';
-import Chart from './Chart';
-import chartData from './chartData';
-import GlobalStyle from './GlobalStyle';
+import './assets/ChartApp.css';
+import Chart from './components/Chart';
+import chartData from './assets/chartData';
+import GlobalStyle from './assets/GlobalStyle';
 
 function App() {
   const chartRef = useRef();

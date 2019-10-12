@@ -3,8 +3,8 @@ import * as d3 from 'd3';
 import styled from 'styled-components';
 import moment from 'moment';
 
-import IntervalBar from './components/IntervalBar';
-import Axis from './components/Axis';
+import IntervalBar from './IntervalBar';
+import Axis from './Axis';
 
 const GroupLabel = styled.text`
   fill: #818181;
