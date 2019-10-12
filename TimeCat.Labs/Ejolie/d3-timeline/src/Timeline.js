@@ -2,9 +2,10 @@ import React, { useMemo, useState } from 'react';
 import * as d3 from 'd3';
 
 import Axes from './Axes';
+import XAxis from './XAxis';
 
 const Timeline = ({ data }) => {
-  const margins = { top: 20, right: 20, bottom: 20, left: 50 };
+  const margins = { top: 30, right: 30, bottom: 30, left: 50 };
   const svgDimensions = { width: 900, height: 500 };
 
   const [width, setWidth] = useState(
@@ -40,12 +41,13 @@ const Timeline = ({ data }) => {
 
   return (
     <svg width={svgDimensions.width} height={svgDimensions.height}>
-      <Axes
+      {/* <Axes
         scales={{ xScale, yScale }}
         margins={margins}
         width={width}
         height={height}
-      />
+      /> */}
+      <XAxis width={width} height={height} margins={margins} />
     </svg>
   );
 };
