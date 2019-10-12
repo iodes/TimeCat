@@ -1,13 +1,13 @@
-import { combineReducers, createStore } from 'redux'
+import {combineReducers, createStore} from 'redux'
 import filters from './filters/reducers'
-import { IFiltersState } from './filters/types'
+import {IFiltersState} from './filters/types'
 
 export interface IRootState {
-    filters: IFiltersState
+  filters: IFiltersState
 }
 
 const reducers = combineReducers<IRootState>({
-    filters,
+  filters,
 })
 
 export default createStore(reducers)

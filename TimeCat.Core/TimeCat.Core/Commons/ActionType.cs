@@ -1,13 +1,12 @@
-﻿using SQLite;
-
-namespace TimeCat.Core.Commons
+﻿namespace TimeCat.Core.Commons
 {
     public enum ActionType
     {
-        Focus,
-        Blur,
-        Open,
-        Close,
-        Active
+        Focus = 0,
+        Blur = 1,
+        Open = 2,
+        Close = 3,
+        Active = 4,
+        Idle = 5
     }
 }

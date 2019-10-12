@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Services";
+
+import "google/protobuf/timestamp.proto";
+
+service RpcCommonService {
+    rpc Initialize (InitializeRequest) returns (InitializeResponse);
+	rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message InitializeRequest {
+	string appVersion = 1;
+}
+
+message InitializeResponse {
+	bool isSuccess = 1;
+}
+
+message HealthCheckRequest {
+	google.protobuf.Timestamp currentTime = 1;
+	google.protobuf.Timestamp responseTime = 2;
+}
+
+message HealthCheckResponse {
+	google.protobuf.Timestamp currentTime = 1;
+	google.protobuf.Timestamp requestTime = 2;
+}

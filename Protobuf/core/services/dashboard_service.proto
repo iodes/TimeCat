@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Services";
+
+import "core/common.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+service RpcDashboardService {
+	rpc GetTotalTime (TotalTimeRequest) returns (TotalTimeResponse);
+	rpc GetApplications (ApplicationRequest) returns (stream ApplicationResponse);
+}
+
+message TotalTimeRequest {
+	TimestampRange range = 1;
+}
+
+message TotalTimeResponse {
+	google.protobuf.Duration totalTime = 1;
+}
+
+message ApplicationRequest {
+	TimestampRange range = 1;
+}
+
+message ApplicationResponse {
+	RpcApplication application = 1;
+	google.protobuf.Duration totalTime = 2;
+}
