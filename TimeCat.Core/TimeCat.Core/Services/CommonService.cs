@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using Serilog;
 using System;
 using System.Threading.Tasks;
 using TimeCat.Core.Database;
@@ -25,7 +26,7 @@ namespace TimeCat.Core.Services
             await TimeCatDB.Instance.Initialize(Environment.Database);
 
             IsInitialized = true;
-            Console.WriteLine($"TimeCat {request.AppVersion} initialized");
+            Log.Information("TimeCat {AppVersion} initialized", request.AppVersion);
 
             return new InitializeResponse() 
             {
@@ -42,7 +43,7 @@ namespace TimeCat.Core.Services
             };
 
             Duration duration = response.CurrentTime - request.CurrentTime;
-            Console.WriteLine($"HealthCheck req {request.CurrentTime.Seconds} res {response.CurrentTime.Seconds} ({duration.Nanos * 0.000001}ms)");
+            Log.Verbose("HealthCheck req {Request} res {Response} ({Time:0.000}ms)", request.CurrentTime.Seconds, response.CurrentTime.Seconds, duration.Nanos * 0.000001);
 
             return Task.FromResult(response);
         }
