@@ -1,9 +1,10 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Serilog;
-using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TimeCat.Core.Database;
+using TimeCat.Core.Extensions;
 using TimeCat.Core.Utility;
 using TimeCat.Proto.Services;
 
@@ -17,9 +18,9 @@ namespace TimeCat.Core.Services
         {
             if (!IsInitialized)
             {
-                return new InitializeResponse() 
+                return new InitializeResponse()
                 {
-                    IsSuccess = false 
+                    IsSuccess = false
                 };
             }
 
@@ -30,7 +31,13 @@ namespace TimeCat.Core.Services
 
             return new InitializeResponse() 
             {
-                IsSuccess = true
+                IsSuccess = true,
+                OsInformation = new OSInformation
+                {
+                    Platform = RuntimeInformationUtility.OSPlatform.ToRpc(),
+                    Architecture = RuntimeInformation.OSArchitecture.ToRpc(),
+                    Description = RuntimeInformation.OSDescription
+                }
             };
         }
 
