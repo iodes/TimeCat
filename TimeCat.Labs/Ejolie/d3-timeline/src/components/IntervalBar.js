@@ -9,11 +9,13 @@ const IntervalBar = ({ x, y, width, height, color }) => {
   // tooltip
   const onMouseOver = () => {};
 
-  console.log('== IntervalBar ==');
-  console.log('x ', x);
-  console.log('y ', y);
-  console.log('width ', width);
-  console.log('height ', height);
+  // console.log('== IntervalBar ==');
+  // console.log('x ', x);
+  // console.log('y ', y);
+  // console.log('width ', width);
+  // console.log('height ', height);
+
+  console.log(color);
 
   return (
     <Bar x={x} y={y} width={width} height={height} onMouseOver={onMouseOver} color={color}/>
