@@ -5,8 +5,12 @@ using System.Text;
 
 namespace FunctionTest.Driver
 {
-    interface IApplicationDriver
+    interface IApplicationDriver : IDisposable
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
+
+        void Start();
+
+        void Stop();
     }
 }
