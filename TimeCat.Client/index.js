@@ -4,28 +4,29 @@ let mainWindow;
 
 async function main()
 {
-    if (mainWindow) return;
+  if (mainWindow) return;
 
-    mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
-        webPreferences: {
-            nodeIntegration: true,
-        },
-    });
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+    titleBarStyle: 'hiddenInset',
+  });
 
-    mainWindow.on('closed', () => {
-        mainWindow = null;
-    });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
+  });
 
-    await mainWindow.webContents.loadFile('frontend/index.html');
+  await mainWindow.webContents.loadFile('frontend/index.html');
 }
 
 app.on('ready', main);
 app.on('activate', main);
 
 app.on('window-all-closed', () => {
-    if (process.platform === 'darwin') return;
+  if (process.platform === 'darwin') return;
 
-    app.quit();
+  app.quit();
 });

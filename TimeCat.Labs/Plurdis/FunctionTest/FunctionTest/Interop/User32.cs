@@ -47,6 +47,17 @@ namespace FunctionTest.Interop
 
         #region Function Declaration
 
+        public static uint GetLastInputTick()
+        {
+            var lastInputInfo = new LASTINPUTINFO();
+            lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
+            lastInputInfo.dwTime = 0;
+
+            GetLastInputInfo(ref lastInputInfo);
+
+            return lastInputInfo.dwTime;
+        }
+
         public static string GetActiveWindowTitle()
         {
             const int nChars = 256;
