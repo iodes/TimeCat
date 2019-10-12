@@ -18,6 +18,8 @@ namespace FunctionTest
 
         static void Main(string[] args)
         {
+            var manualResetEvent = new ManualResetEvent(false);
+
             idleDetector.Start();
             idleDetector.IdleDetected += (s, e) => 
             {
@@ -31,12 +33,13 @@ namespace FunctionTest
                 Console.WriteLine("IDLE Released: " + e.IdleMillseconds + "ms");
             };
 
-            while (true)
-            {
-            }
+            FocusDetector.InitalizeHook();
+
+            Console.ReadLine();
+            manualResetEvent.Set();
 
 
-            var manualResetEvent = new ManualResetEvent(false);
+            return;
 
             var thread = new Thread(() =>
             {
@@ -85,7 +88,7 @@ namespace FunctionTest
             thread.SetApartmentState(ApartmentState.STA);
             thread.Start();
 
-            Console.ReadLine();
+            
             manualResetEvent.Set();
         }
         
