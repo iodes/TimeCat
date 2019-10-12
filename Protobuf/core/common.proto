@@ -60,3 +60,10 @@ enum RpcTimeUnit {
 	Month = 7;
 	Year = 8;
 }
+
+enum RpcOSPlatform {
+	FreeBSD = 0; // FreeBSD 운영 체제를 나타냅니다.
+	Linux = 1; // Linux 운영 체제를 나타냅니다.
+	OSX = 2; // OSX 운영 체제를 나타냅니다.
+	Windows = 3; // Windows 운영 체제를 나타냅니다.
+}

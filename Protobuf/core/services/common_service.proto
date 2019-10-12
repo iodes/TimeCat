@@ -15,6 +15,7 @@ message InitializeRequest {
 
 message InitializeResponse {
 	bool isSuccess = 1;
+	RpcOSPlatform osPlatform = 2;
 }
 
 message HealthCheckRequest {
