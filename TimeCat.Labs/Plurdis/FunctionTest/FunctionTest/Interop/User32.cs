@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -43,9 +44,17 @@ namespace FunctionTest.Interop
         [DllImport(ExternDll.User32)]
         public static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
+        [DllImport(ExternDll.User32)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
         #endregion
 
         #region Function Declaration
+
+        public static int GetWindowThreadProcessId(IntPtr hWnd)
+        {
+            GetWindowThreadProcessId(hWnd, out uint pid);
+            return (int)pid;
+        }
 
         public static uint GetLastInputTick()
         {
@@ -58,14 +67,12 @@ namespace FunctionTest.Interop
             return lastInputInfo.dwTime;
         }
 
-        public static string GetActiveWindowTitle()
+        public static string GetWindowTitle(IntPtr hwnd)
         {
             const int nChars = 256;
-            IntPtr handle = IntPtr.Zero;
-            StringBuilder Buff = new StringBuilder(nChars);
-            handle = GetForegroundWindow();
-
-            if (GetWindowText(handle, Buff, nChars) > 0)
+            var Buff = new StringBuilder(nChars);
+            
+            if (GetWindowText(hwnd, Buff, nChars) > 0)
             {
                 return Buff.ToString();
             }
