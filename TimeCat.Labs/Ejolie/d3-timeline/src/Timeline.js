@@ -1,23 +1,52 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import * as d3 from 'd3';
 
-import Axis from './Axis';
+import Axes from './Axes';
 
-const Timeline = ({ x, y, width, height }) => {
-  const xScale = useMemo(
+const Timeline = ({ data }) => {
+  const margins = { top: 20, right: 20, bottom: 20, left: 50 };
+  const svgDimensions = { width: 900, height: 500 };
+
+  const [width, setWidth] = useState(
+    svgDimensions.width - margins.right - margins.left
+  );
+  const [height, setHeight] = useState(
+    svgDimensions.height - margins.top - margins.bottom
+  );
+
+  // event handler
+  const onWheel = () => {
+    console.log('hello');
+  };
+
+  // scale
+  let xScale = useMemo(
     () =>
       d3
-        .scaleLinear()
-        .domain([0, 1])
+        .scaleTime()
+        .domain([new Date(2019, 10, 10), new Date(2019, 10, 11)])
         .range([0, width]),
     [width]
   );
 
+  let yScale = useMemo(
+    () =>
+      d3
+        .scaleLinear()
+        .domain([0, height])
+        .range([height, 0]),
+    [height]
+  );
+
   return (
-    <g transform={`translate(${x}, ${y})`}>
-      <Axis x={0} y={0} scale={yScale} type="Left" />
-      <Axis x={0} y={height} scale={xScale} type="Bottom" />
-    </g>
+    <svg width={svgDimensions.width} height={svgDimensions.height}>
+      <Axes
+        scales={{ xScale, yScale }}
+        margins={margins}
+        width={width}
+        height={height}
+      />
+    </svg>
   );
 };
 
