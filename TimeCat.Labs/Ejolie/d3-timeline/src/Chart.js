@@ -10,7 +10,7 @@ const GroupLabel = styled.text`
   fill: #818181;
   text-transform: uppercase;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 6 00;
 `;
 
 const Chart = ({ chartData, svgDimensions }) => {
@@ -24,8 +24,8 @@ const Chart = ({ chartData, svgDimensions }) => {
     svgDimensions.height - margins.top - margins.bottom
   );
 
-  console.log(`svgDimensions: ${svgDimensions.width}, ${svgDimensions.height}`);
-  console.log(`width: ${width}, height: ${height}`);
+  // console.log(`svgDimensions: ${svgDimensions.width}, ${svgDimensions.height}`);
+  // console.log(`width: ${width}, height: ${height}`);
 
   useEffect(() => {
     return () => {
@@ -60,8 +60,9 @@ const Chart = ({ chartData, svgDimensions }) => {
       height={svgDimensions.height + margins.top + margins.bottom}
     >
       {chartData.map((obj, idx) => {
-        const myColor = d3.scaleOrdinal().domain(obj.data).range(d3.schemeSet3);
-      
+        // temporary color palette
+        const colors = d3.schemeSet3;
+        
         const intervalBarGroup = obj.data.map((d, i) => {
           return (
             <IntervalBar
@@ -70,7 +71,7 @@ const Chart = ({ chartData, svgDimensions }) => {
               y={intervalBarMargin}
               width={xScale(d.to) - xScale(d.from)}
               height={intervalBarHeight}
-              color={myColor(d)}
+              color={colors[i]}
             />
           );
         });
