@@ -41,12 +41,12 @@ message RpcActivity {
 }
 
 enum RpcActionType {
-	Focus = 0;
-	Blur = 1;
-	Open = 2;
-	Close = 3;
-	Active = 4;
-	Idle = 5;
+	Focus = 0; // 창이 선택된 상태를 나타냅니다.
+	Blur = 1; // 창이 선택해제된 상태를 나타냅니다.
+	Open = 2; // 창이 새로 열린 상태를 나타냅니다.
+	Close = 3; // 창이 닫힌 상태를 나타냅니다.
+	Active = 4; // 창에서 유효타가 발생한 경우를 나타냅니다.
+	Idle = 5; // 창에서 일정시간 유효타가 발생하지 않은 경우를 나타냅니다.
 }
 
 enum RpcTimeUnit {
