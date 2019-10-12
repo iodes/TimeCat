@@ -8,6 +8,12 @@ namespace FunctionTest.Driver
     {
         int ProcessId { get; }
 
-        string Caption { get; }
+        string Name { get; }
+
+        string FullName { get; }
+
+        string Icon { get; }
+
+        string Version { get; }
     }
 }
