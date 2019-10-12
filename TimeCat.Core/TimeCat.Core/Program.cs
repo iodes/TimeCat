@@ -5,6 +5,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
@@ -46,7 +47,7 @@ namespace TimeCat.Core
                     ResourceManager.GetText("Certificates.timecat.key")
                 )
             });
-
+            
             var interceptor = new ServerCallInterceptor();
 
             _server = new Server
