@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-
-namespace FunctionTest.Driver.Windows
+﻿namespace TimeCat.Core.Driver.Windows
 {
     public class WindowsApplication : IApplication
     {

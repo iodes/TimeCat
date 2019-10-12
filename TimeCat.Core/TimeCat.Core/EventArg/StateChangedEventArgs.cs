@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Driver;
 

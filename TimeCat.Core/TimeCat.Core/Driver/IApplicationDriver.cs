@@ -1,7 +1,5 @@
-﻿using TimeCat.Core.EventArg;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using TimeCat.Core.EventArg;
 
 namespace TimeCat.Core.Driver
 {

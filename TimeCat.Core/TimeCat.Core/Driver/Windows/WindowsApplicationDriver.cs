@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TimeCat.Core.Commons;
 using TimeCat.Core.EventArg;
 
@@ -16,12 +14,12 @@ namespace TimeCat.Core.Driver.Windows
 
         public void Start()
         {
-            
+            throw new NotImplementedException();
         }
 
         public void Stop()
         {
-            
+            throw new NotImplementedException();
         }
 
         private void RaiseStateChanged(IApplication application, ActionType stateType) =>
