@@ -14,6 +14,54 @@
 
 ### 🏠 [Homepage](https://github.com/iodes/TimeCat#readme)
 
+## Status
+
+This project is still heavily under development, but is in a state where users are encouraged to try it out and keep it installed alongside the stable TimeCat client. It will continue to evolve over the coming months and hopefully bring some new unique features to the table.
+
+We are accepting bug reports (please report with as much detail as possible). Feature requests are welcome as long as you read and understand the contribution guidelines listed below.
+
+## Requirements
+
+- [Node.js 10.16.3](https://nodejs.org)
+- A desktop platform with the [.NET Core SDK 3.0](https://www.microsoft.com/net/learn/get-started) or higher installed.
+- When running on Windows 7 or 8.1, **[additional prerequisites](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore30)** may be required to correctly run .NET Core applications if your operating system is not up-to-date with the latest service packs.
+- When working with the codebase, we recommend using an IDE with intellisense and syntax highlighting, such as [Visual Studio 2017+](https://visualstudio.microsoft.com/vs/), [Jetbrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio Code](https://code.visualstudio.com/).
+
+## Running TimeCat
+
+### Downloading the source code
+
+Clone the repository:
+
+```shell
+git clone https://github.com/iodes/timecat
+cd TimeCat
+```
+
+To update the source code to the latest commit, run the following command inside the `TimeCat` directory:
+
+```shell
+git pull
+```
+
+### Building
+
+Build the core:
+
+```shell
+cd TimeCat.Core
+dotnet restore
+dotnet build
+```
+
+Build the client:
+
+```shell
+cd TimeCat.Client
+npm install
+npm start
+```
+
 ## ✨ Demo
 
 ## 🚀 Usage

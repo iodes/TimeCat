@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option csharp_namespace = "TimeCat.Proto.Services";
+
+import "core/common.proto";
+import "google/protobuf/timestamp.proto";
+
+service RpcCategoryService {
+	rpc GetCategories (Empty) returns (CategoryListResponse);
+	rpc CreateCategory (CategoryCreateRequest) returns (CategoryCreateResponse);
+	rpc UpdateCategory (CategoryUpdateRequest) returns (Empty);
+	rpc DeleteCategory (CategoryDeleteRequest) returns (Empty);
+}
+
+message CategoryListResponse {
+	repeated RpcCategory categories = 1;
+}
+
+message CategoryCreateRequest {
+	NullableInt32 parentId = 1;
+	string name = 2;
+	string color = 3;
+}
+
+message CategoryCreateResponse {
+	RpcCategory category = 1;
+}
+
+message CategoryUpdateRequest {
+	int32 id = 1;
+	string name = 2;
+	string color = 3;
+	NullableInt32 parentId = 4;
+}
+
+message CategoryDeleteRequest {
+	int32 id = 1;
+}

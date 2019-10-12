@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Initialize" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="SQLite.NET.SQLCipher" Version="2.0.0" />
   </ItemGroup>
 
@@ -18,5 +22,6 @@
   <ItemGroup>
     <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="..\..\Certificate\timecat.key" Link="Resources\Certificates\%(FileName)%(Extension)" />
+    <EmbeddedResource Include="Resources\Initialize" />
   </ItemGroup>
 </Project>
