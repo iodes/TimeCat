@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FunctionTest.Common
 {
-    enum StateType
+    public enum StateType
     {
         Focus = 0,
         Blur = 1,
