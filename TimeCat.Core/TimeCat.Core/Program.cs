@@ -46,7 +46,7 @@ namespace TimeCat.Core
                     ResourceManager.GetText("Certificates.timecat.key")
                 )
             });
-
+            
             var interceptor = new ServerCallInterceptor();
 
             _server = new Server

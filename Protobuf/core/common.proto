@@ -67,3 +67,10 @@ enum RpcOSPlatform {
 	OSX = 2; // OSX 운영 체제를 나타냅니다.
 	Windows = 3; // Windows 운영 체제를 나타냅니다.
 }
+
+enum RpcOSArchitecture {
+    X86 = 0; // 인텔 기반 32-bit 프로세서 아키텍처
+    X64 = 1; // 인텔 기반 64-bit 프로세서 아키텍처
+    Arm = 2; // 32-bit ARM 프로세서 아키텍처
+    Arm64 = 3; // 64-bit ARM 프로세서 아키텍처
+}
