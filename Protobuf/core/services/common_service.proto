@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "TimeCat.Proto.Services";
 
+import "core/common.proto";
 import "google/protobuf/timestamp.proto";
 
 service RpcCommonService {
@@ -15,6 +16,7 @@ message InitializeRequest {
 
 message InitializeResponse {
 	bool isSuccess = 1;
+	OSInformation osInformation = 2;
 }
 
 message HealthCheckRequest {
@@ -25,4 +27,10 @@ message HealthCheckRequest {
 message HealthCheckResponse {
 	google.protobuf.Timestamp currentTime = 1;
 	google.protobuf.Timestamp requestTime = 2;
+}
+
+message OSInformation {
+	RpcOSPlatform platform = 1;
+	RpcOSArchitecture architecture = 2;
+	string description = 3;
 }
