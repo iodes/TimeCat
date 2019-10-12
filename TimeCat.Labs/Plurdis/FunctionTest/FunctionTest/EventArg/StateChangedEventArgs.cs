@@ -12,10 +12,13 @@ namespace FunctionTest.EventArg
 
         public StateType StateType { get; }
 
+        public DateTimeOffset DateTimeOffset { get; }
+
         public StateChangedEventArgs(IApplication application, StateType stateType)
         {
             Application = application;
             StateType = stateType;
+            DateTimeOffset = DateTimeOffset.UtcNow;
         }
     }
 }
