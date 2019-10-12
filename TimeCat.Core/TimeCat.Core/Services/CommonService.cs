@@ -16,7 +16,7 @@ namespace TimeCat.Core.Services
 
         public override async Task<InitializeResponse> Initialize(InitializeRequest request, ServerCallContext context)
         {
-            if (!IsInitialized)
+            if (IsInitialized)
             {
                 return new InitializeResponse()
                 {
