@@ -1,8 +1,10 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using System;
+using Serilog;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TimeCat.Core.Database;
+using TimeCat.Core.Extensions;
 using TimeCat.Core.Utility;
 using TimeCat.Proto.Services;
 
@@ -14,22 +16,28 @@ namespace TimeCat.Core.Services
 
         public override async Task<InitializeResponse> Initialize(InitializeRequest request, ServerCallContext context)
         {
-            if (!IsInitialized)
+            if (IsInitialized)
             {
-                return new InitializeResponse() 
+                return new InitializeResponse()
                 {
-                    IsSuccess = false 
+                    IsSuccess = false
                 };
             }
 
             await TimeCatDB.Instance.Initialize(Environment.Database);
 
             IsInitialized = true;
-            Console.WriteLine($"TimeCat {request.AppVersion} initialized");
+            Log.Information("TimeCat {AppVersion} initialized", request.AppVersion);
 
             return new InitializeResponse() 
             {
-                IsSuccess = true
+                IsSuccess = true,
+                OsInformation = new OSInformation
+                {
+                    Platform = RuntimeInformationUtility.OSPlatform.ToRpc(),
+                    Architecture = RuntimeInformation.OSArchitecture.ToRpc(),
+                    Description = RuntimeInformation.OSDescription
+                }
             };
         }
 
@@ -42,7 +50,7 @@ namespace TimeCat.Core.Services
             };
 
             Duration duration = response.CurrentTime - request.CurrentTime;
-            Console.WriteLine($"HealthCheck req {request.CurrentTime.Seconds} res {response.CurrentTime.Seconds} ({duration.Nanos * 0.000001}ms)");
+            Log.Verbose("HealthCheck req {Request} res {Response} ({Time:0.000}ms)", request.CurrentTime.Seconds, response.CurrentTime.Seconds, duration.Nanos * 0.000001);
 
             return Task.FromResult(response);
         }

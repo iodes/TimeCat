@@ -41,11 +41,12 @@ message RpcActivity {
 }
 
 enum RpcActionType {
-	Focus = 0;
-	Blur = 1;
-	Open = 2;
-	Close = 3;
-	Active = 4;
+	Focus = 0; // 창이 선택된 상태를 나타냅니다.
+	Blur = 1; // 창이 선택해제된 상태를 나타냅니다.
+	Open = 2; // 창이 새로 열린 상태를 나타냅니다.
+	Close = 3; // 창이 닫힌 상태를 나타냅니다.
+	Active = 4; // 창에서 유효타가 발생한 경우를 나타냅니다.
+	Idle = 5; // 창에서 일정시간 유효타가 발생하지 않은 경우를 나타냅니다.
 }
 
 enum RpcTimeUnit {
@@ -58,4 +59,18 @@ enum RpcTimeUnit {
 	Week = 6;
 	Month = 7;
 	Year = 8;
+}
+
+enum RpcOSPlatform {
+	FreeBSD = 0; // FreeBSD 운영 체제를 나타냅니다.
+	Linux = 1; // Linux 운영 체제를 나타냅니다.
+	OSX = 2; // OSX 운영 체제를 나타냅니다.
+	Windows = 3; // Windows 운영 체제를 나타냅니다.
+}
+
+enum RpcOSArchitecture {
+    X86 = 0; // 인텔 기반 32-bit 프로세서 아키텍처
+    X64 = 1; // 인텔 기반 64-bit 프로세서 아키텍처
+    Arm = 2; // 32-bit ARM 프로세서 아키텍처
+    Arm64 = 3; // 64-bit ARM 프로세서 아키텍처
 }

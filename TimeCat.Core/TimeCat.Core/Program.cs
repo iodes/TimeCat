@@ -1,7 +1,12 @@
 ﻿using Grpc.Core;
+using Grpc.Core.Interceptors;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
+using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
 using TimeCat.Proto.Services;
@@ -18,6 +23,11 @@ namespace TimeCat.Core
 
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Verbose()
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .CreateLogger();
+
             ShowInitialize();
             StartServer(host, port);
             Wait();
@@ -37,17 +47,19 @@ namespace TimeCat.Core
                     ResourceManager.GetText("Certificates.timecat.key")
                 )
             });
+            
+            var interceptor = new ServerCallInterceptor();
 
             _server = new Server
             {
                 Services =
                 {
-                    RpcCategoryService.BindService(new CategoryService()),
-                    RpcCommonService.BindService(new CommonService()),
-                    RpcDashboardService.BindService(new DashboardService()),
-                    RpcDetailService.BindService(new DetailService()),
-                    RpcMainService.BindService(new MainService()),
-                    RpcReviewService.BindService(new ReviewService())
+                    RpcCategoryService.BindService(new CategoryService()).Intercept(interceptor),
+                    RpcCommonService.BindService(new CommonService()).Intercept(interceptor),
+                    RpcDashboardService.BindService(new DashboardService()).Intercept(interceptor),
+                    RpcDetailService.BindService(new DetailService()).Intercept(interceptor),
+                    RpcMainService.BindService(new MainService()).Intercept(interceptor),
+                    RpcReviewService.BindService(new ReviewService()).Intercept(interceptor)
                 },
                 Ports =
                 {
@@ -56,7 +68,7 @@ namespace TimeCat.Core
             };
 
             _server.Start();
-            Console.WriteLine($"Listening on {host}:{port}");
+            Log.Information("Listening on {Host}:{Port}", host, port);
         }
 
         static void Wait()
