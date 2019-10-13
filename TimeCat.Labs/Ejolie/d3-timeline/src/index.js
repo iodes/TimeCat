@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './assets/index.css';
 // import App from './App';
-import ChartApp from './ChartApp';
+// import App from './ChartApp';
+import App from './ResponsiveApp';
 
-ReactDOM.render(<ChartApp />, document.getElementById('root'));
+ReactDOM.render(<App />, document.getElementById('root'));
