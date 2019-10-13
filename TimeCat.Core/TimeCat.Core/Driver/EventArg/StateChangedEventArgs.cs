@@ -2,7 +2,7 @@
 using TimeCat.Core.Commons;
 using TimeCat.Core.Driver;
 
-namespace TimeCat.Core.EventArg
+namespace TimeCat.Core.Driver.EventArg
 {
     public class StateChangedEventArgs : EventArgs
     {
