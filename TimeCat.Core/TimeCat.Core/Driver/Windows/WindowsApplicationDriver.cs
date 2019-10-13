@@ -1,6 +1,6 @@
 ﻿using System;
 using TimeCat.Core.Commons;
-using TimeCat.Core.EventArg;
+using TimeCat.Core.Driver.EventArg;
 
 namespace TimeCat.Core.Driver.Windows
 {
