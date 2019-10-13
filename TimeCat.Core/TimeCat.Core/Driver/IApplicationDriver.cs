@@ -1,5 +1,5 @@
 ﻿using System;
-using TimeCat.Core.EventArg;
+using TimeCat.Core.Driver.EventArg;
 
 namespace TimeCat.Core.Driver
 {
