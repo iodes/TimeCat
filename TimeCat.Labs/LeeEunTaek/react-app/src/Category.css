@@ -1,0 +1,91 @@
+body{
+    width: 100%;
+    background: rgb(222, 232, 233);
+}
+
+#list{
+    margin: 0;
+    width: 200px;
+    position: relative;
+    list-style-type: none;
+}
+
+#list::placeholder{
+    color: #FFF;
+    font-size: 14px;
+
+}
+
+#list li{
+    width: 100%;
+    border-radius: 3px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+    color: #6D737C;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 5px;
+    cursor:pointer;
+}
+
+#circle{
+    background-color:#ff0;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border-radius: 50px;
+}
+
+.delete{
+    float:right;
+    cursor: pointer;
+    transition: all 350ms;
+}
+
+.delete:hover{
+    background: rgba(130, 205, 214, .4);
+}
+
+.Adding{
+    padding-left: 10px;
+}
+
+
+#Projets a{
+    font-size: 12px;
+}
+
+#Projects button{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+#inputAdd{
+    position: absolute;
+    border-radius: 3px;
+    font-family: 'Open sans';
+    font-size: 12px;
+    box-shadow: 0 7px 30px rgba(93,83,188, .2);
+    text-indent: 5px;
+}
+
+#inputAdd:focus{
+    box-shadow: 0 12px 40px rgba(93,83,188, .4);
+}
+
+#send{
+    width: 50px;
+    height: 22px;
+    position: absolute;
+    background: #FFF;
+    color: #5D53BC;
+    border-radius: 100px;
+    left: 220px;
+    cursor: pointer;
+}
+
+.prefab {
+    display: none;
+}
