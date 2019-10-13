@@ -14,21 +14,19 @@ export default createGlobalStyle`
     width: 100%;
     font-family: 'Open Sans';
   }
+
   body > section {
     height: 100%;
     width: 100%;
   }
 
-  #chart {
-    width: 90%;
-    height: 150px;
+  svg {
     background: #fff;
-    opacity: 0.9;
     border-radius: 5px;
     border: 1px solid #818181;
   }
 
-  #chart line {
+  line {
     stroke: #e6e6e6;
   }
 
