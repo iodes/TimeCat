@@ -6,6 +6,8 @@ import OverviewPage from './pages/OverviewPage'
 import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
 
+import 'antd/dist/antd.css'
+
 class App extends React.Component {
 	constructor(props: {}) {
 		super(props)
