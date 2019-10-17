@@ -5,6 +5,7 @@
     "semicolon": [true, "never"],
     "indent": [true, "tabs", 2],
     "array-type": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "ordered-imports": false
   }
 }
