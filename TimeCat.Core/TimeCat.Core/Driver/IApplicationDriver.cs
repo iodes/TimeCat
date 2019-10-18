@@ -3,7 +3,7 @@ using TimeCat.Core.Driver.EventArg;
 
 namespace TimeCat.Core.Driver
 {
-    interface IApplicationDriver : IDisposable
+    internal interface IApplicationDriver : IDisposable
     {
         event EventHandler<StateChangedEventArgs> StateChanged;
 
