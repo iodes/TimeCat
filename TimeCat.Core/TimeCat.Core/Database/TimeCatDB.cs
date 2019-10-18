@@ -1,13 +1,13 @@
-﻿using SQLite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using SQLite;
 using TimeCat.Core.Database.Models;
 
 namespace TimeCat.Core.Database
 {
-    sealed class TimeCatDB : SQLiteDatabase
+    internal sealed class TimeCatDB : SQLiteDatabase
     {
         protected override void OnInitialize(SQLiteConnection connection)
         {
@@ -18,18 +18,16 @@ namespace TimeCat.Core.Database
 
         public async IAsyncEnumerable<Category> GetCategoryTree()
         {
-            var categories = (await Connection.Table<Category>().ToArrayAsync())
+            Dictionary<int, List<Category>> categories = (await Connection.Table<Category>().ToArrayAsync())
                 .GroupBy(c => c.CategoryId)
                 .ToDictionary(g => g.Key ?? int.MinValue, g => g.ToList());
 
             if (categories.TryGetValue(int.MinValue, out List<Category> rootCategories))
-            {
-                foreach (Category category in rootCategories)
+                foreach (var category in rootCategories)
                 {
                     await Task.Run(() => BuildTree(category));
                     yield return category;
                 }
-            }
 
             void BuildTree(Category node)
             {
@@ -38,18 +36,24 @@ namespace TimeCat.Core.Database
                     categories.Remove(node.Id);
                     node.Categories = new ReadOnlyCollection<Category>(subCategories);
 
-                    foreach (Category subCategory in subCategories)
+                    foreach (var subCategory in subCategories)
                         BuildTree(subCategory);
                 }
             }
         }
 
-        public IAsyncEnumerable<Application> GetApplications() => TableAsync<Application>();
+        public IAsyncEnumerable<Application> GetApplications()
+        {
+            return TableAsync<Application>();
+        }
 
-        public IAsyncEnumerable<Activity> GetActivities() => TableAsync<Activity>();
+        public IAsyncEnumerable<Activity> GetActivities()
+        {
+            return TableAsync<Activity>();
+        }
 
         #region Singleton
-        static TimeCatDB _instance;
+        private static TimeCatDB _instance;
 
         public static TimeCatDB Instance => _instance ?? (_instance = new TimeCatDB());
 

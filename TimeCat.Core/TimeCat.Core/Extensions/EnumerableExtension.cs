@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace TimeCat.Core.Extensions
 {
-    static class EnumerableExtension
+    internal static class EnumerableExtension
     {
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            var enumerator = source.GetEnumerator();
+            IEnumerator<T> enumerator = source.GetEnumerator();
 
             while (enumerator.MoveNext())
                 action(enumerator.Current);
@@ -21,8 +21,8 @@ namespace TimeCat.Core.Extensions
             if (action == null)
                 throw new ArgumentNullException(nameof(action));
 
-            var enumerator = source.GetEnumerator();
-            int index = -1;
+            IEnumerator<T> enumerator = source.GetEnumerator();
+            var index = -1;
 
             while (enumerator.MoveNext())
                 action(enumerator.Current, ++index);
