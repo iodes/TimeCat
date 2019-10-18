@@ -6,22 +6,41 @@ import { HoursData } from './HoursData'
 const { Text } = Typography
 
 const Container = styled(Card)`
-  width: 260px;
-  height: 180px;
+  width: 280px;
+  height: 200px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
 `
 
 const BarContainer = styled('div')`
   height: 160px;
 `
 
+const Title = styled(Text)`
+  color: #C6C7C8;
+`
+
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        'fill' : '#ffff'
+      }
+    }
+  }
+}
+
+
 const ActiveHours: React.FC = () => {
   const [data, setData] = React.useState(HoursData)
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Most active hours</Text>
+      <Title strong>Most active hours</Title>
       <BarContainer>
         <ResponsiveBar
           data={data}
@@ -42,6 +61,7 @@ const ActiveHours: React.FC = () => {
           motionStiffness={90}
           motionDamping={15}
           enableGridY={false}
+          theme={theme}
         />
       </BarContainer>
     </Container>
