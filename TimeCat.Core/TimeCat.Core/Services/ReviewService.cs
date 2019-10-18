@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TimeCat.Core.Commons;
@@ -18,11 +19,16 @@ namespace TimeCat.Core.Services
 
         public override async Task GetTimeline(TimelineRequest request, IServerStreamWriter<TimelineResponse> responseStream, ServerCallContext context)
         {
-            Dictionary<int, TimestampRange> timestampRanges = new Dictionary<int, TimestampRange>();
-            await foreach (Activity activity in _db.GetActivities())
+            var timestampRanges = new Dictionary<int, TimestampRange>();
+
+            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            var activities = from activity in _db.GetActivities()
+                where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
+                where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                select activity;
+
+            await foreach (var activity in activities)
             {
-                if (activity.Time < request.Range.Start.ToDateTime() || activity.Time > request.Range.End.ToDateTime())
-                    continue;
                 switch (activity.Action)
                 {
                     case ActionType.Active:
@@ -35,8 +41,8 @@ namespace TimeCat.Core.Services
                         if (timestampRanges.ContainsKey(activity.ApplicationId))
                         {
                             timestampRanges[activity.ApplicationId].End = Timestamp.FromDateTimeOffset(activity.Time);
-                            Application application = await _db.GetAsync<Application>(activity.ApplicationId);
-                            TimelineResponse response = new TimelineResponse()
+                            var application = await _db.GetAsync<Application>(activity.ApplicationId);
+                            var response = new TimelineResponse()
                             {
                                 Application = application.ToRpc(),
                                 Range = timestampRanges[activity.ApplicationId]
