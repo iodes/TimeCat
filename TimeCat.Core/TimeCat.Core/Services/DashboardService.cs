@@ -7,7 +7,6 @@ using TimeCat.Core.Commons;
 using TimeCat.Core.Extensions;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
-using TimeCat.Proto.Commons;
 using TimeCat.Proto.Services;
 using Google.Protobuf.WellKnownTypes;
 
