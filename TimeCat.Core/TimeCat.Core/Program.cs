@@ -40,13 +40,13 @@ namespace TimeCat.Core
 
         public static void StartServer(string host, int port)
         {
-            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
-            {
-                new KeyCertificatePair(
-                    ResourceManager.GetText("Certificates.timecat.crt"),
-                    ResourceManager.GetText("Certificates.timecat.key")
-                )
-            });
+//            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
+//            {
+//                new KeyCertificatePair(
+//                    ResourceManager.GetText("Certificates.timecat.crt"),
+//                    ResourceManager.GetText("Certificates.timecat.key")
+//                )
+//            });
 
             var interceptor = new ServerCallInterceptor();
 
@@ -63,7 +63,7 @@ namespace TimeCat.Core
                 },
                 Ports =
                 {
-                    new ServerPort(host, port, credentials)
+                    new ServerPort(host, port, ServerCredentials.Insecure)
                 }
             };
 
