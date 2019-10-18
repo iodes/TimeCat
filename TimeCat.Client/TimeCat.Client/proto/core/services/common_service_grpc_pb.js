@@ -3,6 +3,7 @@
 'use strict';
 var grpc = require('grpc');
 var core_services_common_service_pb = require('../../core/services/common_service_pb.js');
+var core_common_pb = require('../../core/common_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
 function serialize_HealthCheckRequest(arg) {

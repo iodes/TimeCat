@@ -19,6 +19,8 @@ goog.exportSymbol('proto.RpcActionType', null, global);
 goog.exportSymbol('proto.RpcActivity', null, global);
 goog.exportSymbol('proto.RpcApplication', null, global);
 goog.exportSymbol('proto.RpcCategory', null, global);
+goog.exportSymbol('proto.RpcOSArchitecture', null, global);
+goog.exportSymbol('proto.RpcOSPlatform', null, global);
 goog.exportSymbol('proto.RpcTimeUnit', null, global);
 goog.exportSymbol('proto.TimestampRange', null, global);
 
@@ -1336,6 +1338,26 @@ proto.RpcTimeUnit = {
   WEEK: 6,
   MONTH: 7,
   YEAR: 8
+};
+
+/**
+ * @enum {number}
+ */
+proto.RpcOSPlatform = {
+  FREEBSD: 0,
+  LINUX: 1,
+  OSX: 2,
+  WINDOWS: 3
+};
+
+/**
+ * @enum {number}
+ */
+proto.RpcOSArchitecture = {
+  X86: 0,
+  X64: 1,
+  ARM: 2,
+  ARM64: 3
 };
 
 goog.object.extend(exports, proto);
