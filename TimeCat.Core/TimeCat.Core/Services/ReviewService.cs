@@ -47,12 +47,14 @@ namespace TimeCat.Core.Services
                     case ActionType.Idle:
                         if (timestampRanges.ContainsKey(applicationNow.Id))
                         {
-                            timestampRanges[application.Id].End = Timestamp.FromDateTimeOffset(activity.Time);
+                            timestampRanges[applicationNow.Id].End = Timestamp.FromDateTimeOffset(activity.Time);
                             var response = new TimelineResponse()
                             {
                                 Application = applicationNow.ToRpc(),
-                                Range = timestampRanges[application.Id]
+                                Range = timestampRanges[applicationNow.Id]
                             };
+
+                            timestampRanges.Remove(applicationNow.Id);
                             await responseStream.WriteAsync(response);
                         }
                         break;
