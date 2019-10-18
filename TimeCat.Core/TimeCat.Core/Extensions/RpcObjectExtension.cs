@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
@@ -8,12 +9,12 @@ using TimeCat.Proto.Commons;
 
 namespace TimeCat.Core.Extensions
 {
-    static class RpcObjectExtension
+    internal static class RpcObjectExtension
     {
         #region RpcCategory
         public static RpcCategory ToRpc(this Category category)
         {
-            var rpcCategory = new RpcCategory()
+            var rpcCategory = new RpcCategory
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -25,10 +26,10 @@ namespace TimeCat.Core.Extensions
 
             return rpcCategory;
         }
-        
+
         public static RpcApplication ToRpc(this Application application)
         {
-            var rpcApplication = new RpcApplication()
+            var rpcApplication = new RpcApplication
             {
                 CategoryId = application.CategoryId,
                 FullName = application.FullName,
@@ -44,7 +45,7 @@ namespace TimeCat.Core.Extensions
 
         public static Category FromRpc(this RpcCategory rpcCategory)
         {
-            var category = new Category()
+            var category = new Category
             {
                 Id = rpcCategory.Id,
                 Name = rpcCategory.Name,
@@ -53,7 +54,7 @@ namespace TimeCat.Core.Extensions
 
             if (rpcCategory.Categories?.Count > 0)
             {
-                var categoryList = rpcCategory.Categories
+                List<Category> categoryList = rpcCategory.Categories
                     .Select(FromRpc)
                     .ToList();
 
@@ -82,34 +83,43 @@ namespace TimeCat.Core.Extensions
             throw new InvalidOperationException();
         }
 
-        public static OSPlatform FromRpc(this RpcOSPlatform platform) => platform switch
+        public static OSPlatform FromRpc(this RpcOSPlatform platform)
         {
-            RpcOSPlatform.Windows => OSPlatform.Windows,
-            RpcOSPlatform.Osx => OSPlatform.OSX,
-            RpcOSPlatform.Linux => OSPlatform.Linux,
-            RpcOSPlatform.FreeBsd => OSPlatform.FreeBSD,
-            _ => throw new InvalidOperationException()
-        };
+            return platform switch
+            {
+                RpcOSPlatform.Windows => OSPlatform.Windows,
+                RpcOSPlatform.Osx => OSPlatform.OSX,
+                RpcOSPlatform.Linux => OSPlatform.Linux,
+                RpcOSPlatform.FreeBsd => OSPlatform.FreeBSD,
+                _ => throw new InvalidOperationException()
+            };
+        }
         #endregion
 
         #region RpcOSArchitecture
-        public static RpcOSArchitecture ToRpc(this Architecture architecture) => architecture switch
+        public static RpcOSArchitecture ToRpc(this Architecture architecture)
         {
-            Architecture.X86 => RpcOSArchitecture.X86,
-            Architecture.X64 => RpcOSArchitecture.X64,
-            Architecture.Arm => RpcOSArchitecture.Arm,
-            Architecture.Arm64 => RpcOSArchitecture.Arm64,
-            _ => throw new InvalidOperationException()
-        };
+            return architecture switch
+            {
+                Architecture.X86 => RpcOSArchitecture.X86,
+                Architecture.X64 => RpcOSArchitecture.X64,
+                Architecture.Arm => RpcOSArchitecture.Arm,
+                Architecture.Arm64 => RpcOSArchitecture.Arm64,
+                _ => throw new InvalidOperationException()
+            };
+        }
 
-        public static Architecture FromRpc(this RpcOSArchitecture platform) => platform switch
+        public static Architecture FromRpc(this RpcOSArchitecture platform)
         {
-            RpcOSArchitecture.X86 => Architecture.X86,
-            RpcOSArchitecture.X64 => Architecture.X64,
-            RpcOSArchitecture.Arm => Architecture.Arm,
-            RpcOSArchitecture.Arm64 => Architecture.Arm64,
-            _ => throw new InvalidOperationException()
-        };
+            return platform switch
+            {
+                RpcOSArchitecture.X86 => Architecture.X86,
+                RpcOSArchitecture.X64 => Architecture.X64,
+                RpcOSArchitecture.Arm => Architecture.Arm,
+                RpcOSArchitecture.Arm64 => Architecture.Arm64,
+                _ => throw new InvalidOperationException()
+            };
+        }
         #endregion
     }
 }
