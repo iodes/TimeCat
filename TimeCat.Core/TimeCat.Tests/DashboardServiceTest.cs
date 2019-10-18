@@ -25,10 +25,10 @@ namespace TimeCat.Tests
 
         public DashboardServiceTest()
         {
-            DummyGenerator.InsertDummies(Path.GetTempFileName()).Wait();
-            offsetStart = DummyGenerator.LogStartsAt;
-            offsetEnd = DummyGenerator.LogEndsAt;
-            totalTimes = DummyGenerator.TotalUseTimesPerApplications;
+            Dummies.Create(Path.GetTempFileName()).Wait();
+            offsetStart = Dummies.LogStartsAt;
+            offsetEnd = Dummies.LogEndsAt;
+            totalTimes = Dummies.TotalUseTimesPerApplications;
         }
 
         [Test, Description("Tests GetToalTime of DashboardService")]

@@ -25,10 +25,10 @@ namespace TimeCat.Tests
 
         public ReviewServiceTest()
         {
-            DummyGenerator.InsertDummies(Path.GetTempFileName()).Wait();
-            offsetStart = DummyGenerator.LogStartsAt;
-            offsetEnd = DummyGenerator.LogEndsAt;
-            timelines = DummyGenerator.TimelinesPerApplications;
+            Dummies.Create(Path.GetTempFileName()).Wait();
+            offsetStart = Dummies.LogStartsAt;
+            offsetEnd = Dummies.LogEndsAt;
+            timelines = Dummies.TimelinesPerApplications;
         }
 
         [Test, Description("Tests GetTimeline of TimelineService")]
