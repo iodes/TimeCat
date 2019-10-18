@@ -24,22 +24,29 @@ namespace TimeCat.Tests
             TimeSpan unitSpan = new TimeSpan(0, 0, 0, 10);
             Random rnd = new Random();
 
-            // 카테고리 여러개는 필요없음.
-            await _db.InsertAsync(new Category() { CategoryId = 1, Name = "Super Category", Color = Color.Aqua });
+            int applicationCount = 30;
+            int categoriesCount = 10;
 
-            // 어플리케이션 5개 생성
-            await _db.InsertAsync(new Application() { CategoryId = 1, FullName = "C:\\abc.exe", Id = 1, IsProductivity = true, Name = "ABC", Icon = "a", Version = "a" });
-            await _db.InsertAsync(new Application() { CategoryId = 1, FullName = "C:\\123.exe", Id = 2, IsProductivity = true, Name = "123", Icon = "a", Version = "a" });
-            await _db.InsertAsync(new Application() { CategoryId = 1, FullName = "C:\\Star.exe", Id = 3, IsProductivity = true, Name = "Platinum Star", Icon = "a", Version = "a" });
-            await _db.InsertAsync(new Application() { CategoryId = 1, FullName = "C:\\Kim.exe", Id = 4, IsProductivity = true, Name = "Kimmy", Icon = "a", Version = "a" });
-            await _db.InsertAsync(new Application() { CategoryId = 1, FullName = "C:\\Do.exe", Id = 5, IsProductivity = true, Name = "dai", Icon = "a", Version = "a" });
+            // 카테고리와 어플리케이션 무작위 생성
+            for(int i = 0; i < categoriesCount; i++)
+                await _db.InsertAsync(new Category() { CategoryId = i + 1, Name = $"Awesome Category {i}", Color = Color.Aqua });
 
+            for(int i = 0; i < applicationCount; i++)
+                await _db.InsertAsync(new Application() { CategoryId = rnd.Next(categoriesCount) + 1, FullName = $"C:\\TestApp{i}.exe", Id = i + 1, IsProductivity = true, Name = $"Test Application {i}", Icon = "chrome", Version = "1.0" });
+            
             int logIndex = 0;
             var now = start;
 
-            for (int i = 0; i < 10; i++)
+            // 모든 Application 다 Open
+            for (int i = 1; i <= applicationCount; i++)
             {
-                int application = rnd.Next(5) + 1;
+                await _db.InsertAsync(new Activity() { Id = logIndex++, ApplicationId = i, Action = ActionType.Open, Time = now });
+                now += unitSpan;
+            }
+
+            for (int i = 0; i < 50; i++)
+            {
+                int application = rnd.Next(applicationCount) + 1;
                 int active1 = rnd.Next(100);
 
                 await _db.InsertAsync(new Activity() { Id = logIndex++, ApplicationId = application, Action = ActionType.Focus, Time = now });
@@ -67,6 +74,12 @@ namespace TimeCat.Tests
                 totalTimes[application] += active1 == 0 ? 0 : (active1 * unitSpan.Seconds);
             }
 
+            // 모든 Application 다 Close
+            for (int i = 1; i <= applicationCount; i++)
+            {
+                await _db.InsertAsync(new Activity() { Id = logIndex++, ApplicationId = i, Action = ActionType.Close, Time = now });
+                now += unitSpan;
+            }
             offsetEnd = now;
         }
 
@@ -85,7 +98,6 @@ namespace TimeCat.Tests
             await InsertDummies(_db, offsetStart);
         }
         public static Dictionary<int, int> TotalUseTimesPerApplications => totalTimes;
-
         public static Dictionary<int, List<TimestampRange>> TimelinesPerApplications => timeRanges;
         public static DateTimeOffset LogStartsAt => offsetStart;
         public static DateTimeOffset LogEndsAt => offsetEnd;
