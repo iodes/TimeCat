@@ -7,7 +7,6 @@ using TimeCat.Core.Commons;
 using TimeCat.Core.Extensions;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
-using TimeCat.Proto.Commons;
 using TimeCat.Proto.Services;
 using Google.Protobuf.WellKnownTypes;
 
@@ -19,11 +18,17 @@ namespace TimeCat.Core.Services
         public override async Task<TotalTimeResponse> GetTotalTime(TotalTimeRequest request, ServerCallContext context)
         {
             long totalTime = 0, activeSince = -1;
-            await foreach(Activity activity in _db.GetActivities())
+
+            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            var activities = from activity in _db.GetActivities()
+                where activity.Time >= request.Range.Start.ToDateTime() && activity.Time <= request.Range.End.ToDateTime()
+                where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                orderby activity.Time
+                select activity;
+
+            await foreach(var activity in activities)
             {
-                if (activity.Time < request.Range.Start.ToDateTime() || activity.Time > request.Range.End.ToDateTime())
-                    continue;
-                long activityTicks = activity.Time.Ticks;
+                var activityTicks = activity.Time.Ticks;
                 switch(activity.Action)
                 {
                     case ActionType.Active:
@@ -37,8 +42,6 @@ namespace TimeCat.Core.Services
                             activeSince = -1;
                         }
                         break;
-                    default:
-                        continue;
                 }
             }
 
@@ -50,11 +53,17 @@ namespace TimeCat.Core.Services
 
         public override async Task GetApplications(ApplicationRequest request, IServerStreamWriter<ApplicationResponse> responseStream, ServerCallContext context)
         {
-            Dictionary<int, DateTimeOffset> startTimes = new Dictionary<int, DateTimeOffset>();
-            await foreach (Activity activity in _db.GetActivities())
+            var startTimes = new Dictionary<int, DateTimeOffset>();
+
+            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            var activities = from activity in _db.GetActivities()
+                where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
+                where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                orderby activity.Time
+                select activity;
+
+            await foreach (var activity in activities)
             {
-                if (activity.Time < request.Range.Start.ToDateTime() || activity.Time > request.Range.End.ToDateTime())
-                    continue;
                 switch (activity.Action)
                 {
                     case ActionType.Active:
@@ -66,8 +75,8 @@ namespace TimeCat.Core.Services
                     case ActionType.Idle:
                         if (startTimes.ContainsKey(activity.ApplicationId))
                         {
-                            Application application = await _db.GetAsync<Application>(activity.ApplicationId);
-                            ApplicationResponse response = new ApplicationResponse()
+                            var application = await _db.GetAsync<Application>(activity.ApplicationId);
+                            var response = new ApplicationResponse()
                             {
                                 Application = application.ToRpc(),
                                 TotalTime = Duration.FromTimeSpan(activity.Time - startTimes[activity.ApplicationId])
