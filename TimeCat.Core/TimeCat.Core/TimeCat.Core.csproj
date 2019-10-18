@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <None Remove="Resources\Initialize" />
-    <None Remove="Driver\Windows\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,18 +33,17 @@
     <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="..\..\Certificate\timecat.key" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="Resources\Initialize" />
-    <EmbeddedResource Remove="Driver\Windows\**" />
   </ItemGroup>
 
   <ItemGroup Condition="$(OS) != 'Windows_NT'">
-    <Compile Remove="Driver\Windows\**" />
+    <None Include="Driver\Windows\**" />
   </ItemGroup>
   
   <ItemGroup Condition="$(OS) != 'Linux'">
-    <Compile Remove="Driver\Linux\**" />
+    <None Include="Driver\Linux\**" />
   </ItemGroup>
   
   <ItemGroup Condition="$(OS) != 'Unix'">
-    <Compile Remove="Driver\Unix\**" />
+    <None Include="Driver\Unix\**" />
   </ItemGroup>
 </Project>

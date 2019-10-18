@@ -5,6 +5,7 @@ using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using TimeCat.Core.Driver;
 using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
