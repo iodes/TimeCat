@@ -24,13 +24,15 @@ const GlobalStyle = createGlobalStyle`
   }
 `
 
-const Header = styled.header`
+const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   height: 50px;
+  padding: 0 10px;
   background: #22272e;
   border-bottom: 1px solid #2c2a46;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
+  justify-content: space-between;
 `
 
 const MenuList = styled.ul`
@@ -40,10 +42,16 @@ const MenuList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
+  line-height: 50px;
 `
 
 const MenuItem = styled.li`
   margin: 0 10px;
+`
+
+const MenuLink = styled(Link)`
+  color: white;
+  text-decoration: none;
 `
 
 const Main = styled.main`
@@ -66,32 +74,30 @@ class App extends React.Component<IProps> {
         <GlobalStyle />
         <HashRouter>
           <div>
-            <Header>
-              <nav>
+            <header>
+              <Nav>
                 <MenuList>
                   <MenuItem className="overview">
-                    <Link to="/overview">
-                      <span>Overview</span>
-                    </Link>
+                    <MenuLink to="/overview">Overview</MenuLink>
                   </MenuItem>
                   <MenuItem className="review">
-                    <Link to="/review">
-                      <span>Review</span>
-                    </Link>
+                    <MenuLink to="/review">Review</MenuLink>
                   </MenuItem>
                   <MenuItem className="details">
-                    <Link to="/details">
-                      <span>Details</span>
-                    </Link>
+                    <MenuLink to="/details">Details</MenuLink>
                   </MenuItem>
                   <MenuItem className="reports">
-                    <Link to="/reports">
-                      <span>Reports</span>
-                    </Link>
+                    <MenuLink to="/reports">Reports</MenuLink>
                   </MenuItem>
                 </MenuList>
-              </nav>
-            </Header>
+
+                <MenuList>
+                  <MenuItem>Minimize</MenuItem>
+                  <MenuItem>Maximize</MenuItem>
+                  <MenuItem>Close</MenuItem>
+                </MenuList>
+              </Nav>
+            </header>
 
             <Main>
               <Route exact path="/" component={OverviewPage} />
