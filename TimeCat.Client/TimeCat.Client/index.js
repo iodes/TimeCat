@@ -13,6 +13,8 @@ const { Empty, TimestampRange } = require('./proto/core/common_pb');
 const { InitializeRequest, HealthCheckRequest } = require('./proto/core/services/common_service_pb');
 const { CategoryCreateRequest, CategoryUpdateRequest, CategoryDeleteRequest } = require('./proto/core/services/category_service_pb');
 const { TotalTimeRequest, ApplicationRequest } = require('./proto/core/services/dashboard_service_pb');
+const { DateRangeRequest, SearchRequest } = require('./proto/core/services/main_service_pb');
+const { TimelineRequest } = require('./proto/core/services/review_service_pb');
 const { Timestamp } = require('./proto/google/protobuf/timestamp_pb');
 
 let category = new RpcCategoryServiceClient('localhost:37013', grpc.credentials.createInsecure());
@@ -87,19 +89,64 @@ let commands = {
     });
   },
   'dashboard.GetTotalTime': (data, callback) => {
+    let request = new TotalTimeRequest();
 
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    dashboard.getTotalTime(request, (err, response) => {
+      if (err) return;
+
+      callback(response.toObject());
+    });
   },
   'dashboard.GetApplications': (data, callback) => {
+    let request = new ApplicationRequest();
 
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    dashboard.getApplications(request, (err, response) => {
+      if (err) return;
+
+      callback(response.toObject());
+    });
   },
   'main.SetDateRange': (data, callback) => {
+    let request = new DateRangeRequest();
 
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    dashboard.setDateRange(request, (err, response) => {
+      if (err) return;
+
+      callback(response.toObject());
+    })
   },
   'main.Search': (data, callback) => {
+    let request = new SearchRequest();
+
+    request.setKeyword(data.keyword);
+
+    dashboard.search(request, (err, response) => {
+      if (err) return;
+
+      callback(response.toObject());
+    });
 
   },
   'review.GetTimeline': (data, callback) => {
+    let request = new TimelineRequest();
 
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    review.getTimeline(request, (err, response) => {
+      if (err) return;
+
+      callback(response.toObject());
+    });
   },
 };
 
