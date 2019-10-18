@@ -22,7 +22,7 @@ namespace TimeCat.Core.Services
 
             // 요청받은 기간 내의 activity만 가져온다.
             var activities = from activity in _db.GetActivities()
-                where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
+                where activity.Time >= request.Range.Start.ToDateTime() && activity.Time <= request.Range.End.ToDateTime()
                 where activity.Action == ActionType.Active || activity.Action == ActionType.Idle ||
                       activity.Action == ActionType.Blur || activity.Action == ActionType.Focus
                 orderby activity.Time
