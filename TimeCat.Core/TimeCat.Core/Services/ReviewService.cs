@@ -24,6 +24,7 @@ namespace TimeCat.Core.Services
             var activities = from activity in _db.GetActivities()
                 where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
                 where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                orderby activity.Time
                 select activity;
 
             await foreach (var activity in activities)
