@@ -8,5 +8,71 @@
 
 <div id="root"></div>
 
+<script>
+  const { ipcRenderer } = require('electron');
+
+  const { call, stream } = (() => {
+
+    const createId = (() => {
+      let id = 1;
+      return () => id++;
+    })();
+
+    let calls = {};
+    let streams = {};
+
+    const call = (command, request, callback) => {
+      if (typeof request === 'function') {
+        callback = request;
+        request = undefined;
+      }
+
+      let id = createId();
+
+      calls[id] = callback;
+
+      ipcRenderer.send('grpc', command, id, request);
+    };
+
+    const stream = (command, request, data, end) => {
+      if (typeof request === 'function') {
+        end = data;
+        data = request;
+        request = undefined;
+      }
+
+      let id = createId();
+      streams[id] = [data, end];
+      console.log('T');
+
+      ipcRenderer.send('grpc.stream', command, id, request);
+    };
+
+    ipcRenderer.on('grpc', (sender, command, id, response) => {
+      calls[id].call(undefined, undefined, response);
+
+      delete calls[id];
+    });
+
+    ipcRenderer.on('grpc.error', (sender, command, id, err) => {
+      calls[id].call(undefined, err, undefined);
+
+      delete calls[id];
+    });
+
+    ipcRenderer.on('grpc.data', (sender, command, id, data) => {
+      streams[id][0].call(undefined, data);
+    });
+
+    ipcRenderer.on('grpc.end', (sender, command, id) => {
+      streams[id][1].call();
+
+      delete streams[id];
+    });
+
+    return { call, stream };
+  })();
+</script>
+
 </body>
 </html>
