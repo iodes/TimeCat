@@ -1,6 +1,6 @@
 ﻿namespace TimeCat.Core.Commons
 {
-    enum TimeUnit
+    internal enum TimeUnit
     {
         None = 0,
         Millisecond = 1,

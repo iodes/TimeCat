@@ -1,22 +1,23 @@
-﻿using SQLite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using SQLite;
 
 namespace TimeCat.Core.Database.Models
 {
     [Table("categories")]
     public class Category
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
+        [AutoIncrement]
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets the name of category
+        ///     Gets the name of category
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the color of category label
+        ///     Gets the color of category label
         /// </summary>
         [Ignore]
         public Color Color
