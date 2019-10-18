@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Dynamic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
-using TimeCat.Core;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;

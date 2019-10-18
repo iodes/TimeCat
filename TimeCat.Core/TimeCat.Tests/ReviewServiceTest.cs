@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
 using NUnit.Framework;
-using TimeCat.Core.Commons;
-using TimeCat.Core.Database;
-using TimeCat.Core.Database.Models;
 using TimeCat.Core.Services;
 using TimeCat.Proto.Commons;
 using TimeCat.Proto.Services;
