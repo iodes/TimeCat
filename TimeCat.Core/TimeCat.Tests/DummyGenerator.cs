@@ -14,14 +14,14 @@ using TimeCat.Proto.Commons;
 
 namespace TimeCat.Tests
 {
-    static class DummyGenerator
+    static class Dummies
     {
         private static Dictionary<int, int> totalTimes;
         private static Dictionary<int, List<TimestampRange>> timeRanges;
         private static DateTimeOffset offsetStart;
         private static DateTimeOffset offsetEnd;
         private static bool dummiesGenerated = false;
-        private static async Task CreateDummies(TimeCatDB _db, DateTimeOffset start)
+        private static async Task InsertDummies(TimeCatDB _db, DateTimeOffset start)
         {
             totalTimes = new Dictionary<int, int>();
             timeRanges = new Dictionary<int, List<TimestampRange>>();
@@ -74,7 +74,7 @@ namespace TimeCat.Tests
             offsetEnd = now;
         }
 
-        public static async Task InsertDummies(string dbPath)
+        public static async Task Create(string dbPath)
         {
             if (dummiesGenerated)
                 return;
@@ -86,7 +86,7 @@ namespace TimeCat.Tests
 
             // insert dummies
             offsetStart = DateTimeOffset.UtcNow;
-            await CreateDummies(_db, offsetStart);
+            await InsertDummies(_db, offsetStart);
         }
         public static Dictionary<int, int> TotalUseTimesPerApplications => totalTimes;
 
