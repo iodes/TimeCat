@@ -6,13 +6,23 @@
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
+  
+  <PropertyGroup Label="OS Constants">
+    <DefineConstants Condition="$(OS) == 'Windows_NT'">WINDOWS</DefineConstants>
+    <DefineConstants Condition="$(OS) == 'Linux'">LINUX</DefineConstants>
+    <DefineConstants Condition="$(OS) == 'Unix'">UNIX</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Initialize" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.8.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="SQLite.NET.SQLCipher" Version="2.0.0" />
+    <PackageReference Include="System.Linq.Async" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
