@@ -1,5 +1,7 @@
 import * as React from 'react'
+import { DatePicker } from 'antd'
 import styled from 'styled-components'
+const { RangePicker } = DatePicker
 
 const Wrap = styled.div`
   display: flex;
@@ -54,6 +56,19 @@ const NextButton = styled(Button)`
     }
 `
 
+const CustomRangePicker = styled(RangePicker)`
+  .ant-input {
+    background-color: #30373f;
+    border:0;
+  }
+  .ant-calendar-range-picker-separator, .ant-calendar-range-picker-input{
+    color: #ffff;
+  }
+  .ant-calendar-picker-clear, .ant-calendar-picker-icon {
+    background: #30373f;
+  }
+`
+
 export class DateController extends React.Component {
   constructor(props: {}) {
     super(props)
@@ -63,7 +78,7 @@ export class DateController extends React.Component {
     return (
       <Wrap>
         <PrevButton type="button">이전</PrevButton>
-        <div>지난 30일간의 사용통계</div>
+        <div><CustomRangePicker size={'large'}/></div>
         <NextButton type="button">다음</NextButton>
       </Wrap>
     )

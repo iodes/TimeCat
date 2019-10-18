@@ -4,9 +4,18 @@ import styled from 'styled-components'
 const { Text } = Typography
 
 const Container = styled(Card)`
-  width: 260px;
-  height: 180px;
+  width: 280px;
+  height: 200px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
 `
+
+const Title = styled(Text)`
+  color: #C6C7C8;
+`
+
 const Time = styled('p')`
   margin-top: 30px;
   margin-bottom: 5px;
@@ -25,16 +34,21 @@ const Accent = styled('b')`
   color: #006fff;
 `
 
+const Hour = styled('b')`
+  color: #C6C7C8;
+`
+
 const TotalTime: React.FC = () => {
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Total Time</Text>
+      <Title strong>Total Time</Title>
       <Time>3h 42m</Time>
       <Summary>
-        <Accent>28m</Accent> hour
+        <Accent>28m</Accent> 
+        <Hour> hour</Hour>
       </Summary>
 
     </Container>
