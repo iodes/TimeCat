@@ -5,15 +5,15 @@ import styled from 'styled-components'
 import ActiveHours from '../components/contents/Activity/Hours'
 import TotalTime from '../components/contents/Activity/TotalTime'
 import ActiveWeekdays from '../components/contents/Activity/Weekdays'
-import ProductiveHours from '../components/contents/Productivity/Hours'
-import Score from '../components/contents/Productivity/Score'
-import ProductiveWeekdays from '../components/contents/Productivity/Weekdays'
 import Applications from '../components/contents/Charts/Applications'
 import Projects from '../components/contents/Charts/Projects'
 import Stacked from '../components/contents/Charts/Stacked'
+import ProductiveHours from '../components/contents/Productivity/Hours'
+import Score from '../components/contents/Productivity/Score'
+import ProductiveWeekdays from '../components/contents/Productivity/Weekdays'
 
 const Container = styled('div')`
-  background-color: #eeeeee;
+  background-color: #191e23;
 `
 
 const Content = styled(Col)`
