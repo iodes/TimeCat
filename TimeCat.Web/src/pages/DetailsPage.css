@@ -1,0 +1,28 @@
+.content {
+  border: 1px solid black;
+}
+
+.detail-page-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section.ant-layout {
+  background: rgba(0, 0, 0, 0);
+}
+
+.header.ant-layout-header {
+  background: rgba(0, 0, 0, 0);
+}
+
+.header.ant-layout-header h2 {
+  color: #fff;
+}
+
+.detail-content {
+  margin: 10px;
+}
+
+.sider.ant-layout-sider {
+  background: none;
+}
