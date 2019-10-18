@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TimeCat.Core.Extensions
 {
-    static class AsyncEnumerableExtension
+    internal static class AsyncEnumerableExtension
     {
         public static async Task<T[]> ToArray<T>(this IAsyncEnumerable<T> source)
         {
@@ -15,7 +15,7 @@ namespace TimeCat.Core.Extensions
         {
             var list = new List<T>();
 
-            await foreach (T item in source)
+            await foreach (var item in source)
                 list.Add(item);
 
             return list;
