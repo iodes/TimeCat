@@ -1,18 +1,11 @@
 {
   "name": "timecat.client",
   "version": "1.0.0",
-  "description": "TimeCat Web Client",
-  "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "install": "cd TimeCat.Web && npm install && cd ../TimeCat.Client && npm install",
+    "start": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run start",
+    "build": "cd TimeCat.Web && npm run build"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^6.0.10"
-  },
-  "dependencies": {
-    "google-protobuf": "^3.10.0",
-    "grpc": "^1.23.3"
-  }
+  "license": "ISC"
 }
