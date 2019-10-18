@@ -13,18 +13,6 @@ namespace TimeCat.Tests
     [TestFixture]
     public class ReviewServiceTest : TimeCatTestBase
     {
-        private DateTimeOffset offsetStart;
-        private DateTimeOffset offsetEnd;
-        private Dictionary<int, List<TimestampRange>> timelines;
-
-        public ReviewServiceTest()
-        {
-            Dummies.Create(Path.GetTempFileName()).Wait();
-            offsetStart = Dummies.LogStartsAt;
-            offsetEnd = Dummies.LogEndsAt;
-            timelines = Dummies.TimelinesPerApplications;
-        }
-
         [Test, Description("Tests GetTimeline of TimelineService")]
         public async Task GetTimelineTest()
         {

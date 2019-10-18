@@ -14,16 +14,9 @@ namespace TimeCat.Tests
     [TestFixture]
     public class DashboardServiceTest : TimeCatTestBase
     {
-        private DateTimeOffset offsetStart;
-        private DateTimeOffset offsetEnd;
-        private Dictionary<int, int> totalTimes;
 
         public DashboardServiceTest()
         {
-            Dummies.Create(Path.GetTempFileName()).Wait();
-            offsetStart = Dummies.LogStartsAt;
-            offsetEnd = Dummies.LogEndsAt;
-            totalTimes = Dummies.TotalUseTimesPerApplications;
         }
 
         [Test, Description("Tests GetToalTime of DashboardService")]
