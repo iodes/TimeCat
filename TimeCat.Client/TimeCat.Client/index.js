@@ -26,7 +26,7 @@ let review = new RpcReviewServiceClient('localhost:37013', grpc.credentials.crea
 
 const convertTimestamp = (date) => {
   let timestamp = new Timestamp();
-  timestamp.fromDate(date);
+  timestamp.fromDate(new Date(date));
 
   return timestamp;
 };
@@ -43,29 +43,31 @@ const convertTimestampRange = (range) => {
   return timestampRange;
 };
 
-let commands = {
-  'category.GetCategories': (data, callback) => {
+let calls = {
+  'category.GetCategories': (data, callback, error) => {
     let request = new Empty();
 
     category.getCategories(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
-  'category.CreateCategory': (data, callback) => {
+
+  'category.CreateCategory': (data, callback, error) => {
     let request = new CategoryCreateRequest();
     request.setParentid(data.parentId);
     request.setName(data.name);
     request.setColor(data.color);
 
     category.createCategory(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
-  'category.UpdateCategory': (data, callback) => {
+
+  'category.UpdateCategory': (data, callback, error) => {
     let request = new CategoryUpdateRequest();
     request.setId(data.id);
     request.setName(data.name);
@@ -73,88 +75,103 @@ let commands = {
     request.setParentid(data.parentId);
 
     category.updateCategory(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
-  'category.DeleteCategory': (data, callback) => {
+
+  'category.DeleteCategory': (data, callback, error) => {
     let request = new CategoryDeleteRequest();
     request.setId(data.id);
 
     category.deleteCategory(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
-  'dashboard.GetTotalTime': (data, callback) => {
+
+  'dashboard.GetTotalTime': (data, callback, error) => {
     let request = new TotalTimeRequest();
 
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
     dashboard.getTotalTime(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
-  'dashboard.GetApplications': (data, callback) => {
-    let request = new ApplicationRequest();
 
-    let range = convertTimestampRange(data.range);
-    request.setRange(range);
-
-    dashboard.getApplications(request, (err, response) => {
-      if (err) return;
-
-      callback(response.toObject());
-    });
-  },
-  'main.SetDateRange': (data, callback) => {
+  'main.SetDateRange': (data, callback, error) => {
     let request = new DateRangeRequest();
 
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
     dashboard.setDateRange(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     })
   },
-  'main.Search': (data, callback) => {
+
+  'main.Search': (data, callback, error) => {
     let request = new SearchRequest();
 
     request.setKeyword(data.keyword);
 
     dashboard.search(request, (err, response) => {
-      if (err) return;
-
-      callback(response.toObject());
-    });
-
-  },
-  'review.GetTimeline': (data, callback) => {
-    let request = new TimelineRequest();
-
-    let range = convertTimestampRange(data.range);
-    request.setRange(range);
-
-    review.getTimeline(request, (err, response) => {
-      if (err) return;
+      if (err) return error(err);
 
       callback(response.toObject());
     });
   },
 };
 
-ipcMain.on('grpc', (event, command, request) => {
-  if (!(command in commands)) return;
+const streams = {
+  'dashboard.GetApplications': (data, dataCallback, endCallback) => {
+    let request = new ApplicationRequest();
 
-  commands[command](request, (response) => {
-    event.reply('grpc', command, response);
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    let stream = dashboard.getApplications(request);
+    stream.on('data', (data) => dataCallback(data));
+    stream.on('end', () => endCallback());
+  },
+
+  'review.GetTimeline': (data, dataCallback, endCallback) => {
+    let request = new TimelineRequest();
+
+    let range = convertTimestampRange(data.range);
+    request.setRange(range);
+
+    let stream = review.getTimeline(request);
+    stream.on('data', dataCallback);
+    stream.on('end', endCallback);
+  },
+};
+
+ipcMain.on('grpc', (event, command, id, request) => {
+  if (!(command in calls)) return;
+
+  calls[command](request, (response) => {
+    event.reply('grpc', command, id, response);
+  }, (err) => {
+    event.reply('grpc.error', command, id, err);
+  });
+});
+
+ipcMain.on('grpc.stream', (event, command, id, request) => {
+  if (!(command in streams)) return;
+
+  streams[command](request, (data) => {
+    event.reply('grpc.data', command, id, data);
+  }, () => {
+    event.reply('grpc.end', command, id);
   });
 });
 
