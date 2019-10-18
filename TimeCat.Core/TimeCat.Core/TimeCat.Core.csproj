@@ -6,6 +6,12 @@
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <LangVersion>8</LangVersion>
   </PropertyGroup>
+  
+  <PropertyGroup Label="OS Constants">
+    <DefineConstants Condition="$(OS) == 'Windows_NT'">WINDOWS</DefineConstants>
+    <DefineConstants Condition="$(OS) == 'Linux'">LINUX</DefineConstants>
+    <DefineConstants Condition="$(OS) == 'Unix'">UNIX</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Resources\Initialize" />
