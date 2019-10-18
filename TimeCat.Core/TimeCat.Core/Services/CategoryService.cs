@@ -1,7 +1,7 @@
-﻿using Grpc.Core;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Threading.Tasks;
+using Grpc.Core;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
 using TimeCat.Core.Extensions;
@@ -10,7 +10,7 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    class CategoryService : RpcCategoryService.RpcCategoryServiceBase
+    internal class CategoryService : RpcCategoryService.RpcCategoryServiceBase
     {
         private readonly TimeCatDB _db = TimeCatDB.Instance;
 
@@ -18,17 +18,15 @@ namespace TimeCat.Core.Services
         {
             var response = new CategoryListResponse();
 
-            await foreach (Category category in _db.GetCategoryTree())
-            {
+            await foreach (var category in _db.GetCategoryTree())
                 response.Categories.Add(category.ToRpc());
-            }
 
             return response;
         }
 
         public override async Task<CategoryCreateResponse> CreateCategory(CategoryCreateRequest request, ServerCallContext context)
         {
-            var category = new Category()
+            var category = new Category
             {
                 Name = request.Name,
                 Color = ColorTranslator.FromHtml(request.Color),
@@ -38,9 +36,9 @@ namespace TimeCat.Core.Services
             if (await _db.InsertAsync(category) == false)
                 throw new Exception("Couldn't insert category");
 
-            int rowId = _db.LastInsertRowId();
+            var rowId = _db.LastInsertRowId();
 
-            return new CategoryCreateResponse()
+            return new CategoryCreateResponse
             {
                 Category = (await _db.GetAsync<Category>(rowId)).ToRpc()
             };

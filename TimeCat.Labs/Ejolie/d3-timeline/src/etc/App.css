@@ -1,0 +1,46 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+
+/* d3 */
+svg {
+  shape-rendering: crispEdges;
+}
+
+rect {
+  fill: #eee;
+}
+
+.axis path,
+.axis line {
+  stroke: #e0e0e0;
+}
+
+.axis text {
+  font-size: 11px;
+  fill: black;
+}
+
+/* .axis-Bottom text {
+  transform: rotate(-45deg);
+  text-anchor: end;
+} */

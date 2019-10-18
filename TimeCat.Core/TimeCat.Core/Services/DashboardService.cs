@@ -1,21 +1,102 @@
-﻿using Grpc.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using TimeCat.Proto.Commons;
+using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
+using TimeCat.Core.Commons;
+using TimeCat.Core.Database;
+using TimeCat.Core.Database.Models;
+using TimeCat.Core.Extensions;
 using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    class DashboardService : RpcDashboardService.RpcDashboardServiceBase
+    internal class DashboardService : RpcDashboardService.RpcDashboardServiceBase
     {
-        public override Task<TotalTimeResponse> GetTotalTime(TotalTimeRequest request, ServerCallContext context)
+        private readonly TimeCatDB _db = TimeCatDB.Instance;
+
+        public override async Task<TotalTimeResponse> GetTotalTime(TotalTimeRequest request, ServerCallContext context)
         {
-            throw new NotImplementedException();
+            long totalTime = 0, activeSince = -1;
+
+            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            IOrderedAsyncEnumerable<Activity> activities = from activity in _db.GetActivities()
+                                                           where activity.Time >= request.Range.Start.ToDateTime() && activity.Time <= request.Range.End.ToDateTime()
+                                                           where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                                                           orderby activity.Time
+                                                           select activity;
+
+            await foreach (var activity in activities)
+            {
+                var activityTicks = activity.Time.Ticks;
+
+                switch (activity.Action)
+                {
+                    case ActionType.Active:
+                        if (activeSince == -1)
+                            activeSince = activityTicks;
+
+                        break;
+
+                    case ActionType.Idle:
+                        if (activeSince != -1)
+                        {
+                            totalTime += activityTicks - activeSince;
+                            activeSince = -1;
+                        }
+
+                        break;
+                }
+            }
+
+            return new TotalTimeResponse
+            {
+                TotalTime = Duration.FromTimeSpan(new TimeSpan(totalTime))
+            };
         }
 
-        public override Task GetApplications(ApplicationRequest request, IServerStreamWriter<ApplicationResponse> responseStream, ServerCallContext context)
+        public override async Task GetApplications(ApplicationRequest request, IServerStreamWriter<ApplicationResponse> responseStream, ServerCallContext context)
         {
-            throw new NotImplementedException();
+            var startTimes = new Dictionary<int, DateTimeOffset>();
+
+            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            IOrderedAsyncEnumerable<Activity> activities = from activity in _db.GetActivities()
+                                                           where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
+                                                           where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
+                                                           orderby activity.Time
+                                                           select activity;
+
+            await foreach (var activity in activities)
+                switch (activity.Action)
+                {
+                    case ActionType.Active:
+                        if (!startTimes.ContainsKey(activity.ApplicationId))
+                        {
+                            startTimes.Add(activity.ApplicationId, activity.Time);
+                        }
+                        break;
+
+                    case ActionType.Idle:
+                        if (startTimes.ContainsKey(activity.ApplicationId))
+                        {
+                            var application = await _db.GetAsync<Application>(activity.ApplicationId);
+
+                            var response = new ApplicationResponse
+                            {
+                                Application = application.ToRpc(),
+                                TotalTime = Duration.FromTimeSpan(activity.Time - startTimes[activity.ApplicationId])
+                            };
+
+                            await responseStream.WriteAsync(response);
+                            startTimes.Remove(activity.ApplicationId);
+                        }
+
+                        break;
+
+                    default:
+                        continue;
+                }
         }
     }
 }
