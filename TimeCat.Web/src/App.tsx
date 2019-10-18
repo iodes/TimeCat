@@ -14,6 +14,7 @@ import ReportsPage from './pages/ReportsPage'
 import ReviewPage from './pages/ReviewPage'
 
 import styled, { createGlobalStyle } from 'styled-components'
+import DateController from './components/DateController'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -27,22 +28,26 @@ const GlobalStyle = createGlobalStyle`
 const Nav = styled.nav`
   display: flex;
   flex-direction: row;
-  height: 50px;
+  height: 60px;
   padding: 0 10px;
   background: #22272e;
   border-bottom: 1px solid #2c2a46;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
-  justify-content: space-between;
+  align-items: center;
 `
 
 const MenuList = styled.ul`
   display: flex;
   flex-direction: row;
-  height: 50px;
   list-style: none;
   padding: 0;
   margin: 0;
-  line-height: 50px;
+  flex: 1;
+  color: #d0d1d2;
+`
+
+const WindowMenuList = styled(MenuList)`
+  justify-content: flex-end;
 `
 
 const MenuItem = styled.li`
@@ -50,12 +55,17 @@ const MenuItem = styled.li`
 `
 
 const MenuLink = styled(Link)`
-  color: white;
+  color: #d0d1d2;
   text-decoration: none;
 `
 
 const Main = styled.main`
   padding: 15px;
+`
+
+const WrapDateController = styled.div`
+  flex: 1;
+  margin: 0 20px;
 `
 
 interface IProps {
@@ -91,11 +101,15 @@ class App extends React.Component<IProps> {
                   </MenuItem>
                 </MenuList>
 
-                <MenuList>
+                <WrapDateController>
+                  <DateController />
+                </WrapDateController>
+
+                <WindowMenuList>
                   <MenuItem>Minimize</MenuItem>
                   <MenuItem>Maximize</MenuItem>
                   <MenuItem>Close</MenuItem>
-                </MenuList>
+                </WindowMenuList>
               </Nav>
             </header>
 
