@@ -38,6 +38,8 @@ namespace TimeCat.Core.Services
                         applicationNow = application;
                         break;
                     case ActionType.Active:
+                        if (applicationNow == null)
+                            applicationNow = application;
                         if (!timestampRanges.ContainsKey(applicationNow.Id))
                         {
                             timestampRanges[applicationNow.Id] = new TimestampRange(){Start = Timestamp.FromDateTimeOffset(activity.Time)};

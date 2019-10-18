@@ -78,6 +78,8 @@ namespace TimeCat.Core.Services
                         break;
 
                     case ActionType.Active:
+                        if (applicationNow == null)
+                            applicationNow = application;
                         if (!startTimes.ContainsKey(applicationNow.Id))
                         {
                             startTimes[applicationNow.Id] = activity.Time;
