@@ -70,5 +70,24 @@ namespace TimeCat.Core.Services
             await _db.DeleteAsync<Category>(request.Id);
             return new Empty();
         }
+
+        public override async Task<Empty> MoveApplication(ApplicationMoveRequest request, ServerCallContext context)
+        {
+            var application = await _db.GetAsync<Application>(request.ApplicationId);
+         
+            if (application == null)
+                throw new Exception($"{request.ApplicationId} application not found");
+
+            if (await _db.HasKeyAsync<Category>(request.CategoryId) == false)
+                throw new Exception($"{request.CategoryId} category not found");
+
+            if (application.CategoryId != request.CategoryId)
+            {
+                application.CategoryId = request.CategoryId;
+                await _db.UpdateAsync(application);   
+            }
+
+            return new Empty();
+        }
     }
 }
