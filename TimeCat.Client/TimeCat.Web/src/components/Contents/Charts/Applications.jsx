@@ -53,7 +53,7 @@ const Usage = styled(List.Item.Meta)`
   }
 `
 
-const Applications: React.FC = () => {
+const Applications = () => {
   const [data, setData] = React.useState(ApplicationsData)
   return (
     <Container

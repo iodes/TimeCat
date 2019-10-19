@@ -1,4 +1,4 @@
-export const WeekdaysData: object[] = [
+export const WeekdaysData = [
   {
     idx: 1,
     day: '월',

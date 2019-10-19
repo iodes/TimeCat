@@ -2,10 +2,9 @@ import * as React from 'react'
 import { HashRouter, Link, Route } from 'react-router-dom'
 
 import { connect } from 'react-redux'
-import { bindActionCreators, Dispatch } from 'redux'
+import { bindActionCreators } from 'redux'
 
 import { setKeywordFilter } from './stores/filters/actions'
-import { IFiltersState } from './stores/filters/types'
 import { IRootState } from './stores/index'
 
 import DetailsPage from './pages/DetailsPage'
@@ -68,17 +67,8 @@ const WrapDateController = styled.div`
   margin: 0 20px;
 `
 
-interface IProps {
-  filters: IFiltersState
-  setKeywordFilter: typeof setKeywordFilter
-}
-
-class App extends React.Component<IProps> {
-  constructor(props: IProps) {
-    super(props)
-  }
-
-  public render() {
+class App extends React.Component {
+  render() {
     return (
       <React.Fragment>
         <GlobalStyle />
@@ -127,11 +117,11 @@ class App extends React.Component<IProps> {
   }
 }
 
-const mapStateToProps  = ({ filters }: IRootState) => ({
+const mapStateToProps  = ({ filters }) => ({
   filters,
 })
 
-const dispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+const dispatchToProps = (dispatch) => bindActionCreators({
   setKeywordFilter,
 }, dispatch)
 

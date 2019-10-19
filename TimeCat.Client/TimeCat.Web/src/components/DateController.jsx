@@ -70,11 +70,11 @@ const CustomRangePicker = styled(RangePicker)`
 `
 
 export class DateController extends React.Component {
-  constructor(props: {}) {
+  constructor(props) {
     super(props)
   }
 
-  public render() {
+  render() {
     return (
       <Wrap>
         <PrevButton type="button">이전</PrevButton>

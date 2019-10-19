@@ -11,34 +11,47 @@ const Container = styled(Card)`
     padding: 15px;
   }
 `
+
 const Title = styled(Text)`
   color: #C6C7C8;
 `
 
-const Percent = styled('p')`
+const Time = styled('p')`
   margin-top: 30px;
   margin-bottom: 5px;
   font-weight: bold;
   font-size: 36px;
   text-align: center;
-  color: #4bcd50;
+  color: #006fff;
 `
-const Comment = styled('p')`
-  font-size: 14px;
+
+const Summary = styled('p')`
+  font-size:14px;
   text-align: center;
+`
+
+const Accent = styled('b')`
+  color: #006fff;
+`
+
+const Hour = styled('b')`
   color: #C6C7C8;
 `
 
-const Score: React.FC = () => {
+const TotalTime = () => {
   return (
     <Container
       hoverable
       bordered={false}
     >
-      <Title strong>Productivity Score</Title>
-      <Percent>58%</Percent>
-      <Comment>Keep it up 😀</Comment>
+      <Title strong>Total Time</Title>
+      <Time>3h 42m</Time>
+      <Summary>
+        <Accent>28m</Accent> 
+        <Hour> hour</Hour>
+      </Summary>
+
     </Container>
   )
 }
-export default Score
+export default TotalTime

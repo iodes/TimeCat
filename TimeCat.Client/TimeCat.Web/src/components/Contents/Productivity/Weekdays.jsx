@@ -1,8 +1,8 @@
-import { ResponsiveBar } from '@nivo/bar'
-import { Card, Typography } from 'antd'
 import * as React from 'react'
-import styled from 'styled-components'
+import { Card, Typography } from 'antd'
+import { ResponsiveBar } from '@nivo/bar'
 import { WeekdaysData } from './WeekdaysData'
+import styled from 'styled-components'
 const { Text } = Typography
 
 const Container = styled(Card)`
@@ -21,6 +21,7 @@ const Title = styled(Text)`
 const BarContainer = styled('div')`
   height: 160px;
 `
+
 const theme = {
   axis: {
     ticks: {
@@ -31,33 +32,32 @@ const theme = {
   }
 }
 
-
-const ActiveWeekdays: React.FC = () => {
+const ProductiveWeekdays = () => {
   const [data, setData] = React.useState(WeekdaysData)
   return (
     <Container
       hoverable
       bordered={false}
     >
-      <Title strong>Most active weekdays</Title>
+      <Title strong>Most productive weekdays</Title>
       <BarContainer>
         <ResponsiveBar
           data={data}
           groupMode={'grouped'}
-          keys={['data']}
+          keys={['value']}
           indexBy={'day'}
+          colors={(d) => {
+            return d.data.value >= 0 ? '#8fe563' : '#d05b55'
+          }}
           margin={{top: 10, right: 0, bottom: 50, left: 0}}
           padding={0.1}
-          colors={'#006fff'}
           enableLabel={false}
           enableGridX={false}
           enableGridY={false}
           axisTop={null}
           axisRight={null}
           axisLeft={null}
-          axisBottom={{
-            tickSize: 0,
-          }}
+          axisBottom={{tickSize: 0}}
           animate={true}
           motionStiffness={90}
           motionDamping={15}
@@ -67,5 +67,4 @@ const ActiveWeekdays: React.FC = () => {
     </Container>
   )
 }
-
-export default ActiveWeekdays
+export default ProductiveWeekdays
