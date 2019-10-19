@@ -44,4 +44,4 @@ export const StackedData = [
     'News': 60,
     'Social Media': 107,
   },
-]
+];
