@@ -69,10 +69,10 @@ export class CategoryList extends React.Component<{}, IState> {
 	}
 
 	public onDrop = (info: AntTreeNodeDropEvent) => {
-		if (info.node.props.isLeaf) {
+		console.log(info)
+		if (info.node.props.isLeaf && !info.dropToGap) {
 			return
 		}
-		console.log(info)
 		const dropKey = info.node.props.eventKey || ''
 		const dragKey = info.dragNode.props.eventKey || ''
 		const dropPos = info.node.props.pos.split('-')
@@ -151,7 +151,7 @@ export class CategoryList extends React.Component<{}, IState> {
 			<div>
 				<h4>projects</h4>
 				<div className="category-wrapper">
-					<DirectoryTree
+					<Tree
 						className="draggable-tree"
 						defaultExpandedKeys={this.state.expandedKeys}
 						draggable
@@ -160,7 +160,7 @@ export class CategoryList extends React.Component<{}, IState> {
 						onDrop={this.onDrop}
 					>
 						{loop(this.state.gData)}
-					</DirectoryTree>
+					</Tree>
 				</div>
 			</div>
 		)
