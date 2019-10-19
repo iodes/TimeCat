@@ -9,7 +9,7 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    internal class CommonService : RpcCommonService.RpcCommonServiceBase
+    public class CommonService : RpcCommonService.RpcCommonServiceBase
     {
         public bool IsInitialized { get; private set; }
 
