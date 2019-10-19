@@ -1,8 +1,8 @@
-import { SET_KEYWORD } from './actions'
+import { SET_KEYWORD } from './actions';
 
 const initialState = {
   keyword: '',
-}
+};
 
 const filters = (state = initialState, action) => {
   switch (action.type) {
@@ -10,11 +10,11 @@ const filters = (state = initialState, action) => {
       return {
         ...state,
         keyword: action.keyword,
-      }
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default filters
+export default filters;

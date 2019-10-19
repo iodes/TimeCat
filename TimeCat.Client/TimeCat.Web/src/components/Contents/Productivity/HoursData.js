@@ -35,4 +35,4 @@ export const HoursData = [
     '2': 30,
     '3': 20,
   },
-]
+];

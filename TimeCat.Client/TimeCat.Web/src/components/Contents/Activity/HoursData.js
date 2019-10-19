@@ -35,4 +35,4 @@ export const HoursData = [
     '2': 153,
     '3': 159,
   },
-]
+];
