@@ -5,8 +5,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "lint": "tslint --project tsconfig.json",
-    "lint-fix": "tslint --project tsconfig.json --fix"
+    "lint": "eslint . --ext .js,,jsx",
+    "lint-fix": "eslint . --fix --ext .js,.jsx"
   },
   "dependencies": {
     "@nivo/bar": "^0.59.2",
@@ -20,18 +20,16 @@
     "styled-components": "^4.4.0"
   },
   "devDependencies": {
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-redux": "^7.1.4",
-    "@types/react-router-dom": "^4.3.5",
-    "@types/styled-components": "^4.1.19",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.16.0",
     "file-loader": "^4.2.0",
     "html-webpack-plugin": "^3.2.0",
     "style-loader": "^1.0.0",
-    "ts-loader": "^6.1.2",
-    "tslint": "^5.20.0",
-    "typescript": "^3.6.3",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
