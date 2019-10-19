@@ -1,36 +1,10 @@
 import React from 'react';
 import Timeline from 'react-calendar-timeline';
 import { createGlobalStyle } from 'styled-components';
-import 'react-calendar-timeline/lib/Timeline.css';
+// import 'react-calendar-timeline/lib/Timeline.css';
+import '../assets/styles/Timeline.css';
+
 import moment from 'moment';
-
-const GlobalStyle = createGlobalStyle`
-  .react-calendar-timeline .rct-sidebar .rct-sidebar-row.rct-sidebar-row-even {
-      color: #9A9999;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 12px;
-      font-weight: 600;
-  }
-  
-  .react-calendar-timeline .rct-sidebar .rct-sidebar-row.rct-sidebar-row-odd {
-      color: #9A9999;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 12px;
-      font-weight: 600;
-  }
-  
-  .react-calendar-timeline .rct-calendar-header span {
-    color: #c5c5c5;
-    font-size: 12px;
-  }
-
-  .rct-dateHeader.rct-dataHeader-primary {
-
-  }
-
-`;
 
 const groups = [
   { id: 1, title: 'User', height: 40 },
@@ -128,10 +102,9 @@ const onItemClick = (itemId, e, time) => {
   return;
 };
 
-const TimelineCalendar = () => {
+const Timeline = () => {
   return (
     <>
-      <GlobalStyle />
       <div style={{ backgroundColor: '#0F1416' }}>
         <Timeline
           groups={groups}
@@ -154,4 +127,4 @@ const TimelineCalendar = () => {
   );
 };
 
-export default TimelineCalendar;
+export default Timeline;
