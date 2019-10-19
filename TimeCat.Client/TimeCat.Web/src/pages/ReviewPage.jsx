@@ -1,4 +1,6 @@
-import * as React from 'react'
+import * as React from 'react';
+
+import Timeline from '../components/Timeline';
 
 export class ReviewPage extends React.Component {
   constructor(props) {
@@ -7,7 +9,10 @@ export class ReviewPage extends React.Component {
 
   render() {
     return (
-      <h1>Hello, Review Page</h1>
+      <>
+        <Timeline/>
+        <h1>Hello, Review Page</h1>
+      </>
     )
   }
 }
