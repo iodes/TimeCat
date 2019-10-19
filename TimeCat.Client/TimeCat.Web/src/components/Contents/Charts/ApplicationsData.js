@@ -28,4 +28,4 @@ export const ApplicationsData = [
     usage: '3m',
     value: 5,
   },
-]
+];

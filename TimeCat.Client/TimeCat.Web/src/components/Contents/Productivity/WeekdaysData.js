@@ -27,4 +27,4 @@ export const WeekdaysData = [
     day: '일',
     value: 30,
   },
-]
+];

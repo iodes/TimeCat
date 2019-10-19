@@ -89,4 +89,4 @@ export const ProjectsData = [
     label: 'lisp',
     value: 65,
   },
-]
+];
