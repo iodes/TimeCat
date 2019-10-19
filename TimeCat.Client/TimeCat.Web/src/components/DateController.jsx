@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { DatePicker } from 'antd'
-import styled from 'styled-components'
-const { RangePicker } = DatePicker
+import * as React from 'react';
+import { DatePicker } from 'antd';
+import styled from 'styled-components';
+const { RangePicker } = DatePicker;
 
 const Wrap = styled.div`
   display: flex;
@@ -15,7 +15,7 @@ const Wrap = styled.div`
   font-size: 14px;
   color: #d0d1d2;
   white-space: nowrap;
-`
+`;
 
 const Button = styled.button`
   position: relative;
@@ -42,19 +42,19 @@ const Button = styled.button`
     border: solid transparent;
     border-width: 6px 0;
   }
-`
+`;
 
 const PrevButton = styled(Button)`
     &::before {
       border-right: 6px solid #d0d1d2;
     }
-`
+`;
 
 const NextButton = styled(Button)`
     &::before {
       border-left: 6px solid #d0d1d2;
     }
-`
+`;
 
 const CustomRangePicker = styled(RangePicker)`
   .ant-input {
@@ -67,11 +67,11 @@ const CustomRangePicker = styled(RangePicker)`
   .ant-calendar-picker-clear, .ant-calendar-picker-icon {
     background: #30373f;
   }
-`
+`;
 
 export class DateController extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
@@ -81,8 +81,8 @@ export class DateController extends React.Component {
         <div><CustomRangePicker size={'large'}/></div>
         <NextButton type="button">다음</NextButton>
       </Wrap>
-    )
+    );
   }
 }
 
-export default DateController
+export default DateController;
