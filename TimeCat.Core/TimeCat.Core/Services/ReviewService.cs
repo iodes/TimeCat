@@ -12,7 +12,7 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    class ReviewService : RpcReviewService.RpcReviewServiceBase
+    public class ReviewService : RpcReviewService.RpcReviewServiceBase
     {
         private readonly TimeCatDB _db = TimeCatDB.Instance;
 

@@ -2,7 +2,7 @@
 
 namespace TimeCat.Core.Services
 {
-    internal class DetailService : RpcDetailService.RpcDetailServiceBase
+    public class DetailService : RpcDetailService.RpcDetailServiceBase
     {
         // TODO: override detail rpc
     }
