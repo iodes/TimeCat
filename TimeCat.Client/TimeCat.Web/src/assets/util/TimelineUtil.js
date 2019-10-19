@@ -1,5 +1,5 @@
-import Chart from "chart.js";
-import moment from "moment";
+import Chart from 'chart.js';
+import moment from 'moment';
 
 const helpers = Chart.helpers;
 
@@ -29,11 +29,11 @@ export function momentify(value, options) {
   const parser = options.parser;
   const format = options.parser || options.format;
 
-  if (typeof parser === "function") {
+  if (typeof parser === 'function') {
     return parser(value);
   }
 
-  if (typeof value === "string" && typeof format === "string") {
+  if (typeof value === 'string' && typeof format === 'string') {
     return moment(value, format);
   }
 
@@ -47,7 +47,7 @@ export function momentify(value, options) {
 
   // Labels are in an incompatible moment format and no `parser` has been provided.
   // The user might still use the deprecated `format` option to convert his inputs.
-  if (typeof format === "function") {
+  if (typeof format === 'function') {
     return format(value);
   }
 
