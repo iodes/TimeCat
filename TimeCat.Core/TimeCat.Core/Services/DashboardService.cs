@@ -13,7 +13,7 @@ using Google.Protobuf.WellKnownTypes;
 
 namespace TimeCat.Core.Services
 {
-    class DashboardService : RpcDashboardService.RpcDashboardServiceBase
+    public class DashboardService : RpcDashboardService.RpcDashboardServiceBase
     {
         private readonly TimeCatDB _db = TimeCatDB.Instance;
         public override async Task<TotalTimeResponse> GetTotalTime(TotalTimeRequest request, ServerCallContext context)
