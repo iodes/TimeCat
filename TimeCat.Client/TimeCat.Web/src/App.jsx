@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { setKeywordFilter } from './stores/filters/actions'
-import { IRootState } from './stores/index'
 
 import DetailsPage from './pages/DetailsPage'
 import OverviewPage from './pages/OverviewPage'
