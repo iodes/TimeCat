@@ -2,11 +2,11 @@
 {
     public enum ActionType
     {
-        Focus = 0,
-        Blur = 1,
-        Open = 2,
-        Close = 3,
-        Active = 4,
-        Idle = 5
+        Open = 0,
+        Focus = 1,
+        Active = 2,
+        Idle = 3,
+        Blur = 4,
+        Close = 5
     }
 }
