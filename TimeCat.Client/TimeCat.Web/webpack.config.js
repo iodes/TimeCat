@@ -2,14 +2,14 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.tsx'),
+  entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, '../TimeCat.Client/frontend'),
   },
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.jsx', '.js'],
   },
 
   devtool: 'source-map',
@@ -17,8 +17,8 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        loader: 'ts-loader',
+        test: /\.(js|jsx)?$/,
+        loader: 'babel-loader',
       },
       {
         test: /\.css?$/,
