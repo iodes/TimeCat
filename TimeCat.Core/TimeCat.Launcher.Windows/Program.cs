@@ -13,19 +13,32 @@ namespace TimeCat.Launcher.Windows
         [STAThread]
         static void Main()
         {
-            if (!File.Exists(coreFile) || !File.Exists(uiFile))
+            if (!File.Exists(coreFile))
             {
-                MessageBox.Show("파일을 찾을 수 없습니다", "TimeCat", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("TimeCat을 찾을 수 없습니다", "TimeCat", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
             
             StartCore();
+
+#if DEBUG
+            if (!File.Exists(uiFile))
+                return;
+#endif
+
             StartUI();
         }
 
         private static void StartCore()
         {
+#if DEBUG
             Process.Start(coreFile);
+#else
+            Process.Start(new ProcessStartInfo(coreFile)
+            {
+                CreateNoWindow = true
+            });
+#endif
         }
 
         private static void StartUI()
