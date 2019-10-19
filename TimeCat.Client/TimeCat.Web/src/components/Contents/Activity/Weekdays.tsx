@@ -6,22 +6,40 @@ import { WeekdaysData } from './WeekdaysData'
 const { Text } = Typography
 
 const Container = styled(Card)`
-  width: 260px;
-  height: 180px;
+  width: 280px;
+  height: 200px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
+`
+
+const Title = styled(Text)`
+  color: #C6C7C8;
 `
 
 const BarContainer = styled('div')`
   height: 160px;
 `
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        'fill' : '#ffff'
+      }
+    }
+  }
+}
+
 
 const ActiveWeekdays: React.FC = () => {
   const [data, setData] = React.useState(WeekdaysData)
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Most active weekdays</Text>
+      <Title strong>Most active weekdays</Title>
       <BarContainer>
         <ResponsiveBar
           data={data}
@@ -38,11 +56,12 @@ const ActiveWeekdays: React.FC = () => {
           axisRight={null}
           axisLeft={null}
           axisBottom={{
-            tickSize: 0
+            tickSize: 0,
           }}
           animate={true}
           motionStiffness={90}
           motionDamping={15}
+          theme={theme}
         />
       </BarContainer>
     </Container>

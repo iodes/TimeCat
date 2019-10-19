@@ -8,7 +8,15 @@ const { Text } = Typography
 
 const Container = styled(Card)`
   width: 900px;
-  height: 380px;
+  height: 400px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
+`
+
+const Title = styled(Text)`
+  color: #C6C7C8;
 `
 
 const ContentsContainer = styled(Row)`
@@ -39,9 +47,9 @@ const Projects: React.FC = () => {
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Projects & Tasks</Text>
+      <Title strong>Projects & Tasks</Title>
       <ContentsContainer>
         <PieContainer span={12}>
           <ResponsivePieCanvas

@@ -7,7 +7,15 @@ const { Text } = Typography
 
 const Container = styled(Card)`
   width: 900px;
-  height: 380px;
+  height: 400px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
+`
+
+const Title = styled(Text)`
+  color: #C6C7C8;
 `
 
 const ContentsContainer = styled(Row)`
@@ -30,11 +38,19 @@ const Icon = styled(Avatar)`
 const Name = styled(List.Item.Meta)`
   margin-left:10px;
   margin-top: 5px;
+  .ant-list-item-meta-title {
+    color: #ffffff;
+  }
 `
 
 const Usage = styled(List.Item.Meta)`
   width: 20px;
   height: 20px;
+  font-size: 5px;
+  text-align: right;
+  .ant-list-item-meta-description{
+    color: #808080;
+  }
 `
 
 const Applications: React.FC = () => {
@@ -42,9 +58,9 @@ const Applications: React.FC = () => {
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Applications</Text>
+      <Title strong>Applications</Title>
       <ContentsContainer>
         <PieContainer span = {12}>
           <ResponsivePieCanvas
@@ -68,7 +84,7 @@ const Applications: React.FC = () => {
             size={'small'}
             dataSource={data}
             renderItem={(item) => (
-              <List.Item style = {{padding: 0}}>
+              <List.Item style ={{ borderBottom: '1px solid #282A2C', padding: 0}}>
                 <Icon src={item.src}/>
                 <Name title={item.id}/>
                 <Usage description={item.usage}/>

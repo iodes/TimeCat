@@ -6,22 +6,40 @@ import styled from 'styled-components'
 const { Text } = Typography
 
 const Container = styled(Card)`
-  width: 260px;
-  height: 180px;
+  width: 280px;
+  height: 200px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
+`
+
+const Title = styled(Text)`
+  color: #C6C7C8;
 `
 
 const BarContainer = styled('div')`
   height: 160px;
 `
 
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        'fill' : '#ffff'
+      }
+    }
+  }
+}
+
 const ProductiveWeekdays: React.FC = () => {
   const [data, setData] = React.useState(WeekdaysData)
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
-      <Text strong>Most productive weekdays</Text>
+      <Title strong>Most productive weekdays</Title>
       <BarContainer>
         <ResponsiveBar
           data={data}
@@ -43,6 +61,7 @@ const ProductiveWeekdays: React.FC = () => {
           animate={true}
           motionStiffness={90}
           motionDamping={15}
+          theme={theme}
         />
       </BarContainer>
     </Container>

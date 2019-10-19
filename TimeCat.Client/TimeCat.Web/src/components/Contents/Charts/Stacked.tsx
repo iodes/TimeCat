@@ -8,32 +8,57 @@ const { Text } = Typography
 
 const Container = styled(Card)`
   width: 900px;
-  height: 380px;
+  height: 420px;
+  background-color: #101417;
+  .ant-card-body{
+    padding: 15px;
+  }
 `
 
 const BarContainer = styled('div')`
-  height: 340px;
+  height: 360px;
 `
 
 const Based = styled(Select)`
   width: 150px;
+  .ant-select-selection{
+    border: 0px;
+    background-color: #545657;
+    color: #ffffff;
+  }
 `
 
 const Per = styled(Text)`
   margin-left: 5px;
   margin-right: 5px;
+  color: #C6C7C8;
 `
 
 const Unit = styled(Select)`
   width: 80px;
+  .ant-select-selection{
+    border: 0px;
+    background-color: #545657;
+    color: #ffffff;
+  }
 `
+
+const theme = {
+  axis: {
+    ticks: {
+      text: {
+        'fill' : '#ffff'
+      }
+    }
+  }
+}
 
 const Stacked: React.FC = () => {
   const [data, setData] = React.useState(StackedData)
   return (
     <Container
       hoverable
-      bordered={true}
+      bordered={false}
     >
       <Based
         size={'small'}
@@ -58,7 +83,7 @@ const Stacked: React.FC = () => {
           data={data}
           keys={['Web Browsing', 'Development', 'Media', 'Unassigned', 'News', 'Social Media']}
           indexBy={'period'}
-          margin={{top: 10, right: 0, bottom: 50, left: 0}}
+          margin={{top: 50, right: 0, bottom: 50, left: 0}}
           padding={0.3}
           enableGridX={false}
           enableGridY={false}
@@ -72,6 +97,7 @@ const Stacked: React.FC = () => {
           animate={true}
           motionStiffness={90}
           motionDamping={15}
+          theme={theme}
         />
       </BarContainer>
     </Container>
