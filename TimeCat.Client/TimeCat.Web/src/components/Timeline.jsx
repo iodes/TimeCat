@@ -1,11 +1,11 @@
 import * as React from 'react'
 
 export class Timeline extends React.Component {
-  constructor(props: {}) {
+  constructor(props) {
     super(props)
   }
 
-  public render() {
+  render() {
     return (
       <h2>Hello, Timeline Component</h2>
     )

@@ -33,7 +33,7 @@ const theme = {
 }
 
 
-const ActiveHours: React.FC = () => {
+const ActiveHours = () => {
   const [data, setData] = React.useState(HoursData)
   return (
     <Container

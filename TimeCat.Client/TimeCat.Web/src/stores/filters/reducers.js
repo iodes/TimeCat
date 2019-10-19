@@ -1,10 +1,10 @@
-import { FiltersActionType, IFiltersState, SET_KEYWORD } from './types'
+import { SET_KEYWORD } from './actions'
 
-const initialState: IFiltersState = {
+const initialState = {
   keyword: '',
 }
 
-const filters = (state = initialState, action: FiltersActionType): IFiltersState => {
+const filters = (state = initialState, action) => {
   switch (action.type) {
     case SET_KEYWORD:
       return {
