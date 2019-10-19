@@ -16,6 +16,26 @@ import DateController from './components/DateController';
 import './assets/styles/App.css';
 
 class App extends React.Component {
+  maximizeWindow = () => {
+    let window = electron.remote.getCurrentWindow();
+    if (!window.isMaximized()) {
+      window.maximize();
+    }
+    else {
+      window.unmaximize();
+    }
+  };
+
+  minimizeWindow = () => {
+    let window = electron.remote.getCurrentWindow();
+    window.minimize();
+  };
+
+  closeWindow = () => {
+    let window = electron.remote.getCurrentWindow();
+    window.close();
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -44,13 +64,13 @@ class App extends React.Component {
 
                 <ul className="window-menu">
                   <li className="minimize">
-                    <button type="button">Minimize</button>
+                    <button type="button" onClick={this.minimizeWindow}>Minimize</button>
                   </li>
                   <li className="maximize">
-                    <button type="button">Maximize</button>
+                    <button type="button" onClick={this.maximizeWindow}>Maximize</button>
                   </li>
                   <li className="close">
-                    <button type="button">Close</button>
+                    <button type="button" onClick={this.closeWindow}>Close</button>
                   </li>
                 </ul>
               </nav>
