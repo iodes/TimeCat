@@ -1,62 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
-using Google.Protobuf.WellKnownTypes;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Database;
 using TimeCat.Core.Database.Models;
-using TimeCat.Proto.Commons;
 
 namespace TimeCat.Core
 {
-    static class Dummies
+    internal static class Dummies
     {
-        private static Dictionary<int, int> totalTimes;
-        private static Dictionary<int, List<TimestampRange>> timeRanges;
-        private static DateTimeOffset offsetStart;
-        private static DateTimeOffset offsetEnd;
-        private static bool dummiesGenerated = false;
-        
+        private static T RandomEnumValue<T>()
+        {
+            var v = Enum.GetValues(typeof(T));
+            return (T)v.GetValue(new Random().Next(v.Length));
+        }
+
         private static async Task InsertDummies(DateTimeOffset start)
         {
-            totalTimes = new Dictionary<int, int>();
-            timeRanges = new Dictionary<int, List<TimestampRange>>();
-            TimeSpan unitSpan = new TimeSpan(0, 0, 0, 1);
-            Random rnd = new Random();
+            var rnd = new Random();
 
-            int applicationCount = 30;
-            int categoriesCount = 5, subCategoriesCount = 5;
+            const int applicationCount = 30;
+            const int subCategoriesCount = 5;
+            const int categoriesCount = 5;
 
-            await TimeCatDB.Instance.TransactionAsync(async (s) =>
+            await TimeCatDB.Instance.TransactionAsync(async s =>
             {
                 // 카테고리와 어플리케이션 무작위 생성
                 for (int i = 0; i < categoriesCount; i++)
-                    await TimeCatDB.Instance.InsertAsync(new Category() 
+                    await TimeCatDB.Instance.InsertAsync(new Category
                     {
                         Id = i + 1,
                         Name = $"Awesome Category {i}",
-                        Color = Color.Blue
+                        Color = RandomEnumValue<Color>()
                     });
 
                 for (int i = 0; i < subCategoriesCount; i++)
-                    await TimeCatDB.Instance.InsertAsync(new Category() 
+                    await TimeCatDB.Instance.InsertAsync(new Category
                     {
                         Id = i + categoriesCount + 1,
                         CategoryId = rnd.Next(categoriesCount) + 1,
                         Name = $"Awesome Category {i}",
-                        Color = Color.Aqua 
+                        Color = RandomEnumValue<Color>()
                     });
 
                 for (int i = 0; i < applicationCount; i++)
-                    await TimeCatDB.Instance.InsertAsync(new Application() 
+                    await TimeCatDB.Instance.InsertAsync(new Application
                     { 
-                        CategoryId = rnd.Next(categoriesCount) + 1, 
-                        FullName = $"C:\\TestApp{i}.exe", Id = i + 1, 
-                        IsProductivity = rnd.Next(100) % 2 == 0, 
-                        Name = $"Test Application {i}", 
-                        Icon = "chrome", 
-                        Version = "1.0" 
+                        CategoryId = rnd.Next(categoriesCount) + 1,
+                        FullName = $"C:\\TestApp{i}.exe", Id = i + 1,
+                        IsProductivity = rnd.Next(100) % 2 == 0,
+                        Name = $"Test Application {i}",
+                        Icon = "chrome",
+                        Version = "1.0"
                     });
 
                 // Activity 생성
@@ -66,7 +61,7 @@ namespace TimeCat.Core
                     var lastTime = start.AddMinutes(rnd.Next(0, 43200));
 
                     // - OPEN
-                    await TimeCatDB.Instance.InsertAsync(new Activity()
+                    await TimeCatDB.Instance.InsertAsync(new Activity
                     {
                         Id = logIndex++,
                         ApplicationId = i,
@@ -77,7 +72,7 @@ namespace TimeCat.Core
                     for (int j = 0; j < rnd.Next(1, 200); j++)
                     {
                         // - FOCUS
-                        await TimeCatDB.Instance.InsertAsync(new Activity()
+                        await TimeCatDB.Instance.InsertAsync(new Activity
                         {
                             Id = logIndex++,
                             ApplicationId = i,
@@ -87,7 +82,7 @@ namespace TimeCat.Core
 
                         // - BLUR
                         lastTime = lastTime.AddMinutes(rnd.Next(1, 10));
-                        await TimeCatDB.Instance.InsertAsync(new Activity()
+                        await TimeCatDB.Instance.InsertAsync(new Activity
                         {
                             Id = logIndex++,
                             ApplicationId = i,
@@ -98,7 +93,7 @@ namespace TimeCat.Core
 
                     // - CLOSE
                     lastTime = lastTime.AddMinutes(rnd.Next(1, 10));
-                    await TimeCatDB.Instance.InsertAsync(new Activity()
+                    await TimeCatDB.Instance.InsertAsync(new Activity
                     {
                         Id = logIndex++,
                         ApplicationId = i,
@@ -111,21 +106,7 @@ namespace TimeCat.Core
 
         public static async Task Create()
         {
-            if (dummiesGenerated)
-                return;
-            dummiesGenerated = true;
-
-            // insert dummies
-            offsetStart = DateTimeOffset.UtcNow - new TimeSpan(30,0,0,0);
-            await InsertDummies(offsetStart);
+            await InsertDummies(DateTimeOffset.UtcNow - new TimeSpan(30, 0, 0, 0));
         }
-
-        public static Dictionary<int, int> TotalUseTimesPerApplications => totalTimes;
-
-        public static Dictionary<int, List<TimestampRange>> TimelinesPerApplications => timeRanges;
-        
-        public static DateTimeOffset LogStartsAt => offsetStart;
-        
-        public static DateTimeOffset LogEndsAt => offsetEnd;
     }
 }
