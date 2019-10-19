@@ -1,10 +1,10 @@
-import { ResponsivePieCanvas } from '@nivo/pie'
-import { Card, Col, Icon, Row, Tree, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-import { ProjectsData } from './ProjectsData'
-const { TreeNode } = Tree
-const { Text } = Typography
+import { ResponsivePieCanvas } from '@nivo/pie';
+import { Card, Col, Icon, Row, Tree, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+import { ProjectsData } from './ProjectsData';
+const { TreeNode } = Tree;
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 900px;
@@ -13,37 +13,37 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 
 const Title = styled(Text)`
   color: #C6C7C8;
-`
+`;
 
 const ContentsContainer = styled(Row)`
   width: 780px;
-`
+`;
 
 const PieContainer = styled(Col)`
   height: 320px;
-`
+`;
 
 const TreeContainer = styled(Col)`
   height: 320px;
-`
+`;
 
 const Node = styled(TreeNode)`
   border-bottom: 1px solid #e7e7e7;
   padding: 2px;
-`
+`;
 
 const NodeIcon = styled(Icon)`
   width: 12px;
   height: 12px;
   border-radius: 50%;
-`
+`;
 
 const Projects = () => {
-  const [data, setData] = React.useState(ProjectsData)
+  const [data, setData] = React.useState(ProjectsData);
   return (
     <Container
       hoverable
@@ -144,6 +144,6 @@ const Projects = () => {
         </TreeContainer>
       </ContentsContainer>
     </Container>
-  )
-}
-export default Projects
+  );
+};
+export default Projects;
