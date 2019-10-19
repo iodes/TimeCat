@@ -43,15 +43,17 @@ const convertTimestampRange = (range) => {
   return timestampRange;
 };
 
+const wrap = (callback, error) => (err, response) => {
+  if (err) return error(err);
+
+  callback(response.toObject());
+};
+
 let calls = {
   'category.GetCategories': (data, callback, error) => {
     let request = new Empty();
 
-    category.getCategories(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    category.getCategories(request, wrap(callback, error));
   },
 
   'category.CreateCategory': (data, callback, error) => {
@@ -60,11 +62,7 @@ let calls = {
     request.setName(data.name);
     request.setColor(data.color);
 
-    category.createCategory(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    category.createCategory(request, wrap(callback, error));
   },
 
   'category.UpdateCategory': (data, callback, error) => {
@@ -74,22 +72,14 @@ let calls = {
     request.setColor(data.color);
     request.setParentid(data.parentId);
 
-    category.updateCategory(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    category.updateCategory(request, wrap(callback, error));
   },
 
   'category.DeleteCategory': (data, callback, error) => {
     let request = new CategoryDeleteRequest();
     request.setId(data.id);
 
-    category.deleteCategory(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    category.deleteCategory(request, wrap(callback, error));
   },
 
   'dashboard.GetTotalTime': (data, callback, error) => {
@@ -98,11 +88,7 @@ let calls = {
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
-    dashboard.getTotalTime(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    dashboard.getTotalTime(request, wrap(callback, error));
   },
 
   'main.SetDateRange': (data, callback, error) => {
@@ -111,47 +97,38 @@ let calls = {
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
-    dashboard.setDateRange(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    })
+    dashboard.setDateRange(request, wrap(callback, error))
   },
 
   'main.Search': (data, callback, error) => {
     let request = new SearchRequest();
-
     request.setKeyword(data.keyword);
 
-    dashboard.search(request, (err, response) => {
-      if (err) return error(err);
-
-      callback(response.toObject());
-    });
+    dashboard.search(request, wrap(callback, error));
   },
 };
 
 const streams = {
-  'dashboard.GetApplications': (data, dataCallback, endCallback) => {
+  'dashboard.GetApplications': (data, callback, end) => {
     let request = new ApplicationRequest();
 
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
     let stream = dashboard.getApplications(request);
-    stream.on('data', (data) => dataCallback(data));
-    stream.on('end', () => endCallback());
+    stream.on('data', (data) => callback(data));
+    stream.on('end', () => end());
   },
 
-  'review.GetTimeline': (data, dataCallback, endCallback) => {
+  'review.GetTimeline': (data, callback, end) => {
     let request = new TimelineRequest();
 
     let range = convertTimestampRange(data.range);
     request.setRange(range);
 
     let stream = review.getTimeline(request);
-    stream.on('data', dataCallback);
-    stream.on('end', endCallback);
+    stream.on('data', callback);
+    stream.on('end', end);
   },
 };
 
@@ -169,7 +146,7 @@ ipcMain.on('grpc.stream', (event, command, id, request) => {
   if (!(command in streams)) return;
 
   streams[command](request, (data) => {
-    event.reply('grpc.data', command, id, data);
+    event.reply('grpc.data', command, id, data.toObject());
   }, () => {
     event.reply('grpc.end', command, id);
   });
@@ -192,7 +169,7 @@ async function openMainWindow()
       webPreferences: {
         nodeIntegration: true,
       },
-      titleBarStyle: 'hiddenInset',
+      titleBarStyle: (process.platform === 'darwin') ? undefined : 'hidden',
     });
 
     mainWindow.on('closed', () => {
