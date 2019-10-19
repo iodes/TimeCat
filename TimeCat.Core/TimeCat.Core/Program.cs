@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using TimeCat.Core.Database;
 using TimeCat.Core.Driver;
 using TimeCat.Core.Driver.Windows;
 using TimeCat.Core.Interceptors;
@@ -20,11 +22,10 @@ namespace TimeCat.Core
         private const int port = 37013;
 
         private static Server _server;
-        private static AutoResetEvent _autoResetEvent;
 
         private static IApplicationDriver _applicationDriver;
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -32,9 +33,8 @@ namespace TimeCat.Core
                 .CreateLogger();
 
             ShowInitialize();
-            StartServer(host, port);
+            await StartServer(host, port);
             StartDriver();
-            Wait();
         }
 
         public static void ShowInitialize()
@@ -42,7 +42,7 @@ namespace TimeCat.Core
             Console.WriteLine(ResourceManager.GetText("Initialize"));
         }
 
-        public static void StartServer(string host, int port)
+        public static async Task StartServer(string host, int port)
         {
             var interceptor = new ServerCallInterceptor();
 
@@ -64,9 +64,12 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+
 #if FAKE
             Log.Information("It's fake time!");
-            Dummies.Create().Wait();
+            await TimeCatDB.Instance.Initialize(Environment.Database);
+            await Dummies.Create();
+            Log.Information("Fake DB prepare got succeed");
 #endif
             Log.Information("Listening on {Host}:{Port}", host, port);
         }
@@ -86,14 +89,6 @@ namespace TimeCat.Core
         public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
             _server.ShutdownAsync().Wait();
-            _autoResetEvent.Set();
-        }
-
-        public static void Wait()
-        {
-            _autoResetEvent = new AutoResetEvent(false);
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-            _autoResetEvent.WaitOne();
         }
     }
 }
