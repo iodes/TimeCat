@@ -68,7 +68,7 @@ const WrapDateController = styled.div`
 `
 
 class App extends React.Component {
-  public render() {
+  render() {
     return (
       <React.Fragment>
         <GlobalStyle />

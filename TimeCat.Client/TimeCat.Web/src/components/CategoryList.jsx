@@ -5,7 +5,7 @@ export class CategoryList extends React.Component {
     super(props)
   }
 
-  public render() {
+  render() {
     return (
       <h2>Hello, CategoryList Component</h2>
     )

@@ -5,7 +5,7 @@ export class Timeline extends React.Component {
     super(props)
   }
 
-  public render() {
+  render() {
     return (
       <h2>Hello, Timeline Component</h2>
     )
