@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Driver.EventArg;
 using TimeCat.Core.Driver.Windows.Interops;
@@ -33,11 +36,11 @@ namespace TimeCat.Core.Driver.Windows
         private int _shellMessage;
 
         private readonly Dictionary<string, ActionType> _actionCache = new Dictionary<string, ActionType>();
-        private readonly Dictionary<string, Process> _processCache = new Dictionary<string, Process>();
+        private readonly Dictionary<string, ProcessInfo> _processCache = new Dictionary<string, ProcessInfo>();
+        private readonly Dictionary<string, WindowsApplication> _appCache = new Dictionary<string, WindowsApplication>();
 
-        private Process _foregroundProcess;
+        private ProcessInfo _foregroundProcess;
         private IntPtr _foregroundHandle;
-        private IApplication _foregroundApplication;
 
         public void Start()
         {
@@ -140,7 +143,6 @@ namespace TimeCat.Core.Driver.Windows
                     SetActionType(_foregroundProcess, _foregroundHandle, ActionType.Blur);
                     _foregroundProcess = null;
                     _foregroundHandle = IntPtr.Zero;
-                    _foregroundApplication = null;
                 }
             }
 
@@ -161,14 +163,17 @@ namespace TimeCat.Core.Driver.Windows
                     return;
             }
 
-            SetActionType(Process.GetProcessById(pId), hWnd, ShellEventToActionType(shellEvents));
+            var proessInfo = new ProcessInfo(pId);
+
+            if (!File.Exists(proessInfo.FileName))
+                return;
+
+            SetActionType(proessInfo, hWnd, ShellEventToActionType(shellEvents));
         }
 
-        private void SetActionType(Process process, IntPtr hWnd, ActionType action)
+        private void SetActionType(ProcessInfo process, IntPtr hWnd, ActionType action)
         {
-            string fileName = process.MainModule.FileName;
-
-            if (_actionCache.TryGetValue(fileName, out ActionType prevAction))
+            if (_actionCache.TryGetValue(process.Key, out ActionType prevAction))
             {
                 if (prevAction == ActionType.Close || prevAction == action)
                     return;
@@ -181,10 +186,10 @@ namespace TimeCat.Core.Driver.Windows
             switch (action)
             {
                 case ActionType.Open:
-                    if (_processCache.ContainsKey(fileName))
+                    if (_processCache.ContainsKey(process.Key))
                         return;
                     else
-                        _processCache[fileName] = process;
+                        _processCache[process.Key] = process;
                     break;
 
                 case ActionType.Focus:
@@ -193,7 +198,7 @@ namespace TimeCat.Core.Driver.Windows
                     break;
 
                 case ActionType.Close:
-                    if (!_processCache.ContainsKey(fileName))
+                    if (!_processCache.ContainsKey(process.Key))
                         return;
 
                     int count = 0;
@@ -217,33 +222,36 @@ namespace TimeCat.Core.Driver.Windows
                     if (count > 0)
                         return;
                     
-                    if (fileName == _foregroundProcess.MainModule.FileName)
+                    if (process.Key == _foregroundProcess.Key)
                     {
                         OnApplicationEvent(_foregroundProcess, _foregroundHandle, ActionType.Blur);
                     }
 
-                    _processCache.Remove(fileName);
+                    _processCache.Remove(process.Key);
                     break;
             }
 
             if (action ==  ActionType.Close)
-                _actionCache.Remove(fileName);
+                _actionCache.Remove(process.Key);
             else
-                _actionCache[fileName] = action;
+                _actionCache[process.Key] = action;
 
             OnApplicationEvent(process, hWnd, action);
         }
 
-        private IApplication GetApplication(Process process, IntPtr hWnd)
+        private IApplication GetApplication(ProcessInfo process, IntPtr hWnd)
         {
-            return null; // TODO
+            if (_appCache.TryGetValue(process.Key, out WindowsApplication application))
+                return application;
+
+            application = WindowsApplication.FromPath(process.Key);
+            _appCache[process.Key] = application;
+
+            return application;
         }
 
-        private void OnApplicationEvent(Process process, IntPtr hWnd, ActionType actionType)
+        private void OnApplicationEvent(ProcessInfo process, IntPtr hWnd, ActionType actionType)
         {
-            string title = User32.GetWindowText(hWnd);
-            Log.Information("[{actionType}] {Title} (PID: {pId}) {f}", actionType, title, process.Id, process.MainModule.FileName);
-
             StateChanged?.Invoke(this, new StateChangedEventArgs(GetApplication(process, hWnd), actionType));
         }
 
@@ -279,7 +287,7 @@ namespace TimeCat.Core.Driver.Windows
             Stop();
         }
 
-        public static IntPtr GetDesktopWindow(DesktopWindow desktopWindow)
+        private static IntPtr GetDesktopWindow(DesktopWindow desktopWindow)
         {
             IntPtr _ProgMan = User32.GetShellWindow();
             IntPtr _SHELLDLL_DefViewParent = _ProgMan;
@@ -320,12 +328,53 @@ namespace TimeCat.Core.Driver.Windows
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static string GetProcessName(int pid)
+        {
+            var processHandle = Kernel32.OpenProcess(0x0400 | 0x0010, false, pid);
+
+            if (processHandle == IntPtr.Zero)
+            {
+                return null;
+            }
+
+            const int lengthSb = 4000;
+
+            var sb = new StringBuilder(lengthSb);
+
+            string result = null;
+
+            if (Kernel32.GetModuleFileNameEx(processHandle, IntPtr.Zero, sb, lengthSb) > 0)
+            {
+                result = sb.ToString();
+            }
+
+            Kernel32.CloseHandle(processHandle);
+
+            return result;
+        }
+
         public enum DesktopWindow
         {
             ProgMan,
             SHELLDLL_DefViewParent,
             SHELLDLL_DefView,
             SysListView32
+        }
+
+        class ProcessInfo
+        {
+            public int Id { get; }
+
+            public string FileName { get; }
+
+            public string Key => FileName ?? $"$PID_{Id}";
+
+            public ProcessInfo(int id)
+            {
+                Id = id;
+                FileName = GetProcessName(id);
+            }
         }
     }
 }
