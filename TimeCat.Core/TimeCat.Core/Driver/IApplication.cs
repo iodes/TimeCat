@@ -2,8 +2,6 @@
 {
     public interface IApplication
     {
-        int ProcessId { get; }
-
         string Name { get; }
 
         string FullName { get; }
