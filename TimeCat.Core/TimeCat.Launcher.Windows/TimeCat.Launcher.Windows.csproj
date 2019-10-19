@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <Company>TimeCat</Company>
+        <Product>TimeCat</Product>
+        <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+        <OutputPath>$(SolutionDir)..\Build</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+</Project>
