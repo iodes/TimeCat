@@ -6,11 +6,14 @@ namespace TimeCat.Core.Driver.Windows
 {
     public class WindowsApplicationDriver : IApplicationDriver
     {
-        public event EventHandler<StateChangedEventArgs> StateChanged;
-
         public bool IsRunning { get; }
 
-        public void Dispose() => Stop();
+        public event EventHandler<StateChangedEventArgs> StateChanged;
+
+        public void Dispose()
+        {
+            Stop();
+        }
 
         public void Start()
         {
@@ -22,8 +25,10 @@ namespace TimeCat.Core.Driver.Windows
             throw new NotImplementedException();
         }
 
-        private void RaiseStateChanged(IApplication application, ActionType stateType) =>
+        private void RaiseStateChanged(IApplication application, ActionType stateType)
+        {
             RaiseStateChanged(new StateChangedEventArgs(application, stateType));
+        }
 
         private void RaiseStateChanged(StateChangedEventArgs eArgs)
         {
