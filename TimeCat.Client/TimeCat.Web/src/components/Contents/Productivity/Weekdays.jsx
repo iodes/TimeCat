@@ -32,7 +32,7 @@ const theme = {
   }
 }
 
-const ProductiveWeekdays: React.FC = () => {
+const ProductiveWeekdays = () => {
   const [data, setData] = React.useState(WeekdaysData)
   return (
     <Container

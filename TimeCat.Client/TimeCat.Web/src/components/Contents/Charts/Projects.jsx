@@ -42,7 +42,7 @@ const NodeIcon = styled(Icon)`
   border-radius: 50%;
 `
 
-const Projects: React.FC = () => {
+const Projects = () => {
   const [data, setData] = React.useState(ProjectsData)
   return (
     <Container

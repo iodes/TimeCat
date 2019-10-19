@@ -22,7 +22,7 @@ const Content = styled(Col)`
   justify-content: center;
 `
 
-const OverviewPage: React.FC = () => {
+const OverviewPage = () => {
   return (
     <Container>
       <Row>

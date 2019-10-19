@@ -1,4 +1,4 @@
-export const HoursData: object[] = [
+export const HoursData = [
   {
     'label': '12AM',
     '-2': 132,

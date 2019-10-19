@@ -38,7 +38,7 @@ const Hour = styled('b')`
   color: #C6C7C8;
 `
 
-const TotalTime: React.FC = () => {
+const TotalTime = () => {
   return (
     <Container
       hoverable
