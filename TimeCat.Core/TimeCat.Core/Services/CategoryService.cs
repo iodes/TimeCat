@@ -10,7 +10,7 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core.Services
 {
-    internal class CategoryService : RpcCategoryService.RpcCategoryServiceBase
+    public class CategoryService : RpcCategoryService.RpcCategoryServiceBase
     {
         private readonly TimeCatDB _db = TimeCatDB.Instance;
 
