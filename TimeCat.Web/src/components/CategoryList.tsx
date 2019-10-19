@@ -1,5 +1,4 @@
 import * as React from 'react'
-import CategoryItem from './CategoryItem'
 import { AntTreeNodeSelectedEvent } from 'antd/es/tree'
 import { Tree } from 'antd'
 import { AntTreeNodeDropEvent } from 'antd/es/tree/Tree'
