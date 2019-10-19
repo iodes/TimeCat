@@ -72,6 +72,10 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+#if FAKE
+            Log.Information("It's fake time!");
+            Dummies.Create().Wait();
+#endif
             Log.Information("Listening on {Host}:{Port}", host, port);
         }
 
