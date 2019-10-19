@@ -7,7 +7,7 @@ using TimeCat.Core.Database.Models;
 
 namespace TimeCat.Core.Database
 {
-    internal sealed class TimeCatDB : SQLiteDatabase
+    public sealed class TimeCatDB : SQLiteDatabase
     {
         protected override void OnInitialize(SQLiteConnection connection)
         {
@@ -55,7 +55,7 @@ namespace TimeCat.Core.Database
         #region Singleton
         private static TimeCatDB _instance;
 
-        public static TimeCatDB Instance => _instance ?? (_instance = new TimeCatDB());
+        public static TimeCatDB Instance => _instance ??= new TimeCatDB();
 
         private TimeCatDB()
         {
