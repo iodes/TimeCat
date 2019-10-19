@@ -1,9 +1,9 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using System;
+﻿using System;
+using Google.Protobuf.WellKnownTypes;
 
 namespace TimeCat.Core.Utility
 {
-    static class TimestampUtility
+    internal static class TimestampUtility
     {
         public static Timestamp Now => Timestamp.FromDateTimeOffset(DateTimeOffset.UtcNow);
     }

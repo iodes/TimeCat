@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Net.Mime;
 using TimeCat.Core.Commons;
 using TimeCat.Core.Extensions;
 using TimeCat.Core.Database;
@@ -53,41 +54,68 @@ namespace TimeCat.Core.Services
 
         public override async Task GetApplications(ApplicationRequest request, IServerStreamWriter<ApplicationResponse> responseStream, ServerCallContext context)
         {
+            var totalTimes = new Dictionary<int, TimeSpan>();
             var startTimes = new Dictionary<int, DateTimeOffset>();
 
-            // 요청받은 기간 내의 Active 및 Idle activity만 가져온다
+            // 요청받은 기간 내의 activity만 가져온다.
             var activities = from activity in _db.GetActivities()
-                where activity.Time > request.Range.Start.ToDateTime() && activity.Time < request.Range.End.ToDateTime()
-                where activity.Action == ActionType.Active || activity.Action == ActionType.Idle
-                orderby activity.Time
-                select activity;
+                             where activity.Time >= request.Range.Start.ToDateTime() && activity.Time <= request.Range.End.ToDateTime()
+                             where activity.Action == ActionType.Active || activity.Action == ActionType.Idle ||
+                                   activity.Action == ActionType.Blur || activity.Action == ActionType.Focus
+                             orderby activity.Time
+                             select activity;
+
+            Application applicationNow = null;
 
             await foreach (var activity in activities)
             {
+                var application = await _db.GetAsync<Application>(activity.ApplicationId);
+
                 switch (activity.Action)
                 {
+                    case ActionType.Focus:
+                        applicationNow = application;
+                        break;
+
                     case ActionType.Active:
-                        if (!startTimes.ContainsKey(activity.ApplicationId))
+                        if (applicationNow == null)
+                            applicationNow = application;
+                        if (!startTimes.ContainsKey(applicationNow.Id))
                         {
-                            startTimes.Add(activity.ApplicationId, activity.Time);
+                            startTimes[applicationNow.Id] = activity.Time;
                         }
+
                         break;
+
+                    case ActionType.Blur:
                     case ActionType.Idle:
-                        if (startTimes.ContainsKey(activity.ApplicationId))
+                        if (startTimes.ContainsKey(applicationNow.Id))
                         {
-                            var application = await _db.GetAsync<Application>(activity.ApplicationId);
-                            var response = new ApplicationResponse()
+                            if (!totalTimes.ContainsKey(applicationNow.Id))
                             {
-                                Application = application.ToRpc(),
-                                TotalTime = Duration.FromTimeSpan(activity.Time - startTimes[activity.ApplicationId])
-                            };
-                            await responseStream.WriteAsync(response);
-                            startTimes.Remove(activity.ApplicationId);
+                                totalTimes[applicationNow.Id] = TimeSpan.Zero;
+                            }
+
+                            totalTimes[applicationNow.Id] += activity.Time - startTimes[applicationNow.Id];
+                            startTimes.Remove(applicationNow.Id);
                         }
+
                         break;
+
                     default:
                         continue;
                 }
+            }
+
+            foreach (var i in totalTimes)
+            {
+                var response = new ApplicationResponse()
+                {
+                    Application = (await _db.GetAsync<Application>(i.Key)).ToRpc(),
+                    TotalTime = Duration.FromTimeSpan(i.Value)
+                };
+
+                await responseStream.WriteAsync(response);
             }
         }
     }

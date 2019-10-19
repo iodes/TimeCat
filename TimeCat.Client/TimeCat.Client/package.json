@@ -4,15 +4,69 @@
   "description": "TimeCat Web Client",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "npm rebuild --target=6.0.0 --runtime=electron --dist-url=https://atom.io/download/electron",
+    "build": "electron-builder",
+    "build:osx": "electron-builder --mac",
+    "build:linux": "npm run build:linux32 && npm run build:linux64",
+    "build:linux32": "electron-builder --linux --ia32",
+    "build:linux64": "electron-builder --linux --x64",
+    "build:win": "npm run build:win32 && npm run build:win64",
+    "build:win32": "electron-builder --win --ia32",
+    "build:win64": "electron-builder --win --x64"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^6.0.10"
+    "electron": "^6.0.10",
+    "electron-builder": "^21.2.0"
   },
   "dependencies": {
     "google-protobuf": "^3.10.0",
-    "grpc": "^1.23.3"
+    "grpc": "1.23.3"
+  },
+  "build": {
+    "productName": "TimeCat.ui",
+    "appId": "com.kodnix.ui.timecat",
+    "artifactName": "${productName}.${ext}",
+    "asar": true,
+    "protocols": {
+      "name": "timecat.ui",
+      "schemes": [
+        "timecat.ui"
+      ]
+    },
+    "mac": {
+      "target": [
+        "default"
+      ]
+    },
+    "dmg": {
+      "title": "TimeCat.ui"
+    },
+    "win": {
+      "target": [
+        "zip",
+        "nsis"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm",
+        "zip",
+        "tar.gz"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "buildResources": "resources/installer/",
+      "output": "../../Build/${os}",
+      "app": "."
+    }
   }
 }

@@ -1,11 +1,10 @@
-﻿using Grpc.Core;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
@@ -13,15 +12,15 @@ using TimeCat.Proto.Services;
 
 namespace TimeCat.Core
 {
-    class Program
+    internal class Program
     {
-        const string host = "localhost";
-        const int port = 37013;
+        private const string host = "localhost";
+        private const int port = 37013;
 
-        static Server _server;
-        static AutoResetEvent _autoResetEvent;
+        private static Server _server;
+        private static AutoResetEvent _autoResetEvent;
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -33,21 +32,21 @@ namespace TimeCat.Core
             Wait();
         }
 
-        static void ShowInitialize()
+        public static void ShowInitialize()
         {
             Console.WriteLine(ResourceManager.GetText("Initialize"));
         }
 
-        static void StartServer(string host, int port)
+        public static void StartServer(string host, int port)
         {
-            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
-            {
-                new KeyCertificatePair(
-                    ResourceManager.GetText("Certificates.timecat.crt"),
-                    ResourceManager.GetText("Certificates.timecat.key")
-                )
-            });
-            
+//            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
+//            {
+//                new KeyCertificatePair(
+//                    ResourceManager.GetText("Certificates.timecat.crt"),
+//                    ResourceManager.GetText("Certificates.timecat.key")
+//                )
+//            });
+
             var interceptor = new ServerCallInterceptor();
 
             _server = new Server
@@ -63,7 +62,7 @@ namespace TimeCat.Core
                 },
                 Ports =
                 {
-                    new ServerPort(host, port, credentials)
+                    new ServerPort(host, port, ServerCredentials.Insecure)
                 }
             };
 
@@ -71,17 +70,17 @@ namespace TimeCat.Core
             Log.Information("Listening on {Host}:{Port}", host, port);
         }
 
-        static void Wait()
+        public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
+        {
+            _server.ShutdownAsync().Wait();
+            _autoResetEvent.Set();
+        }
+
+        public static void Wait()
         {
             _autoResetEvent = new AutoResetEvent(false);
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _autoResetEvent.WaitOne();
-        }
-
-        static void CurrentDomain_ProcessExit(object sender, EventArgs e)
-        {
-            _server.ShutdownAsync().Wait();
-            _autoResetEvent.Set();
         }
     }
 }
