@@ -28,7 +28,7 @@ const z = 1
 const gData: IGData[] = []
 
 // tslint:disable-next-line:variable-name
-const generateData = (_level: number, _preKey: string, _tns: IGData[]) => {
+const generateData = (_level: number, _preKey?: string, _tns?: IGData[]) => {
 	const preKey = _preKey || '0'
 	const tns = _tns || gData
 
@@ -49,11 +49,11 @@ const generateData = (_level: number, _preKey: string, _tns: IGData[]) => {
 		return generateData(level, key, tns[index].children)
 	})
 }
-
+generateData(z)
 export class CategoryList extends React.Component<{}, IState> {
 	public state = {
 		gData,
-		expandedKeys: ['0-0', '0-0-0', '0-0-0-0'],
+		expandedKeys: [],
 	}
 
 	constructor(props: {}) {
@@ -64,9 +64,9 @@ export class CategoryList extends React.Component<{}, IState> {
 		// tslint:disable-next-line:no-console
 		console.log(info)
 		// expandedKeys 需要受控时设置
-		// this.setState({
-		//   expandedKeys: info.expandedKeys,
-		// });
+		this.setState({
+			expandedKeys: info.expandedKeys,
+		})
 	}
 
 	public onDrop = (info: AntTreeNodeDropEvent) => {
@@ -105,7 +105,7 @@ export class CategoryList extends React.Component<{}, IState> {
 				item.children.push(dragObj)
 			})
 		} else if (
-			(info.node.props.children || []).length > 0 && // Has children
+			((info.node.props.children || []) as React.ReactNodeArray).length > 0 && // Has children
 			info.node.props.expanded && // Is expanded
 			dropPosition === 1 // On the bottom gap
 		) {
@@ -143,14 +143,14 @@ export class CategoryList extends React.Component<{}, IState> {
 						</TreeNode>
 					)
 				}
-				return <TreeNode key={item.key} title={item.title} />
+				return <TreeNode key={item.key} title={item.title} isLeaf />
 			})
 
 		return (
 			<div>
 				<h4>projects</h4>
 				<div className="category-wrapper">
-					<Tree
+					<DirectoryTree
 						className="draggable-tree"
 						defaultExpandedKeys={this.state.expandedKeys}
 						draggable
@@ -159,7 +159,7 @@ export class CategoryList extends React.Component<{}, IState> {
 						onDrop={this.onDrop}
 					>
 						{loop(this.state.gData)}
-					</Tree>
+					</DirectoryTree>
 				</div>
 			</div>
 		)
