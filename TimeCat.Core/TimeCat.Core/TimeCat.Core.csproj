@@ -5,12 +5,15 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <LangVersion>8</LangVersion>
+    <OutputPath>$(SolutionDir)..\Build</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   
-  <PropertyGroup Label="OS Constants">
+  <PropertyGroup Label="Constants">
     <DefineConstants Condition="$(OS) == 'Windows_NT'">WINDOWS</DefineConstants>
     <DefineConstants Condition="$(OS) == 'Linux'">LINUX</DefineConstants>
     <DefineConstants Condition="$(OS) == 'Unix'">UNIX</DefineConstants>
+    <DefineConstants Condition="$(FAKE) == 'true'">FAKE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +25,7 @@
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
     <PackageReference Include="SQLite.NET.SQLCipher" Version="2.0.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
     <PackageReference Include="System.Linq.Async" Version="4.0.0" />
   </ItemGroup>
 
@@ -33,5 +37,17 @@
     <EmbeddedResource Include="..\..\Certificate\timecat.crt" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="..\..\Certificate\timecat.key" Link="Resources\Certificates\%(FileName)%(Extension)" />
     <EmbeddedResource Include="Resources\Initialize" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(OS) != 'Windows_NT'">
+    <None Include="Driver\Windows\**" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(OS) != 'Linux'">
+    <None Include="Driver\Linux\**" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="$(OS) != 'Unix'">
+    <None Include="Driver\Unix\**" />
   </ItemGroup>
 </Project>

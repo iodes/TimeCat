@@ -10,6 +10,7 @@ service RpcCategoryService {
 	rpc CreateCategory (CategoryCreateRequest) returns (CategoryCreateResponse);
 	rpc UpdateCategory (CategoryUpdateRequest) returns (Empty);
 	rpc DeleteCategory (CategoryDeleteRequest) returns (Empty);
+	rpc MoveApplication (ApplicationMoveRequest) returns (Empty);
 }
 
 message CategoryListResponse {
@@ -35,4 +36,9 @@ message CategoryUpdateRequest {
 
 message CategoryDeleteRequest {
 	int32 id = 1;
+}
+
+message ApplicationMoveRequest {
+	int32 categoryId = 1;
+	int32 applicationId = 2;
 }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using TimeCat.Core.Database;
+using TimeCat.Core.Driver;
+using TimeCat.Core.Driver.Windows;
 using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
@@ -20,7 +24,9 @@ namespace TimeCat.Core
         private static Server _server;
         private static AutoResetEvent _autoResetEvent;
 
-        private static void Main(string[] args)
+        private static IApplicationDriver _applicationDriver;
+
+        private static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -28,8 +34,11 @@ namespace TimeCat.Core
                 .CreateLogger();
 
             ShowInitialize();
-            StartServer(host, port);
-            Wait();
+            await StartServer(host, port);
+            StartDriver();
+            
+            if (_applicationDriver == null)
+                Wait();
         }
 
         public static void ShowInitialize()
@@ -37,16 +46,8 @@ namespace TimeCat.Core
             Console.WriteLine(ResourceManager.GetText("Initialize"));
         }
 
-        public static void StartServer(string host, int port)
+        public static async Task StartServer(string host, int port)
         {
-//            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
-//            {
-//                new KeyCertificatePair(
-//                    ResourceManager.GetText("Certificates.timecat.crt"),
-//                    ResourceManager.GetText("Certificates.timecat.key")
-//                )
-//            });
-
             var interceptor = new ServerCallInterceptor();
 
             _server = new Server
@@ -67,7 +68,36 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+
+#if FAKE
+            Log.Information("It's fake time!");
+            await TimeCatDB.Instance.Initialize(Environment.Database);
+            await Dummies.Create();
+            Log.Information("Fake DB prepare got succeed");
+#endif
             Log.Information("Listening on {Host}:{Port}", host, port);
+        }
+
+        private static void StartDriver()
+        {
+#if WINDOWS
+            _applicationDriver = new WindowsApplicationDriver();
+#elif LINUX
+            // LINUX
+#elif UNIX
+            // UNIX
+#endif
+
+            if (_applicationDriver != null)
+            {
+                _applicationDriver.StateChanged += Driver_StateChanged;
+                _applicationDriver.Start();   
+            }
+        }
+
+        private static void Driver_StateChanged(object sender, Driver.EventArg.StateChangedEventArgs e)
+        {
+            Log.Information("[{ActionType}] {ApplicationName}", e.StateType, e.Application.FullName);
         }
 
         public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
@@ -75,7 +105,7 @@ namespace TimeCat.Core
             _server.ShutdownAsync().Wait();
             _autoResetEvent.Set();
         }
-
+        
         public static void Wait()
         {
             _autoResetEvent = new AutoResetEvent(false);

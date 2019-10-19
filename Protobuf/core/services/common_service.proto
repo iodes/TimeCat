@@ -6,7 +6,7 @@ import "core/common.proto";
 import "google/protobuf/timestamp.proto";
 
 service RpcCommonService {
-    rpc Initialize (InitializeRequest) returns (InitializeResponse);
+	rpc Initialize (InitializeRequest) returns (InitializeResponse);
 	rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
 }
 

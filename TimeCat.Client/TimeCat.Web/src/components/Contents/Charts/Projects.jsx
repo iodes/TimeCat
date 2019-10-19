@@ -29,10 +29,11 @@ const PieContainer = styled(Col)`
 
 const TreeContainer = styled(Col)`
   height: 320px;
+  overflow-y: scroll;
 `;
 
 const Node = styled(TreeNode)`
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid #282A2C;
   padding: 2px;
 `;
 
@@ -41,6 +42,19 @@ const NodeIcon = styled(Icon)`
   height: 12px;
   border-radius: 50%;
 `;
+
+const ProjectContainer = styled('div')`
+  display: inline-flex;
+`
+
+const Project = styled('div')`
+  color: white;
+  width: 200px;
+`
+
+const Time = styled('div')`
+  color: #808080;
+`
 
 const Projects = () => {
   const [data, setData] = React.useState(ProjectsData);
@@ -66,14 +80,14 @@ const Projects = () => {
           />
         </PieContainer>
         <TreeContainer span={12}>
-          <Tree showIcon>
+          <Tree showIcon style = {{color: '#808080'}}>
             <Node
               icon = {
                 <NodeIcon
                   style={{backgroundColor: '#eebc85'}}
                 />
               }
-              title={'Sample Projects'}
+              title={<ProjectContainer><Project>Sample Project</Project><Time>3h 2m</Time></ProjectContainer>}
               key={'0-0'}
             >
               <Node
@@ -82,7 +96,7 @@ const Projects = () => {
                     style={{backgroundColor: '#faef89'}}
                   />
                 }
-                title={'Development'}
+                title={<ProjectContainer><Project>Development</Project><Time>3h 2m</Time></ProjectContainer>}
                 key={'0-0-0'}
               />
               <Node
@@ -91,7 +105,7 @@ const Projects = () => {
                     style={{backgroundColor: '#f4d887'}}
                   />
                 }
-                title={'Media'}
+                title={<ProjectContainer><Project>Media</Project><Time>3h 2m</Time></ProjectContainer>}
                 key={'0-0-1'}
               />
               <Node
@@ -100,7 +114,7 @@ const Projects = () => {
                     style={{backgroundColor: '#8589fb'}}
                   />
                 }
-                title={'Office & Business'}
+                title={<ProjectContainer><Project>Office</Project><Time>3h 2m</Time></ProjectContainer>}
                 key={'0-0-2'}
               />
               <Node
@@ -109,7 +123,7 @@ const Projects = () => {
                     style={{backgroundColor: '#df87bb'}}
                   />
                 }
-                title={'File Management'}
+                title={<ProjectContainer><Project>File Management</Project><Time>3h 2m</Time></ProjectContainer>}
                 key={'0-0-3'}
               />
               <Node
@@ -118,8 +132,8 @@ const Projects = () => {
                     style={{backgroundColor: 'green'}}
                   />
                 }
-                title={'Reading & Writing'}
-                key={'0-0-0'}
+                title={<ProjectContainer><Project>Reading</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-4'}
               />
               <Node
                 icon = {
@@ -127,8 +141,62 @@ const Projects = () => {
                     style={{backgroundColor: 'black'}}
                   />
                 }
-                title={'Graphics'}
+                title={<ProjectContainer><Project>Graphics</Project><Time>3h 2m</Time></ProjectContainer>}
                 key={'0-0-5'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: '#faef89'}}
+                  />
+                }
+                title={<ProjectContainer><Project>Development</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-6'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: '#f4d887'}}
+                  />
+                }
+                title={<ProjectContainer><Project>Media</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-7'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: '#8589fb'}}
+                  />
+                }
+                title={<ProjectContainer><Project>Office</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-8'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: '#df87bb'}}
+                  />
+                }
+                title={<ProjectContainer><Project>File Management</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-9'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: 'green'}}
+                  />
+                }
+                title={<ProjectContainer><Project>Reading</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-10'}
+              />
+              <Node
+                icon = {
+                  <NodeIcon
+                    style={{backgroundColor: 'black'}}
+                  />
+                }
+                title={<ProjectContainer><Project>Graphics</Project><Time>3h 2m</Time></ProjectContainer>}
+                key={'0-0-11'}
               />
             </Node>
             <Node
@@ -137,7 +205,7 @@ const Projects = () => {
                     style={{backgroundColor: '#d4d4d4'}}
                   />
                 }
-                title={'(No Project)'}
+                title={<ProjectContainer><Project>(No Project)</Project><Time></Time></ProjectContainer>}
                 key={'0-1'}
             />
           </Tree>

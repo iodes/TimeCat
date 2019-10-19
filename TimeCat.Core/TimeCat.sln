@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TimeCat.Tests", "TimeCat.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCat.Proto", "TimeCat.Proto\TimeCat.Proto.csproj", "{170815F4-F853-474D-9826-9F2BA8FF44FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeCat.Launcher.Windows", "TimeCat.Launcher.Windows\TimeCat.Launcher.Windows.csproj", "{AE75104E-BF32-4074-8231-FC1F447A36D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{170815F4-F853-474D-9826-9F2BA8FF44FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{170815F4-F853-474D-9826-9F2BA8FF44FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{170815F4-F853-474D-9826-9F2BA8FF44FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE75104E-BF32-4074-8231-FC1F447A36D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE75104E-BF32-4074-8231-FC1F447A36D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE75104E-BF32-4074-8231-FC1F447A36D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE75104E-BF32-4074-8231-FC1F447A36D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
