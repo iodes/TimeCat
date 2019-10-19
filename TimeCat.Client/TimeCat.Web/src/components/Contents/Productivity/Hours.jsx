@@ -32,7 +32,7 @@ const theme = {
   }
 }
 
-const ProductiveHours: React.FC = () => {
+const ProductiveHours = () => {
   const [data, setData] = React.useState(HoursData)
   return (
     <Container

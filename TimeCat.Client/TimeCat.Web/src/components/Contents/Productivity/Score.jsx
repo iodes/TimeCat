@@ -29,7 +29,7 @@ const Comment = styled('p')`
   color: #C6C7C8;
 `
 
-const Score: React.FC = () => {
+const Score = () => {
   return (
     <Container
       hoverable

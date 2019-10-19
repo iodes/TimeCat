@@ -53,7 +53,7 @@ const theme = {
   }
 }
 
-const Stacked: React.FC = () => {
+const Stacked = () => {
   const [data, setData] = React.useState(StackedData)
   return (
     <Container

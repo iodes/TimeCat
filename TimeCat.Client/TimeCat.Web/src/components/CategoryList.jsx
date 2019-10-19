@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export class CategoryList extends React.Component {
-  constructor(props: {}) {
+  constructor(props) {
     super(props)
   }
 

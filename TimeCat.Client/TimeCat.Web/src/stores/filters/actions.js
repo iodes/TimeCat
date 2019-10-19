@@ -1,6 +1,6 @@
-import { ISetKeywordAction, SET_KEYWORD } from './types'
+export const SET_KEYWORD = 'filters/SET_KEYWORD'
 
-export const setKeywordFilter = (keyword: string): ISetKeywordAction => ({
+export const setKeywordFilter = (keyword) => ({
   type: SET_KEYWORD,
   keyword,
 })
