@@ -84,7 +84,7 @@ namespace TimeCat.Core
 
         private static void Driver_StateChanged(object sender, Driver.EventArg.StateChangedEventArgs e)
         {
-            //Log.Information("[{ActionType}] {ApplicationName}", e.StateType, e.Application.Name);
+            Log.Information("[{ActionType}] {ApplicationName}", e.StateType, e.Application.FullName);
         }
 
         public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
