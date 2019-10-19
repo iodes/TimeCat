@@ -4,7 +4,8 @@
   "description": "TimeCat Web Client",
   "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "npm rebuild --target=6.0.0 --runtime=electron --dist-url=https://atom.io/download/electron"
   },
   "author": "",
   "license": "ISC",
