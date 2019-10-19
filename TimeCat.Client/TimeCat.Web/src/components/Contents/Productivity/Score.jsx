@@ -1,7 +1,7 @@
-import { Card, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-const { Text } = Typography
+import { Card, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 280px;
@@ -10,10 +10,10 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 const Title = styled(Text)`
   color: #C6C7C8;
-`
+`;
 
 const Percent = styled('p')`
   margin-top: 30px;
@@ -22,12 +22,12 @@ const Percent = styled('p')`
   font-size: 36px;
   text-align: center;
   color: #4bcd50;
-`
+`;
 const Comment = styled('p')`
   font-size: 14px;
   text-align: center;
   color: #C6C7C8;
-`
+`;
 
 const Score = () => {
   return (
@@ -39,6 +39,6 @@ const Score = () => {
       <Percent>58%</Percent>
       <Comment>Keep it up 😀</Comment>
     </Container>
-  )
-}
-export default Score
+  );
+};
+export default Score;
