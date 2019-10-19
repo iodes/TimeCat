@@ -184,7 +184,6 @@ export const controller = {
     const opts = me.chart.options;
     const elemOpts = opts.elements || {};
     const rectangleElementOptions = elemOpts.rectangle;
-    // const textPad = elemOpts.textPadding;
     const minBarWidth = elemOpts.minBarWidth;
 
     rectangle._xScale = xScale;
@@ -192,23 +191,17 @@ export const controller = {
     rectangle._datasetIndex = me.index;
     rectangle._index = index;
 
-    const appIcon = data[2].icon;
+    const app = data[2];
 
     const ruler = me.getRuler(index);
 
     const x = xScale.getPixelForValue(data[0]);
     const end = xScale.getPixelForValue(data[1]);
-
     const y = yScale.getPixelForValue(data, datasetIndex, datasetIndex);
     const width = end - x;
     const height = me.calculateBarHeight(ruler);
-    const color = elemOpts.colorFunction(appIcon, data, dataset, index);
 
-    let font = elemOpts.font;
-
-    if (!font) {
-      font = '12px bold Arial';
-    }
+    const color = elemOpts.colorFunction(app.color);
 
     // This one has in account the size of the tick and the height of the bar, so we just
     // divide both of them by two and subtract the height part and add the tick part
@@ -244,7 +237,7 @@ export const controller = {
       label: me.chart.data.labels[index],
       datasetLabel: dataset.label,
 
-      appIcon: appIcon
+      appIcon: app.icon
     };
 
     rectangle.draw = function() {
@@ -268,10 +261,20 @@ export const controller = {
       // ctx.beginPath();
 
       // Draw app icon image over rectangle
-      const img = new Image();
-      img.src = vm.appIcon;
-      img.onload = function() {
-        ctx.drawImage(img, vm.x + vm.width / 2, vm.y + vm.height / 4, 15, 15);
+      const iconSize = 18;
+      if (vm.width < iconSize + 4) {
+        return;
+      }
+      const icon = new Image();
+      icon.src = vm.appIcon;
+      icon.onload = function() {
+        ctx.drawImage(
+          icon,
+          vm.x + vm.width / 2 - iconSize / 2,
+          vm.y + vm.height / 2 - iconSize / 2,
+          iconSize,
+          iconSize
+        );
       };
     };
 
@@ -351,13 +354,9 @@ export const controller = {
     return yScale.options.stacked ? ruler.categoryHeight : ruler.barHeight;
   },
 
-  removeHoverStyle: function(e) {
-    // TODO
-  },
+  removeHoverStyle: function(e) {},
 
-  setHoverStyle: function(e) {
-    // TODO: Implement this
-  }
+  setHoverStyle: function(e) {}
 };
 
 export const data = {
@@ -372,9 +371,31 @@ export const data = {
             name: 'Chrome',
             icon:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/512px-Google_Chrome_icon_%28September_2014%29.png',
-            category: 'Browser'
-          },
-          '#98E3D5'
+            category: 'Browser',
+            color: '#98E3D5'
+          }
+        ],
+        [
+          new Date(2018, 1, 22, 2, 14, 14),
+          new Date(2018, 1, 22, 2, 30, 14),
+          {
+            name: 'Chrome',
+            icon:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/512px-Google_Chrome_icon_%28September_2014%29.png',
+            category: 'Browser',
+            color: '#98E3D5'
+          }
+        ],
+        [
+          new Date(2018, 1, 22, 22, 14, 14),
+          new Date(2018, 1, 22, 23, 30, 14),
+          {
+            name: 'Chrome',
+            icon:
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/512px-Google_Chrome_icon_%28September_2014%29.png',
+            category: 'Browser',
+            color: '#98E3D5'
+          }
         ]
       ]
     },
@@ -387,9 +408,9 @@ export const data = {
             name: 'Visual Studio Code',
             icon:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Visual_Studio_Code_1.18_icon.svg/512px-Visual_Studio_Code_1.18_icon.png',
-            category: 'Development'
-          },
-          '#F1E15B'
+            category: 'Development',
+            color: '#F1E15B'
+          }
         ],
         [
           new Date(2018, 1, 22, 14, 14, 0),
@@ -398,9 +419,9 @@ export const data = {
             name: 'Safari',
             icon:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1028px-Safari_browser_logo.png',
-            category: 'Browser'
-          },
-          '#E8C1A0'
+            category: 'Browser',
+            color: '#E8C1A0'
+          }
         ],
         [
           new Date(2018, 1, 22, 15, 30, 10),
@@ -409,9 +430,9 @@ export const data = {
             name: 'Safari',
             icon:
               'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Safari_browser_logo.svg/1028px-Safari_browser_logo.png',
-            category: 'Browser'
-          },
-          '#E8C1A0'
+            category: 'Browser',
+            color: '#E8C1A0'
+          }
         ]
       ]
     }
@@ -420,8 +441,8 @@ export const data = {
 
 export const defaults = {
   elements: {
-    colorFunction: function(icon, data) {
-      return Color(data[3]);
+    colorFunction: function(color) {
+      return Color(color);
     },
     showText: true,
     textPadding: 4,
@@ -485,25 +506,28 @@ export const defaults = {
   },
 
   tooltips: {
+    yAlign: 'bottom',
+    xAlign: 'center',
+    yPadding: 20,
+    xPadding: 45,
+    // _bodyAlign: 'center',
+    // _footerAlign: 'center',
     titleFontSize: 16,
     bodyFontSize: 13,
     backgroundColor: 'rgba(0,0,0,0.4)',
-    caretSize: 5,
-    cornerRadius: 2,
+    caretSize: 7,
+    cornerRadius: 7,
     titleFontcolor: '#fff',
     bodyFontcolor: '#fff',
     borderColor: '#B3B3B3',
     borderWidth: 1,
     displayColors: false,
-    yAlign: 'bottom',
-    xAlign: 'center',
-    yPadding: 20,
-    xPadding: 45,
-    _bodyAlign: 'center',
-    _footerAlign: 'center',
     callbacks: {
       title: function(tooltipItems, data) {
         const d = data.labels[tooltipItems[0].datasetIndex];
+        console.log(data);
+        console.log(tooltipItems);
+        console.log('===============');
         return d;
       },
       label: function(tooltipItem, data) {

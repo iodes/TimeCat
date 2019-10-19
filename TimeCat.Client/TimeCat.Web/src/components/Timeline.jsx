@@ -34,20 +34,10 @@ const Timeline = () => {
         //   enabled: true,
         //   drag: false,
         //   mode: "x"
-        //
-        // events: ["mousemove"],
         maintainAspectRatio: false
       },
       data: data
     };
-
-    // config.data.datasets.forEach((dataset, idx) => {
-    //   // dataset.borderColor = randomColor(0.4);
-    //   // dataset.backgroundColor = randomColor(0.5);
-    //   // dataset.pointBorderColor = randomColor(0.7);
-    //   // dataset.pointBackgroundColor = randomColor(0.5);
-    //   // dataset.pointBorderWidth = 1;
-    // });
 
     myTimeline = new Chart(myChartRef, config);
   };
@@ -59,7 +49,11 @@ const Timeline = () => {
 
   return (
     <div style={{ height: '150px' }}>
-      <canvas id='myChart' ref={chartRef} />
+      <canvas
+        id='myChart'
+        ref={chartRef}
+        style={{ backgroundColor: '#0F1416' }}
+      />
     </div>
   );
 };
