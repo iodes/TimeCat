@@ -46,6 +46,11 @@ namespace TimeCat.Core.Database
                 yield return item;
         }
 
+        public async Task<bool> HasKeyAsync<T>(object pk) where T : new()
+        {
+            return await GetAsync<T>(pk) != null;
+        }
+
         public Task<T> GetAsync<T>(object pk) where T : new()
         {
             return Connection.GetAsync<T>(pk);
