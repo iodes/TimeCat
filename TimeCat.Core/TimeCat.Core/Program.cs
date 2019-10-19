@@ -22,6 +22,7 @@ namespace TimeCat.Core
         private const int port = 37013;
 
         private static Server _server;
+        private static AutoResetEvent _autoResetEvent;
 
         private static IApplicationDriver _applicationDriver;
 
@@ -35,6 +36,9 @@ namespace TimeCat.Core
             ShowInitialize();
             await StartServer(host, port);
             StartDriver();
+            
+            if (_applicationDriver == null)
+                Wait();
         }
 
         public static void ShowInitialize()
@@ -76,9 +80,19 @@ namespace TimeCat.Core
 
         private static void StartDriver()
         {
+#if WINDOWS
             _applicationDriver = new WindowsApplicationDriver();
-            _applicationDriver.StateChanged += Driver_StateChanged;
-            _applicationDriver.Start();
+#elif LINUX
+            // LINUX
+#elif UNIX
+            // UNIX
+#endif
+
+            if (_applicationDriver != null)
+            {
+                _applicationDriver.StateChanged += Driver_StateChanged;
+                _applicationDriver.Start();   
+            }
         }
 
         private static void Driver_StateChanged(object sender, Driver.EventArg.StateChangedEventArgs e)
@@ -89,6 +103,14 @@ namespace TimeCat.Core
         public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
             _server.ShutdownAsync().Wait();
+            _autoResetEvent.Set();
+        }
+        
+        public static void Wait()
+        {
+            _autoResetEvent = new AutoResetEvent(false);
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            _autoResetEvent.WaitOne();
         }
     }
 }
