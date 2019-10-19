@@ -5,7 +5,7 @@ export class DetailsPage extends React.Component {
     super(props)
   }
 
-  public render() {
+  render() {
     return (
       <h1>Hello, Details Page</h1>
     )
