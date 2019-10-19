@@ -4,9 +4,7 @@
   "description": "TimeCat Web Frontend",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "webpack",
-    "lint": "tslint --project tsconfig.json",
-    "lint-fix": "tslint --project tsconfig.json --fix"
+    "build": "webpack"
   },
   "dependencies": {
     "@nivo/bar": "^0.59.2",
