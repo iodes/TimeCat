@@ -6,6 +6,7 @@ using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using TimeCat.Core.Driver;
+using TimeCat.Core.Driver.Windows;
 using TimeCat.Core.Interceptors;
 using TimeCat.Core.Managers;
 using TimeCat.Core.Services;
@@ -21,6 +22,8 @@ namespace TimeCat.Core
         private static Server _server;
         private static AutoResetEvent _autoResetEvent;
 
+        private static IApplicationDriver _applicationDriver;
+
         private static void Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
@@ -30,6 +33,7 @@ namespace TimeCat.Core
 
             ShowInitialize();
             StartServer(host, port);
+            StartDriver();
             Wait();
         }
 
@@ -69,6 +73,18 @@ namespace TimeCat.Core
 
             _server.Start();
             Log.Information("Listening on {Host}:{Port}", host, port);
+        }
+
+        private static void StartDriver()
+        {
+            _applicationDriver = new WindowsApplicationDriver();
+            _applicationDriver.StateChanged += Driver_StateChanged;
+            _applicationDriver.Start();
+        }
+
+        private static void Driver_StateChanged(object sender, Driver.EventArg.StateChangedEventArgs e)
+        {
+            //Log.Information("[{ActionType}] {ApplicationName}", e.StateType, e.Application.Name);
         }
 
         public static void CurrentDomain_ProcessExit(object sender, EventArgs e)
