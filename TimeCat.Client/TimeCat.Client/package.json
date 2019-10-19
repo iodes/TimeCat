@@ -26,13 +26,14 @@
     "grpc": "1.23.3"
   },
   "build": {
-    "productName": "TimeCat",
-    "appId": "com.kodnix.timecat",
+    "productName": "TimeCat.ui",
+    "appId": "com.kodnix.ui.timecat",
+    "artifactName": "${productName}.${ext}",
     "asar": true,
     "protocols": {
-      "name": "timecat",
+      "name": "timecat.ui",
       "schemes": [
-        "timecat"
+        "timecat.ui"
       ]
     },
     "mac": {
@@ -41,7 +42,7 @@
       ]
     },
     "dmg": {
-      "title": "TimeCat"
+      "title": "TimeCat.ui"
     },
     "win": {
       "target": [
@@ -64,7 +65,7 @@
     },
     "directories": {
       "buildResources": "resources/installer/",
-      "output": "dist/",
+      "output": "../../Build/${os}",
       "app": "."
     }
   }
