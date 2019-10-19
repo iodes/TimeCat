@@ -1,15 +1,15 @@
-import * as React from 'react'
+import * as React from 'react';
 
 export class Timeline extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
     return (
       <h2>Hello, Timeline Component</h2>
-    )
+    );
   }
 }
 
-export default Timeline
+export default Timeline;

@@ -1,26 +1,26 @@
-import { Col, Row } from 'antd'
-import 'antd/dist/antd.css'
-import * as React from 'react'
-import styled from 'styled-components'
-import ActiveHours from '../components/Contents/Activity/Hours'
-import TotalTime from '../components/Contents/Activity/TotalTime'
-import ActiveWeekdays from '../components/Contents/Activity/Weekdays'
-import Applications from '../components/Contents/Charts/Applications'
-import Projects from '../components/Contents/Charts/Projects'
-import Stacked from '../components/Contents/Charts/Stacked'
-import ProductiveHours from '../components/Contents/Productivity/Hours'
-import Score from '../components/Contents/Productivity/Score'
-import ProductiveWeekdays from '../components/Contents/Productivity/Weekdays'
+import { Col, Row } from 'antd';
+import 'antd/dist/antd.css';
+import * as React from 'react';
+import styled from 'styled-components';
+import ActiveHours from '../components/Contents/Activity/Hours';
+import TotalTime from '../components/Contents/Activity/TotalTime';
+import ActiveWeekdays from '../components/Contents/Activity/Weekdays';
+import Applications from '../components/Contents/Charts/Applications';
+import Projects from '../components/Contents/Charts/Projects';
+import Stacked from '../components/Contents/Charts/Stacked';
+import ProductiveHours from '../components/Contents/Productivity/Hours';
+import Score from '../components/Contents/Productivity/Score';
+import ProductiveWeekdays from '../components/Contents/Productivity/Weekdays';
 
 const Container = styled('div')`
   background-color: #191e23;
-`
+`;
 
 const Content = styled(Col)`
   padding: 10px;
   display: flex;
   justify-content: center;
-`
+`;
 
 const OverviewPage = () => {
   return (
@@ -67,7 +67,7 @@ const OverviewPage = () => {
         </Content>
       </Row>
     </Container>
-  )
-}
+  );
+};
 
-export default OverviewPage
+export default OverviewPage;

@@ -1,10 +1,10 @@
-import { ResponsiveBar } from '@nivo/bar'
-import { Card, Select, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-import { StackedData } from './StackedData'
-const { Option } = Select
-const { Text } = Typography
+import { ResponsiveBar } from '@nivo/bar';
+import { Card, Select, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+import { StackedData } from './StackedData';
+const { Option } = Select;
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 900px;
@@ -13,11 +13,11 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 
 const BarContainer = styled('div')`
   height: 360px;
-`
+`;
 
 const Based = styled(Select)`
   width: 150px;
@@ -26,13 +26,13 @@ const Based = styled(Select)`
     background-color: #545657;
     color: #ffffff;
   }
-`
+`;
 
 const Per = styled(Text)`
   margin-left: 5px;
   margin-right: 5px;
   color: #C6C7C8;
-`
+`;
 
 const Unit = styled(Select)`
   width: 80px;
@@ -41,7 +41,7 @@ const Unit = styled(Select)`
     background-color: #545657;
     color: #ffffff;
   }
-`
+`;
 
 const theme = {
   axis: {
@@ -51,10 +51,10 @@ const theme = {
       }
     }
   }
-}
+};
 
 const Stacked = () => {
-  const [data, setData] = React.useState(StackedData)
+  const [data, setData] = React.useState(StackedData);
   return (
     <Container
       hoverable
@@ -101,6 +101,6 @@ const Stacked = () => {
         />
       </BarContainer>
     </Container>
-  )
-}
-export default Stacked
+  );
+};
+export default Stacked;
