@@ -31,7 +31,7 @@ namespace TimeCat.Core
                     {
                         Id = i + 1,
                         Name = $"Awesome Category {i}",
-                        Color = RandomEnumValue<Color>()
+                        Color = Color.FromKnownColor(RandomEnumValue<KnownColor>())
                     });
 
                 for (int i = 0; i < subCategoriesCount; i++)
@@ -40,7 +40,7 @@ namespace TimeCat.Core
                         Id = i + categoriesCount + 1,
                         CategoryId = rnd.Next(categoriesCount) + 1,
                         Name = $"Awesome Category {i}",
-                        Color = RandomEnumValue<Color>()
+                        Color = Color.FromKnownColor(RandomEnumValue<KnownColor>())
                     });
 
                 for (int i = 0; i < applicationCount; i++)
