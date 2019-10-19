@@ -61,7 +61,6 @@ export class CategoryList extends React.Component<{}, IState> {
 	}
 
 	public onDragEnter = (info: AntTreeNodeDragEnterEvent) => {
-		// tslint:disable-next-line:no-console
 		console.log(info)
 		// expandedKeys 需要受控时设置
 		this.setState({
@@ -70,7 +69,9 @@ export class CategoryList extends React.Component<{}, IState> {
 	}
 
 	public onDrop = (info: AntTreeNodeDropEvent) => {
-		// tslint:disable-next-line:no-console
+		if (info.node.props.isLeaf) {
+			return
+		}
 		console.log(info)
 		const dropKey = info.node.props.eventKey || ''
 		const dragKey = info.dragNode.props.eventKey || ''
