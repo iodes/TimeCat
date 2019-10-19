@@ -1,18 +1,18 @@
-import * as React from 'react'
-import { HashRouter, Link, Route } from 'react-router-dom'
+import * as React from 'react';
+import { HashRouter, Link, Route } from 'react-router-dom';
 
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import { setKeywordFilter } from './stores/filters/actions'
+import { setKeywordFilter } from './stores/filters/actions';
 
-import DetailsPage from './pages/DetailsPage'
-import OverviewPage from './pages/OverviewPage'
-import ReportsPage from './pages/ReportsPage'
-import ReviewPage from './pages/ReviewPage'
+import DetailsPage from './pages/DetailsPage';
+import OverviewPage from './pages/OverviewPage';
+import ReportsPage from './pages/ReportsPage';
+import ReviewPage from './pages/ReviewPage';
 
-import styled, { createGlobalStyle } from 'styled-components'
-import DateController from './components/DateController'
+import styled, { createGlobalStyle } from 'styled-components';
+import DateController from './components/DateController';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
     background: #191e23;
     color: #fff;
   }
-`
+`;
 
 const Nav = styled.nav`
   display: flex;
@@ -32,7 +32,7 @@ const Nav = styled.nav`
   border-bottom: 1px solid #2c2a46;
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
   align-items: center;
-`
+`;
 
 const MenuList = styled.ul`
   display: flex;
@@ -42,29 +42,29 @@ const MenuList = styled.ul`
   margin: 0;
   flex: 1;
   color: #d0d1d2;
-`
+`;
 
 const WindowMenuList = styled(MenuList)`
   justify-content: flex-end;
-`
+`;
 
 const MenuItem = styled.li`
   margin: 0 10px;
-`
+`;
 
 const MenuLink = styled(Link)`
   color: #d0d1d2;
   text-decoration: none;
-`
+`;
 
 const Main = styled.main`
   padding: 15px;
-`
+`;
 
 const WrapDateController = styled.div`
   flex: 1;
   margin: 0 20px;
-`
+`;
 
 class App extends React.Component {
   render() {
@@ -112,19 +112,19 @@ class App extends React.Component {
           </div>
         </HashRouter>
       </React.Fragment>
-    )
+    );
   }
 }
 
 const mapStateToProps  = ({ filters }) => ({
   filters,
-})
+});
 
 const dispatchToProps = (dispatch) => bindActionCreators({
   setKeywordFilter,
-}, dispatch)
+}, dispatch);
 
 export default connect(
   mapStateToProps,
   dispatchToProps,
-)(App)
+)(App);

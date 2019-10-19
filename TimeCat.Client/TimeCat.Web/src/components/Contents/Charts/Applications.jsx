@@ -1,9 +1,9 @@
-import { ResponsivePieCanvas } from '@nivo/pie'
-import { Avatar, Card, Col, List, Row, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-import { ApplicationsData } from './ApplicationsData'
-const { Text } = Typography
+import { ResponsivePieCanvas } from '@nivo/pie';
+import { Avatar, Card, Col, List, Row, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+import { ApplicationsData } from './ApplicationsData';
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 900px;
@@ -12,28 +12,28 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 
 const Title = styled(Text)`
   color: #C6C7C8;
-`
+`;
 
 const ContentsContainer = styled(Row)`
   width: 780px;
-`
+`;
 
 const PieContainer = styled(Col)`
   height: 320px;
-`
+`;
 
 const ListContainer = styled(Col)`
   height: 320px;
-`
+`;
 
 const Icon = styled(Avatar)`
   width: 15px;
   height: 15px;
-`
+`;
 
 const Name = styled(List.Item.Meta)`
   margin-left:10px;
@@ -41,7 +41,7 @@ const Name = styled(List.Item.Meta)`
   .ant-list-item-meta-title {
     color: #ffffff;
   }
-`
+`;
 
 const Usage = styled(List.Item.Meta)`
   width: 20px;
@@ -51,10 +51,10 @@ const Usage = styled(List.Item.Meta)`
   .ant-list-item-meta-description{
     color: #808080;
   }
-`
+`;
 
 const Applications = () => {
-  const [data, setData] = React.useState(ApplicationsData)
+  const [data, setData] = React.useState(ApplicationsData);
   return (
     <Container
       hoverable
@@ -94,7 +94,7 @@ const Applications = () => {
         </ListContainer>
       </ContentsContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default Applications
+export default Applications;
