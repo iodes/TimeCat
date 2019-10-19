@@ -1,5 +1,5 @@
-import * as React from "react";
-import Chart from "chart.js";
+import * as React from 'react';
+import Chart from 'chart.js';
 
 import {
   scaleDefaults,
@@ -7,9 +7,9 @@ import {
   data,
   defaults,
   controller
-} from "../assets/util/TimelineConfig";
+} from '../assets/util/TimelineConfig';
 
-Chart.scaleService.registerScaleType("timeline", scale, scaleDefaults);
+Chart.scaleService.registerScaleType('timeline', scale, scaleDefaults);
 Chart.controllers.timeline = Chart.controllers.bar.extend(controller);
 Chart.defaults.timeline = defaults;
 
@@ -18,10 +18,10 @@ const Timeline = () => {
   const chartRef = React.useRef();
 
   const buildChart = () => {
-    const myChartRef = chartRef.current.getContext("2d");
+    const myChartRef = chartRef.current.getContext('2d');
 
     const config = {
-      type: "timeline",
+      type: 'timeline',
       options: {
         showText: true,
         responsive: true,
@@ -58,8 +58,8 @@ const Timeline = () => {
   }, []);
 
   return (
-    <div style={{ height: "150px" }}>
-      <canvas id="myChart" ref={chartRef} />
+    <div style={{ height: '150px' }}>
+      <canvas id='myChart' ref={chartRef} />
     </div>
   );
 };
