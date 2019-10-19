@@ -1,9 +1,9 @@
-import { ResponsiveBar } from '@nivo/bar'
-import { Card, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-import { HoursData } from './HoursData'
-const { Text } = Typography
+import { ResponsiveBar } from '@nivo/bar';
+import { Card, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+import { HoursData } from './HoursData';
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 280px;
@@ -12,15 +12,15 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 
 const Title = styled(Text)`
   color: #C6C7C8;
-`
+`;
 
 const BarContainer = styled('div')`
   height: 160px;
-`
+`;
 
 const theme = {
   axis: {
@@ -30,10 +30,10 @@ const theme = {
       }
     }
   }
-}
+};
 
 const ProductiveHours = () => {
-  const [data, setData] = React.useState(HoursData)
+  const [data, setData] = React.useState(HoursData);
   return (
     <Container
       hoverable
@@ -53,7 +53,7 @@ const ProductiveHours = () => {
           axisRight={null}
           axisBottom={{tickSize: 0}}
           colors={(d) => {
-            return d.value >= 0 ? '#8fe563' : '#d06b55'
+            return d.value >= 0 ? '#8fe563' : '#d06b55';
           }}
           labelSkipWidth={12}
           labelSkipHeight={12}
@@ -66,7 +66,7 @@ const ProductiveHours = () => {
         />
       </BarContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default ProductiveHours
+export default ProductiveHours;

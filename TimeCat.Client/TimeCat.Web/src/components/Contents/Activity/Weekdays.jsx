@@ -1,9 +1,9 @@
-import { ResponsiveBar } from '@nivo/bar'
-import { Card, Typography } from 'antd'
-import * as React from 'react'
-import styled from 'styled-components'
-import { WeekdaysData } from './WeekdaysData'
-const { Text } = Typography
+import { ResponsiveBar } from '@nivo/bar';
+import { Card, Typography } from 'antd';
+import * as React from 'react';
+import styled from 'styled-components';
+import { WeekdaysData } from './WeekdaysData';
+const { Text } = Typography;
 
 const Container = styled(Card)`
   width: 280px;
@@ -12,15 +12,15 @@ const Container = styled(Card)`
   .ant-card-body{
     padding: 15px;
   }
-`
+`;
 
 const Title = styled(Text)`
   color: #C6C7C8;
-`
+`;
 
 const BarContainer = styled('div')`
   height: 160px;
-`
+`;
 const theme = {
   axis: {
     ticks: {
@@ -29,11 +29,11 @@ const theme = {
       }
     }
   }
-}
+};
 
 
 const ActiveWeekdays = () => {
-  const [data, setData] = React.useState(WeekdaysData)
+  const [data, setData] = React.useState(WeekdaysData);
   return (
     <Container
       hoverable
@@ -65,7 +65,7 @@ const ActiveWeekdays = () => {
         />
       </BarContainer>
     </Container>
-  )
-}
+  );
+};
 
-export default ActiveWeekdays
+export default ActiveWeekdays;

@@ -1,4 +1,10 @@
 {
+  "extends": "plugin:react/recommended",
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "parserOptions": {
     "ecmaVersion": 9,
     "sourceType": "module",
