@@ -5,29 +5,35 @@ namespace TimeCat.Core.Database.Models
     [Table("applications")]
     public class Application
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey]
+        [AutoIncrement]
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets the display name of the application
+        ///     Gets the display name of the application
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets the full path of the application
+        ///     Gets the full path of the application
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// Gets the display icon path of the application
+        ///     Gets the display icon path of the application
         /// </summary>
         public string Icon { get; set; }
 
         /// <summary>
-        /// Gets the display version of the application
+        ///     Gets the display version of the application
         /// </summary>
         public string Version { get; set; }
-        
-        public int CategoryId { get; set; }
+
+        /// <summary>
+        ///     Indicates whether this is a productive application
+        /// </summary>
+        public bool IsProductivity { get; set; }
+
+        public int? CategoryId { get; set; }
     }
 }

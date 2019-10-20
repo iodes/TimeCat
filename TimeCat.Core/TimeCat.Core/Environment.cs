@@ -3,7 +3,7 @@ using SystemEnvironment = System.Environment;
 
 namespace TimeCat.Core
 {
-    static class Environment
+    internal static class Environment
     {
         public static string Storage
         {
@@ -16,7 +16,11 @@ namespace TimeCat.Core
             }
         }
 
+#if !DEBUG
         static readonly string _storage = Path.Combine(SystemEnvironment.GetFolderPath(SystemEnvironment.SpecialFolder.ApplicationData), ".timecat");
+#else
+        private static readonly string _storage = Path.Combine(SystemEnvironment.GetFolderPath(SystemEnvironment.SpecialFolder.ApplicationData), ".timecat_development");
+#endif
 
         public static string Database => Path.Combine(Storage, "TimeCat.db");
     }

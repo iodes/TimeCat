@@ -1,14 +1,18 @@
 {
   "name": "timecat.client",
   "version": "1.0.0",
-  "description": "TimeCat Web Client",
-  "main": "index.js",
   "scripts": {
-    "start": "electron ."
+    "install": "cd TimeCat.Web && npm install && cd ../TimeCat.Client && npm install",
+    "start": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run start",
+    "build": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build",
+    "build:osx": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:osx",
+    "build:linux": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:linux",
+    "build:linux32": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:linux32",
+    "build:linux64": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:linux64",
+    "build:win": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:win",
+    "build:win32": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:win32",
+    "build:win64": "cd TimeCat.Web && npm run build && cd ../TimeCat.Client && npm run build:win64"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "electron": "^6.0.10"
-  }
+  "license": "ISC"
 }
