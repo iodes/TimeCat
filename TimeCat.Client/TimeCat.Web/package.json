@@ -13,6 +13,7 @@
     "@nivo/pie": "^0.59.1",
     "antd": "^3.23.5",
     "interactjs": "^1.6.2",
+    "chart.js": "^2.8.0",
     "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-calendar-timeline": "^0.26.5",
