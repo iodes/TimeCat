@@ -180,6 +180,7 @@ namespace TimeCat.Core.Driver.Windows
             }
             else if (action != ActionType.Open)
             {
+                Log.Error("process {fullname} {action}", process.FileName, action);
                 return;
             }
 
