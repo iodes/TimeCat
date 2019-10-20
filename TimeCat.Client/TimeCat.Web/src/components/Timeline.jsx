@@ -25,8 +25,8 @@ const items = [
     id: 2,
     group: 2,
     title: 'Chrome',
-    start_time: moment().add(1.5),
-    end_time: moment().add(4, 'hour'),
+    start_time: moment().add(1),
+    end_time: moment().add(5, 'hour'),
     backgroundColor: '#98E3D5',
     icon:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Google_Chrome_icon_%28September_2014%29.svg/512px-Google_Chrome_icon_%28September_2014%29.png'
@@ -35,8 +35,8 @@ const items = [
     id: 3,
     group: 2,
     title: 'Visual Studio Code',
-    start_time: moment().add(-3, 'hour'),
-    end_time: moment().add(1, 'hour'),
+    start_time: moment().add(-5, 'hour'),
+    end_time: moment().add(-1, 'hour'),
     backgroundColor: '#F1E15B',
     icon:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Visual_Studio_Code_1.18_icon.svg/512px-Visual_Studio_Code_1.18_icon.png'
