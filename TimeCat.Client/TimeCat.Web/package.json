@@ -1,0 +1,41 @@
+{
+  "name": "timecat.web",
+  "version": "1.0.0",
+  "description": "TimeCat Web Frontend",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "lint": "eslint . --ext .js,,jsx",
+    "lint-fix": "eslint . --fix --ext .js,.jsx"
+  },
+  "dependencies": {
+    "@nivo/bar": "^0.59.2",
+    "@nivo/pie": "^0.59.1",
+    "antd": "^3.23.5",
+    "interactjs": "^1.6.2",
+    "chart.js": "^2.8.0",
+    "moment": "^2.24.0",
+    "react": "^16.9.0",
+    "react-calendar-timeline": "^0.26.5",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "styled-components": "^4.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.16.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
+  }
+}

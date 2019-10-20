@@ -1,19 +1,29 @@
 ﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using FunctionTest.Interop;
 
 namespace FunctionTest
 {
     class Program
     {
+        static IdleDetector idleDetector = new IdleDetector();
+
         static void Main(string[] args)
         {
-            User32.GetOpenWindows()
-                .ToList()
-                .ForEach(i => Console.WriteLine(i.Value));
+            //idleDetector.Start();
+            idleDetector.IdleDetected += (s, e) => 
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("IDLE Detected: " + e.IdleMillseconds + "ms");
+            };
 
+            idleDetector.IdleReleased += (s, e) =>
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("IDLE Released: " + e.IdleMillseconds + "ms");
+            };
+
+            FocusDetector.Start();
             Console.ReadLine();
+            FocusDetector.Stop();
         }
     }
 }
