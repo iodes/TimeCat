@@ -103,7 +103,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
         title="Code"
         >💻</a
       ><a
-        href="https://github.com/iodes/TimeCat/commits?author=WEb-Engine"
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
         title="Review"
         >👀</a
       >
@@ -129,11 +129,11 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
           alt="TaeSang Cho"
         /><br /><sub><b>TaeSang Cho</b></sub></a
       ><br /><a
-        href="https://github.com/iodes/TimeCat/commits?author=WEb-Engine"
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
         title="Code"
         >💻</a
       ><a
-        href="https://github.com/iodes/TimeCat/commits?author=WEb-Engine"
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
         title="Review"
         >👀</a
       >
