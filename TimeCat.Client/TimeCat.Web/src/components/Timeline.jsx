@@ -1,6 +1,5 @@
 import React from 'react';
-import Timeline from 'react-calendar-timeline';
-import { createGlobalStyle } from 'styled-components';
+import CalendarTimeline from 'react-calendar-timeline';
 // import 'react-calendar-timeline/lib/Timeline.css';
 import '../assets/styles/Timeline.css';
 
@@ -53,7 +52,6 @@ const itemRenderer = ({
 }) => {
   itemContext.dimensions.height = 30;
   itemContext.selected = false;
-  console.log(itemContext);
   const backgroundColor = item.backgroundColor;
   return (
     <div
@@ -92,35 +90,21 @@ const onTimeChange = (visibleTimeStart, visibleTimeEnd, updateScrollCanvas) => {
   }
 };
 
-const onItemSelect = (itemId, e, time) => {
-  e.preventDefault();
-  return;
-};
-
-const onItemClick = (itemId, e, time) => {
-  e.preventDefault();
-  return;
-};
-
 const Timeline = () => {
   return (
     <>
       <div style={{ backgroundColor: '#0F1416' }}>
-        <Timeline
+        <CalendarTimeline
           groups={groups}
           items={items}
           defaultTimeStart={moment().add(-12, 'hour')}
           defaultTimeEnd={moment().add(12, 'hour')}
-          // visibleTimeStart={moment().add(-12, 'hour')}
-          // visibleTimeEnd={moment().add(12, 'hour')}
           canResize={false}
           canMove={false}
           minZoom={60 * 60 * 1000}
           maxZoom={60 * 60 * 1000 * 24}
           itemRenderer={itemRenderer}
           onTimeChange={onTimeChange}
-          onItemSelect={onItemSelect}
-          onItemClick={onItemClick}
         />
       </div>
     </>
