@@ -12,22 +12,22 @@
 
 > App usage collection and statistics solution
 
-### 🏠 [Homepage](https://github.com/iodes/TimeCat#readme)
+TimeCat show you how you spent your time and help you improve productivity. :octocat:
 
-## Status
+## 💭 Status
 
 This project is still heavily under development, but is in a state where users are encouraged to try it out and keep it installed alongside the stable TimeCat client. It will continue to evolve over the coming months and hopefully bring some new unique features to the table.
 
 We are accepting bug reports (please report with as much detail as possible). Feature requests are welcome as long as you read and understand the contribution guidelines listed below.
 
-## Requirements
+## ✨ Requirements
 
 - [Node.js 10.16.3](https://nodejs.org)
 - A desktop platform with the [.NET Core SDK 3.0](https://www.microsoft.com/net/learn/get-started) or higher installed.
 - When running on Windows 7 or 8.1, **[additional prerequisites](https://docs.microsoft.com/en-us/dotnet/core/windows-prerequisites?tabs=netcore30)** may be required to correctly run .NET Core applications if your operating system is not up-to-date with the latest service packs.
 - When working with the codebase, we recommend using an IDE with intellisense and syntax highlighting, such as [Visual Studio 2019+](https://visualstudio.microsoft.com/vs/), [Jetbrains Rider](https://www.jetbrains.com/rider/) or [Visual Studio Code](https://code.visualstudio.com/).
 
-## Running TimeCat
+## 🚀 Running TimeCat
 
 ### Downloading the source code
 
@@ -61,10 +61,6 @@ cd TimeCat.Client
 npm install
 npm start
 ```
-
-## ✨ Demo
-
-## 🚀 Usage
 
 ## 🤝 Contributing
 
@@ -106,6 +102,10 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
         href="https://github.com/iodes/TimeCat/commits?author=SteaI"
         title="Code"
         >💻</a
+      ><a
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
+        title="Review"
+        >👀</a
       >
     </td>
     <td align="center">
@@ -129,9 +129,13 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
           alt="TaeSang Cho"
         /><br /><sub><b>TaeSang Cho</b></sub></a
       ><br /><a
-        href="https://github.com/iodes/TimeCat/commits?author=WEb-Engine"
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
         title="Code"
         >💻</a
+      ><a
+        href="https://github.com/iodes/TimeCat/commits?author=Web-Engine"
+        title="Review"
+        >👀</a
       >
     </td>
     <td align="center">
