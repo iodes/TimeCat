@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import Timeline from '../components/Timeline';
 import Timeline from '../components/Timeline';
 export class ReportsPage extends React.Component {
   constructor(props) {
