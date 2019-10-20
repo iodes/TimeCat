@@ -27,11 +27,21 @@ namespace TimeCat.Core.Database
             await TransactionAsync(OnInitialize);
         }
 
+        public async Task<int> Execute(string query, params object[] args)
+        {
+            return await Connection.ExecuteAsync(query, args);
+        }
+
         protected abstract void OnInitialize(SQLiteConnection connection);
 
         public int LastInsertRowId()
         {
             return (int)SQLite3.LastInsertRowid(Connection.GetConnection().Handle);
+        }
+
+        public Task<T> ExecuteScalarAsync<T>(string query, params object[] args)
+        {
+            return Connection.ExecuteScalarAsync<T>(query, args);
         }
 
         public async IAsyncEnumerable<T> TableAsync<T>() where T : new()

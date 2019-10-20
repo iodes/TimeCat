@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Core;
@@ -7,6 +8,7 @@ using Grpc.Core.Interceptors;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using TimeCat.Core.Database;
+using TimeCat.Core.Database.Models;
 using TimeCat.Core.Driver;
 using TimeCat.Core.Driver.Windows;
 using TimeCat.Core.Interceptors;
@@ -32,6 +34,8 @@ namespace TimeCat.Core
                 .MinimumLevel.Verbose()
                 .WriteTo.Console(theme: AnsiConsoleTheme.Code)
                 .CreateLogger();
+
+            TimeCatDB.Instance.Initialize(Environment.Database).Wait();
 
             ShowInitialize();
             await StartServer(host, port);
@@ -82,6 +86,8 @@ namespace TimeCat.Core
         {
 #if WINDOWS
             _applicationDriver = new WindowsApplicationDriver();
+            _applicationDriver.StateChanged += Driver_StateChanged;
+            _applicationDriver.Start();
 #elif LINUX
             // LINUX
 #elif UNIX
@@ -95,8 +101,45 @@ namespace TimeCat.Core
             }
         }
 
+        public static async Task<Application> GetApplication(IApplication app)
+        {
+            int count = await TimeCatDB.Instance.TableAsync<Application>()
+                .Where(x => StringComparer.OrdinalIgnoreCase.Compare(x.FullName, app.FullName) == 0)
+                .CountAsync();
+
+            if (count > 0)
+            {
+                return await TimeCatDB.Instance.TableAsync<Application>()
+                    .Where(x => StringComparer.OrdinalIgnoreCase.Compare(x.FullName, app.FullName) == 0)
+                    .FirstAsync();
+            }
+            else
+            {
+                Application application = new Application()
+                {
+                    Name = app.Name,
+                    FullName = app.FullName,
+                    Icon = app.Icon,
+                    Version = app.Version,
+                    IsProductivity = false,
+                    CategoryId = null,
+                };
+                await TimeCatDB.Instance.InsertAsync(application);
+                return application;
+            }
+        }
+
         private static void Driver_StateChanged(object sender, Driver.EventArg.StateChangedEventArgs e)
         {
+            Application application = GetApplication(e.Application).Result;
+
+            TimeCatDB.Instance.InsertAsync(new Activity()
+            {
+                Action = e.StateType,
+                ApplicationId = application.Id,
+                Time = DateTimeOffset.UtcNow
+            }).Wait();
+
             Log.Information("[{ActionType}] {ApplicationName}", e.StateType, e.Application.FullName);
         }
 
