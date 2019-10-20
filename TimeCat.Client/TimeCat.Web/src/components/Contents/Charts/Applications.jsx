@@ -1,5 +1,5 @@
 import { ResponsivePieCanvas } from '@nivo/pie';
-import { Avatar, Card, Col, List, Row, Typography } from 'antd';
+import { Avatar, Card, Col, List, Row, Typography, Button } from 'antd';
 import * as React from 'react';
 import styled from 'styled-components';
 import { ApplicationsData } from './ApplicationsData';
@@ -28,6 +28,7 @@ const PieContainer = styled(Col)`
 
 const ListContainer = styled(Col)`
   height: 320px;
+  overflow-y: scroll;
 `;
 
 const Icon = styled(Avatar)`
@@ -47,19 +48,55 @@ const Usage = styled(List.Item.Meta)`
   width: 20px;
   height: 20px;
   font-size: 5px;
-  text-align: right;
+  text-align: left;
   .ant-list-item-meta-description{
     color: #808080;
   }
 `;
 
+const secondsToString = (seconds) => {
+  let total = seconds;
+  let days = Math.floor(total/(24*60*60));
+  total -= days * (24*60*60);
+  let hours = Math.floor(total/(60*60));
+  total -= hours * (60*60);
+  let minutes = Math.floor(total/60);
+  return (0 < days ? days + "day, ":"")+hours+"h "+minutes+"m"
+}
+
 const Applications = () => {
   const [data, setData] = React.useState(ApplicationsData);
+  let dummy = [];
+  const getDummy = () => { stream(
+      "dashboard.GetApplications",
+      {
+        range: {
+          start: 0,
+          end: Date.now()
+        }
+      },
+      data => {
+        console.log("data",data);
+        dummy.push({
+          id: data.application.name,
+          src: "../../../TimeCat.Client/TimeCat.Web/src/assets/images/chrome.png",
+          value: data.totaltime.seconds,
+          usage: secondsToString(data.totaltime.seconds)
+        });
+      },
+      () => {
+        console.log("end");
+        setData(dummy);
+        dummy = [];
+      }
+    );
+  }
   return (
     <Container
       hoverable
       bordered={false}
     >
+      <Button type = "primary" shape="circle" icon="sync" onClick={getDummy}/>
       <Title strong>Applications</Title>
       <ContentsContainer>
         <PieContainer span = {12}>

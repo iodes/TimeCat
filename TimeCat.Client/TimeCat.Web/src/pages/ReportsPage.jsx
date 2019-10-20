@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Timeline from '../components/Timeline';
 
 export class ReportsPage extends React.Component {
   constructor(props) {
@@ -7,7 +8,10 @@ export class ReportsPage extends React.Component {
 
   render() {
     return (
-      <h1>Hello, Reports Page</h1>
+      <>
+        <Timeline />
+        <h1>Hello, Reports Page</h1>
+      </>
     );
   }
 }

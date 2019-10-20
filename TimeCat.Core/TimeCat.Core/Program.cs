@@ -28,7 +28,7 @@ namespace TimeCat.Core
 
         private static IApplicationDriver _applicationDriver;
 
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
@@ -38,9 +38,11 @@ namespace TimeCat.Core
             TimeCatDB.Instance.Initialize(Environment.Database).Wait();
 
             ShowInitialize();
-            StartServer(host, port);
+            await StartServer(host, port);
             StartDriver();
-            Wait();
+            
+            if (_applicationDriver == null)
+                Wait();
         }
 
         public static void ShowInitialize()
@@ -48,16 +50,8 @@ namespace TimeCat.Core
             Console.WriteLine(ResourceManager.GetText("Initialize"));
         }
 
-        public static void StartServer(string host, int port)
+        public static async Task StartServer(string host, int port)
         {
-//            var credentials = new SslServerCredentials(new List<KeyCertificatePair>
-//            {
-//                new KeyCertificatePair(
-//                    ResourceManager.GetText("Certificates.timecat.crt"),
-//                    ResourceManager.GetText("Certificates.timecat.key")
-//                )
-//            });
-
             var interceptor = new ServerCallInterceptor();
 
             _server = new Server
@@ -78,18 +72,33 @@ namespace TimeCat.Core
             };
 
             _server.Start();
+
 #if FAKE
             Log.Information("It's fake time!");
-            Dummies.Create().Wait();
+            await TimeCatDB.Instance.Initialize(Environment.Database);
+            await Dummies.Create();
+            Log.Information("Fake DB prepare got succeed");
 #endif
             Log.Information("Listening on {Host}:{Port}", host, port);
         }
 
         private static void StartDriver()
         {
+#if WINDOWS
             _applicationDriver = new WindowsApplicationDriver();
             _applicationDriver.StateChanged += Driver_StateChanged;
             _applicationDriver.Start();
+#elif LINUX
+            // LINUX
+#elif UNIX
+            // UNIX
+#endif
+
+            if (_applicationDriver != null)
+            {
+                _applicationDriver.StateChanged += Driver_StateChanged;
+                _applicationDriver.Start();   
+            }
         }
 
         public static async Task<Application> GetApplication(IApplication app)
@@ -139,7 +148,7 @@ namespace TimeCat.Core
             _server.ShutdownAsync().Wait();
             _autoResetEvent.Set();
         }
-
+        
         public static void Wait()
         {
             _autoResetEvent = new AutoResetEvent(false);
