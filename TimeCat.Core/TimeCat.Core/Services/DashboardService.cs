@@ -60,8 +60,7 @@ namespace TimeCat.Core.Services
             // 요청받은 기간 내의 activity만 가져온다.
             var activities = from activity in _db.GetActivities()
                              where activity.Time >= request.Range.Start.ToDateTime() && activity.Time <= request.Range.End.ToDateTime()
-                             where activity.Action == ActionType.Active || activity.Action == ActionType.Idle ||
-                                   activity.Action == ActionType.Blur || activity.Action == ActionType.Focus
+                             where activity.Action == ActionType.Focus || activity.Action == ActionType.Blur
                              orderby activity.Time
                              select activity;
 
@@ -77,18 +76,9 @@ namespace TimeCat.Core.Services
                         applicationNow = application;
                         break;
 
-                    case ActionType.Active:
-                        if (applicationNow == null)
-                            applicationNow = application;
-                        if (!startTimes.ContainsKey(applicationNow.Id))
-                        {
-                            startTimes[applicationNow.Id] = activity.Time;
-                        }
-
-                        break;
-
                     case ActionType.Blur:
-                    case ActionType.Idle:
+                        if (applicationNow == null)
+                            continue;
                         if (startTimes.ContainsKey(applicationNow.Id))
                         {
                             if (!totalTimes.ContainsKey(applicationNow.Id))
