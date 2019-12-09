@@ -223,7 +223,7 @@ namespace TimeCat.Core.Driver.Windows
                     if (count > 0)
                         return;
                     
-                    if (process.Key == _foregroundProcess.Key)
+                    if (process.Key == _foregroundProcess?.Key)
                     {
                         OnApplicationEvent(_foregroundProcess, _foregroundHandle, ActionType.Blur);
                     }
