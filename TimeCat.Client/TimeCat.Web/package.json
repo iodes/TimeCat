@@ -14,7 +14,7 @@
     "antd": "^3.23.5",
     "interactjs": "^1.6.2",
     "chart.js": "^2.8.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.9.0",
     "react-calendar-timeline": "^0.26.5",
     "react-dom": "^16.9.0",
